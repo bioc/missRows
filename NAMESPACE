@@ -1,0 +1,14 @@
+import(methods)
+import(ggplot2)
+import(grDevices)
+
+importFrom(plyr, alply, ddply)
+importFrom(stats, var, cor)
+importFrom(gtools, permutations)
+
+exportPattern("^[[:alpha:]]+")
+
+exportClasses("MIDTList")
+
+S3method(print, missPattern)
+S3method(print, tuneM)

@@ -1,0 +1,119 @@
+\name{MIDTList-class}
+
+\encoding{latin1}
+\docType{class}
+\alias{MIDTList}
+\alias{MIDTList-class}
+\alias{incompleteData}
+\alias{incompleteData,MIDTList-method}
+\alias{tableNames}
+\alias{tableNames,MIDTList-method}
+\alias{strata}
+\alias{strata,MIDTList-method}
+\alias{missingRows}
+\alias{missingRows,MIDTList-method}
+\alias{compromise}
+\alias{compromise,MIDTList-method}
+\alias{configurations}
+\alias{configurations,MIDTList-method}
+\alias{imputedRows}
+\alias{imputedRows,MIDTList-method}
+\alias{MIparam}
+\alias{MIparam,MIDTList-method}
+
+\title{Infrastructure for Multiple Imputation and Data Tables List}
+
+\description{
+\code{MIDTList} is an S4 class providing the infrastructure to store the
+input data tables, intermediate calculations and results of a multiple
+imputation approach.
+}
+
+\section{Objects from the Class}{
+Objects of this class are typically created by \code{\link{newMIDTList}}
+constructor and returned by \code{\link{MIMFA}} function. Usually there
+should be no need to create them directly.
+}
+
+\section{Slots}{
+Initial slots:
+
+  \describe{
+
+    \item{\code{incompleteData}:}{list...}
+
+    \item{\code{strata}:}{named vector with the individual names
+          and the corresponding condition (stratum).}
+
+    \item{\code{tableNames}:}{a character vector of the same length as
+          \code{incompleteData} with the name of the each table.}
+
+    \item{\code{missingRows}:}{a character vector containing the name of
+          the missing rows.}
+%  }
+
+Slots returned after \code{\link{MIMFA}}:
+
+%  \describe{
+
+    \item{\code{compromise}:}{the compromise configuration, a data
+          frame or matrix?? with the individuals coordinates as returned by
+          \code{\link{wrapperSTATIS}} function.}
+
+    \item{\code{configurations}:}{a list containing the individuals
+          coordinates for each imputed dataset as returned by
+          \code{\link{MIMFA}} function.}
+
+    \item{\code{imputedRows}:}{a list containing the imputed rows
+          (individuals) for each data table as returned by
+          \code{\link{imputeDataMFA}} function.}
+
+    \item{\code{MIparam}:}{a list containing the parameters used
+          in the \code{\link{MIMFA}} function.}
+  }
+}
+
+\section{Extends}{
+Class \code{\linkS4class{MIDTList}}, directly.
+}
+
+\section{Methods}{
+Class-specific methods return the corresponding objects:
+
+  \describe{
+
+    \item{incompleteData}{\code{signature(object = "MIDTList")}}
+
+    \item{tableNames}{\code{signature(object = "MIDTList")}}
+
+    \item{strata}{\code{signature(object = "MIDTList")}}
+
+    \item{missingRows}{\code{signature(object = "MIDTList")}}
+
+    \item{compromise}{\code{signature(object = "MIDTList")}}
+
+    \item{configurations}{\code{signature(object = "MIDTList")}}
+
+    \item{imputedRows}{\code{signature(object = "MIDTList")}}
+
+    \item{MIparam}{\code{signature(object = "MIDTList")}}
+  }
+
+Standard generic methods:
+
+  \describe{
+
+    \item{show}{\code{signature(object = "MIDTList")}: Informatively
+          display object contents.}
+	}
+}
+
+\author{
+Ignacio González
+}
+
+\seealso{
+\code{\link{newMIDTList}}
+}
+
+\keyword{classes}

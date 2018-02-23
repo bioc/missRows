@@ -1,0 +1,12 @@
+Package: missRows
+Type: Package
+Title: Handling Missing Rows in Multi-Omics Data Integration
+Version: 0.1
+Date: 2018-02-16
+Author: Voillet Valentin and Gonzalez Ignacio
+Maintainer: Gonzalez Ignacio <ignacio.gonzalez@some.domain.net>
+Description: missRows implements the MI-MFA approach...
+License: GPL (>= 2)
+Depends: methods, gtools, plyr, ggplot2, stats, grDevices
+VignetteBuilder: knitr
+Suggests: BiocStyle, knitr
