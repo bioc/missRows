@@ -65,7 +65,7 @@ See \code{\link{MIDTList}} for description.
 }
 
 \references{
-Voillet V., Besse P., Liaubet L., San Cristobal M., Gonz·lez I. (2016).
+Voillet V., Besse P., Liaubet L., San Cristobal M., Gonz√°lez I. (2016).
 Handling missing rows in multi-omics data integration:
 Multiple Imputation in Multiple Factor Analysis framework.
 \emph{BMC Bioinformatics}, 17(40).
@@ -82,7 +82,7 @@ approximations.
 }
 
 \author{
-Ignacio Gonz·lez and Valentin Voillet
+Ignacio Gonz√°lez and Valentin Voillet
 }
 
 \seealso{
