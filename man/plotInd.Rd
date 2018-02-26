@@ -86,7 +86,7 @@ An object of class \code{ggplot}.
 }
 
 \author{
-Ignacio Gonz?lez and Valentin Voillet
+Ignacio González and Valentin Voillet
 }
 
 \seealso{
