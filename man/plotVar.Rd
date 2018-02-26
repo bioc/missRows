@@ -118,7 +118,7 @@ midt <- MIMFA(midt, ncomp = 2, M = 5)
 #-- default plot
 plotVar(midt)
 
-#-- select data table variables and cutoff
+#-- select data table variables to draw and cutoff
 plotVar(midt, var.names = "trans", cutoff = 0.55)
 plotVar(midt, var.names = TRUE, cutoff = 0.55)
 }
