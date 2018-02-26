@@ -62,10 +62,23 @@ plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
 \code{plotInd} function makes scatter plot for individuals
 representation from \code{\link{MIMFA}} results. Each point
 corresponds to an individual. The individuals are colored with
-rapport to their stratum. Imputated individuals are colored with
-\code{col.missing} color.
+rapport to their stratum, whereas imputed individuals are colored 
+according to the \code{col.missing} argument.
 
-Confidences areas ...
+Multiple imputation generates \code{M} imputed datasets and 
+the variance between-imputations reflects the uncertainty associated 
+to the estimation of the missing row values. The idea is to project all 
+the multiple imputed datasets onto the compromise configuration. 
+Each individual is represented by \code{M} points, each corresponding 
+to one of the \code{M} configurations. Confidence ellipses and convex 
+hulls can then be constructed for the \code{M} configurations for each
+individual.
+
+Confidence ellipses can be created by setting the \code{conf.areas} 
+argument to \code{'ellipse'}. The 95\% confidence ellipses are showed by 
+default. Convex hulls are plotted by setting the \code{conf.areas} argument 
+to \code{'convex.hull'}. The computed convex hull results in a polygon 
+containing all \code{M} solutions.
 }
 
 \value{
@@ -73,7 +86,7 @@ An object of class \code{ggplot}.
 }
 
 \author{
-Ignacio González and Valentin Voillet
+Ignacio Gonz?lez and Valentin Voillet
 }
 
 \seealso{
