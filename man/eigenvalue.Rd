@@ -25,5 +25,4 @@ eigenvalue(x)
 The firts singular value of \code{svd(x)}.
 }
 
-\keyword{ kwd1 }
-\keyword{ kwd2 }
+\keyword{algebra}
