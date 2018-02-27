@@ -37,16 +37,16 @@ imputeDataMFA <- function(datasets, U, missRows, comp,
 
   rownames(X.new) <- rownames(X)
 
-  iimputData <- vector("list", length(missRows))
-  names(iimputData) <- names(missRows)
+  imputData <- vector("list", length(missRows))
+  names(imputData) <- names(missRows)
   nl <- c(0, unlist(lapply(datasets, ncol)))
 
-  for (nm in names(iimputData)) {
+  for (nm in names(imputData)) {
     id <- which(names(nl[-1]) == nm)
     from <- sum(nl[1:id]) + 1
     to <- sum(nl[1:(id + 1)])
-    iimputData[[nm]] <- X.new[missRows[[nm]], from:to]
+    imputData[[nm]] <- X.new[missRows[[nm]], from:to]
   }
 
-  return(iimputData)
+  return(imputData)
 }
