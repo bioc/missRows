@@ -25,17 +25,22 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 
   \item{x}{object of class inheriting from \code{tuneM}}
 
-  \item{ncomp}{Describe \code{ncomp} here}
+  \item{ncomp}{number of components to include in MFA.}
 
-  \item{M.max}{Describe \code{M.max} here}
+  \item{M.max}{integer corresponding to the maximum number of 
+        imputed datasets. See Details.}
 
-  \item{inc}{Describe \code{inc} here}
+  \item{inc}{integer. \Rcode{M} number of imputations are considered 
+        for \code{M = seq(inc, M.max, by = inc)}. See Details.}
 
-  \item{N}{Describe \code{N} here}
+  \item{N}{integer. Collections of size \code{N} are generated for 
+        each number of imputations \code{M}. See Details.}
 
-  \item{tol}{Describe \code{tol} here}
+  \item{tol}{positive value, the tolerance used for assessing 
+        stabilization.}
 
-  \item{show.plot}{Describe \code{show.plot} here}
+  \item{show.plot}{logical. Whether the plot will be displayed. 
+        Default is \code{TRUE}.}
 
   \item{\ldots}{not used currently.}
 }
@@ -56,11 +61,11 @@ Describe the value returned
 Voillet V., Besse P., Liaubet L., Cristobal M.S., González I.
 (2016). Handling missing rows in multi-omics data integration:
 Multiple Imputation in Multiple Factor Analysis framework.
-\emph{BMC Bioinformatics}, \bold{17}(40).
+\emph{BMC Bioinformatics}, 17(40).
 }
 
 \author{
-who you are
+Ignacio González, Valentin Voillet
 }
 
 \seealso{
