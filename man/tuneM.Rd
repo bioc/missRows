@@ -5,11 +5,13 @@
 \alias{print.tuneM}
 
 \title{
-tuneM
+Tune the Number of Imputations in MI-MFA
 }
 
 \description{
- A concise (1-5 lines) description of what the function does.
+\code{tuneM} can be used to determine the appropriate number 
+of imputed datasets needed to obtain satisfactory results 
+in MI-MFA.
 }
 
 \usage{
@@ -30,8 +32,8 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
   \item{M.max}{integer corresponding to the maximum number of 
         imputed datasets. See Details.}
 
-  \item{inc}{integer. \Rcode{M} number of imputations are considered 
-        for \code{M = seq(inc, M.max, by = inc)}. See Details.}
+  \item{inc}{integer. The increment of the sequence for the
+        number \code{M} of imputations considered. See Details.}
 
   \item{N}{integer. Collections of size \code{N} are generated for 
         each number of imputations \code{M}. See Details.}
@@ -39,22 +41,41 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
   \item{tol}{positive value, the tolerance used for assessing 
         stabilization.}
 
-  \item{show.plot}{logical. Whether the plot will be displayed. 
-        Default is \code{TRUE}.}
+  \item{show.plot}{logical. If \code{TRUE} (the default) a plot 
+        showing the stability of the estimated MFA configurations 
+        is displayed.}
 
   \item{\ldots}{not used currently.}
 }
 
 \details{
- If necessary, more details than the description above
+The appropriate number of imputations can be informally determined 
+by carrying out MI-MFA on \eqn{N} replicate sets of \eqn{M_l} 
+imputations for \eqn{l=0,1,2,\ldots ,} with 
+\eqn{M_0 < M_1< M_2 < \cdots < M_{max}}, until the estimate 
+compromise configurations are stabilized.
+
+\code{tuneM} function implements such a procedure. Collections 
+of size \code{N} are generated for each number of imputations 
+\code{M}, with \code{M = seq(inc, M.max, by = inc)}. The stability 
+of the estimated MI-MFA configurations is then determined by 
+calculating the RV coefficient between the configurations obtained 
+using \code{M}\eqn{_{\,l}} and \code{M}\eqn{_{\,l+1}} imputations.
+
+If \code{show.plot = TRUE} a plot showing the stability of the 
+estimated MFA configurations is displayed. The values shown are 
+the mean RV coefficients for the \code{N} configurations as a 
+function of the number of imputations. Error bars represent the 
+standard deviation of the RV coefficients.
 }
 
 \value{
-Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+An list with the following components:
+
+  \item{RVcoeff}{\code{data.frame} containing the information
+        used to generate the plot.}
+
+  \item{ggp}{a object of class \code{ggplot}.}
 }
 
 \references{
@@ -69,7 +90,7 @@ Ignacio González, Valentin Voillet
 }
 
 \seealso{
-objects to See Also as %\code{\link{help}},
+\code{\link{MIMFA}}
 }
 
 %\examples{}
