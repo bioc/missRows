@@ -5,7 +5,7 @@
 \alias{print.missPattern}
 
 \title{
-Inspects pattern of missingness
+Inspects Pattern of Missingness
 }
 
 \description{
@@ -38,7 +38,8 @@ missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
 
   \item{miss.lab}{character. The label legend for missing rows.}
 
-  \item{show.plot}{Describe here}
+  \item{show.plot}{logical. Whether the plot will be displayed. 
+        Default is \code{TRUE}.}
 
   \item{\ldots}{not used currently.}
 }
@@ -58,7 +59,7 @@ An list with the following components:
   \item{nbMissing}{\code{data.frame} containing the amount of
         missing/available rows in each stratum per data table.}
 
-  \item{nisMissing}{\code{data.frame} containing the indicator
+  \item{isMissing}{\code{data.frame} containing the indicator
         matrix for the missing rows.}
 
   \item{ggp}{a object of class \code{ggplot}.}

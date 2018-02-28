@@ -7,7 +7,7 @@
 \alias{tableNames<-,MIDTList-method}
 
 \title{
-Creates a MIDTList object
+Creates a MIDTList Object
 }
 
 \description{
@@ -44,7 +44,7 @@ newMIDTList(..., strata = NULL, tableNames = NULL)
 \details{
 To facilitate programming pipelines, \code{NULL} values are input for
 \code{compromise}, \code{configurations}, \code{imputedRows} and
-\code{MIparam}, in which case the default value is used as if the
+\code{MIparam} slots, in which case the default value is used as if the
 argument had been missing. These slots will be updated after multiple
 imputation (\code{\link{MIMFA}}) approach.
 }
