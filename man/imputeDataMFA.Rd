@@ -4,7 +4,7 @@
 \alias{imputeDataMFA}
 
 \title{
-Impute Missing Rows of Data Tables
+Imputes Missing Rows and Estimates MFA axes
 }
 
 \description{
@@ -39,13 +39,13 @@ imputeDataMFA(datasets, U, missRows, comp, max.iter = 500,
 }
 
 \details{
-Since the core of MFA is a PCA of the weighted data table \eqn{K}, 
+Since the core of MFA is a PCA of the merged data tables \eqn{K}, 
 the algorithm suggested to estimate MFA axes and impute missing 
 values is inspired from the alternating least squares algorithm 
 used in PCA. This consists in finding matrices \eqn{F} and \eqn{U} 
 which minimize the following criterion:
 
-\eqn{||K-M-FU||^2 = \sum_{i}\sum_{k}\left( K_{ik} - M_{ik} - \sum_{d=1}^D F_{id} U_{kd} \right)^2,}
+\deqn{||K-M-FU||^2 = \sum_{i}\sum_{k}\left( K_{ik} - M_{ik} - \sum_{d=1}^D F_{id} U_{kd} \right)^2,}
 
 where \eqn{M} is a matrix with each row equal to a vector of the 
 mean of each variable and \eqn{D} is the kept dimensions in PCA. 
@@ -53,10 +53,27 @@ The solution is obtained by alternating two multiple regressions
 until convergence, one for estimating axes (loadings \eqn{\hat{U}}) 
 and one for components (scores \eqn{\hat{F}}):
 
-  \eqn{
-    \hat{U}' = (\hat{F}'\hat{F})^{-1}\hat{F}'(K-\hat{M})\\
+  \deqn{
+    \hat{U}' = (\hat{F}'\hat{F})^{-1}\hat{F}'(K-\hat{M})
+  }
+  \deqn{
     \hat{F} = (K-\hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
   }
+
+The \code{imputeDataMFA} algorithm first consists imputing missing 
+values in \eqn{K} with initial values (the column means on the 
+non-missing entries), then \eqn{\hat{M}} is computed. The second step 
+of the iterative algorithm is to calculate 
+\eqn{\hat{F} = (K-\hat{M})U(U'U)^{-1}} on the completed dataset by 
+using \eqn{D} components of \eqn{U}. Missing values are estimated as 
+\eqn{\hat{K} = \hat{M} + \hat{F}U'}. The new imputed data set \eqn{K} 
+is obtained by replacing the missing values of the original \eqn{K} 
+matrix with the corresponding elements of \eqn{\hat{K}}, whilst keeping 
+the observed values unaltered. These steps of estimation of the 
+parameters and imputation of the missing values are iterate until 
+convergence. The number \eqn{D} of components used in the algorithm can 
+be estimated setting the \code{estim.ncp} argument to \code{TRUE} in the 
+function \code{\link{MIMFA}}.
 }
 
 \value{
