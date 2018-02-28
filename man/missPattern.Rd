@@ -21,7 +21,8 @@ missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
 }
 
 \arguments{
-  \item{object}{an object of class \code{MIDTList}.}
+  \item{object}{an object of class \code{MIDTList} as returned by
+        \code{\link{newMIDTList}}.}
 
   \item{x}{object of class inheriting from \code{missPattern}}
 
