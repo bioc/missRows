@@ -40,7 +40,10 @@ Initial slots:
 
   \describe{
 
-    \item{\code{incompleteData}:}{list...}
+    \item{\code{incompleteData}:}{a list containing the data tables 
+          with missing rows. Tables in the list should be arranged 
+          in samples \eqn{\times} variables, with samples order matching 
+          in all data tables.}
 
     \item{\code{strata}:}{named vector with the individual names
           and the corresponding condition (stratum).}
@@ -50,11 +53,11 @@ Initial slots:
 
     \item{\code{missingRows}:}{a character vector containing the name of
           the missing rows.}
-%  }
+  }
 
 Slots returned after \code{\link{MIMFA}}:
 
-%  \describe{
+  \describe{
 
     \item{\code{compromise}:}{the compromise configuration, a data
           frame or matrix?? with the individuals coordinates as returned by
