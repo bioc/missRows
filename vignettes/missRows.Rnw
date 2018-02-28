@@ -262,8 +262,8 @@ dim(conf)
 The list of the imputed data tables can be exported by the function \Rcode{imputedData} \medskip
 
 <<imputData>>=
-imputData <- imputedData(midt)
-str(imputData)
+completeData <- imputedData(midt)
+str(completeData)
 @
 
 
