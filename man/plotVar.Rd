@@ -99,7 +99,7 @@ A list containing the following components:
 }
 
 \author{
-Ignacio Gonz√°lez
+Ignacio Gonz·lez
 }
 
 \seealso{

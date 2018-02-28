@@ -67,12 +67,14 @@ according to the \code{col.missing} argument.
 
 Multiple imputation generates \code{M} imputed datasets and 
 the variance between-imputations reflects the uncertainty associated 
-to the estimation of the missing row values. The idea is to project all 
-the multiple imputed datasets onto the compromise configuration. 
-Each individual is represented by \code{M} points, each corresponding 
-to one of the \code{M} configurations. Confidence ellipses and convex 
-hulls can then be constructed for the \code{M} configurations for each
-individual.
+to the estimation of the missing row values. The \code{plotInd} 
+function propose two approaches to visualize the uncertainty 
+due to missing data: confidence ellipses and convex hulls. The idea 
+is to project all the multiple imputed datasets onto the compromise 
+configuration. Each individual is represented by \code{M} points, each corresponding to one of the \code{M} configurations. Confidence ellipses 
+and convex hulls can then be constructed for the \code{M} configurations 
+for each individual. For ease of understanding, not all individuals for 
+the \code{M} configurations obtained are plotted.
 
 Confidence ellipses can be created by setting the \code{conf.areas} 
 argument to \code{'ellipse'}. The 95\% confidence ellipses are showed by 
