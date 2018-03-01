@@ -39,39 +39,35 @@ should be no need to create them directly.
 Initial slots:
 
   \describe{
-
-    \item{\code{incompleteData}:}{a list containing the data tables 
+    \item{\code{incompleteData} :}{a list containing the data tables 
           with missing rows. Tables in the list should be arranged 
-          in samples \eqn{\times} variables, with samples order matching 
-          in all data tables.}
+          in samples \eqn{\times}{x} variables, with samples order 
+          matching in all data tables.}
 
-    \item{\code{strata}:}{named vector with the individual names
+    \item{\code{strata} :}{named vector with the individual names
           and the corresponding condition (stratum).}
 
-    \item{\code{tableNames}:}{a character vector of the same length as
+    \item{\code{tableNames} :}{a character vector of the same length as
           \code{incompleteData} with the name of the each table.}
 
-    \item{\code{missingRows}:}{a character vector containing the name of
+    \item{\code{missingRows} :}{a character vector containing the name of
           the missing rows.}
-  }
 
-Slots returned after \code{\link{MIMFA}}:
+  Slots returned after \code{\link{MIMFA}}:
 
-  \describe{
-
-    \item{\code{compromise}:}{the compromise configuration, a data
-          frame or matrix?? with the individuals coordinates as returned by
+    \item{\code{compromise} :}{the compromise configuration, a 
+          matrix with the individuals coordinates as returned by
           \code{\link{wrapperSTATIS}} function.}
 
-    \item{\code{configurations}:}{a list containing the individuals
+    \item{\code{configurations} :}{a list containing the individuals
           coordinates for each imputed dataset as returned by
           \code{\link{MIMFA}} function.}
 
-    \item{\code{imputedRows}:}{a list containing the imputed rows
+    \item{\code{imputedRows} :}{a list containing the imputed rows
           (individuals) for each data table as returned by
           \code{\link{imputeDataMFA}} function.}
 
-    \item{\code{MIparam}:}{a list containing the parameters used
+    \item{\code{MIparam} :}{a list containing the parameters used
           in the \code{\link{MIMFA}} function.}
   }
 }
