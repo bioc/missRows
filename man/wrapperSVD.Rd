@@ -8,7 +8,9 @@ Singular Value Decomposition of a Matrix
 
 \description{
 Wrapper function from the \pkg{FactoMineR} package to perform
-Singular Value Decomposition of a matrix.
+Singular Value Decomposition of a matrix. This function
+is called internally by \code{\link{MFA}} and is not usually 
+called directly by a user.
 }
 
 \usage{
