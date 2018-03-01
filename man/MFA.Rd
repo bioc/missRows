@@ -20,7 +20,7 @@ MFA(dataTables, ncomp, nb.rows, nb.tables, nc.table)
 \arguments{
   \item{dataTables}{a list containing the data tables with missing
         rows. Tables in the list should be arranged in samples
-        \eqn{\times} variables, with samples order matching in all
+        \eqn{\times}{x} variables, with samples order matching in all
         data tables.}
 
   \item{ncomp}{number of components to include in MFA.}

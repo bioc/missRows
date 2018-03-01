@@ -80,12 +80,12 @@ Multiple Imputation in Multiple Factor Analysis framework.
 Lavit C., Escoufier Y., Sabatier R., Traissac P. (1994)
 The ACT (STATIS method).
 \emph{Computational Statistics & Data Analysis},
-18(1), 97-119.
+18(1), 97--119.
 
 Josse J., Husson F. (2012).
 Selecting the number of components in PCA using cross-validation
 approximations.
-\emph{Computational Statistics and Data Analysis}, 56, 1869-1879.
+\emph{Computational Statistics and Data Analysis}, 56, 1869--1879.
 }
 
 \author{

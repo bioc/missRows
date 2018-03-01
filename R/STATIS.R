@@ -1,4 +1,4 @@
-wrapperSTATIS <- function (Ktab, nf = 3, tol = 1e-07) {
+STATIS <- function (Ktab, nf = 3, tol = 1e-07) {
   
   nlig <- nrow(Ktab[[1]]) 
   ntab <- length(Ktab)

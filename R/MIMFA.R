@@ -157,7 +157,7 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
 
   #-- calculation of the compromise space (STATIS method) ------------------------#
   #-------------------------------------------------------------------------------#
-  tmp <- wrapperSTATIS(U, nf = ncomp)
+  tmp <- STATIS(U, nf = ncomp)
   colnames(tmp$C.li) <- paste0("comp ", 1:ncomp)
 
   #-- estimation of the number of components for data imputation -----------------#
