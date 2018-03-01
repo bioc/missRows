@@ -147,7 +147,7 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 
   for (n in 1:N) {
     #-- calculation of the compromise space (STATIS method)
-    conf0[[n]] <- wrapperSTATIS(variates.MFA[In[[n]]], nf = ncomp)$C.li
+    conf0[[n]] <- STATIS(variates.MFA[In[[n]]], nf = ncomp)$C.li
   }
 
   #-- configurations for M_l, l > 1
@@ -183,8 +183,8 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 
     for (n in 1:N) {
       #-- calculation of the compromise space (STATIS method)
-      conf <- wrapperSTATIS(variates.MFA[In[[n]]], nf = ncomp)$C.li
-      RV.coef <- c(RV.coef, wrapperRVcoeff(conf0[[n]], conf))
+      conf <- STATIS(variates.MFA[In[[n]]], nf = ncomp)$C.li
+      RV.coef <- c(RV.coef, RVcoeff(conf0[[n]], conf))
       conf0[[n]] <- conf
     }
 
@@ -201,8 +201,8 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
   #--------------------------------------------------------------------------------#
   df <- data.frame(x = 1:length(ave.RV.coef), avg = ave.RV.coef, sd = sd.RV.coef)
   lab <- paste0("(", Ml[1:(nbMl - 1)], ",", Ml[2:nbMl], ")")
-  res <- list(RVcoeff = df[, -1])
-  res$RVcoeff <- data.frame(imputations = lab, res$RVcoeff)
+  res <- list(stats = df[, -1])
+  res$stats <- data.frame(imputations = lab, res$stats)
 
   g <- ggplot(df, aes(x = df$x, y = df$avg)) +
     geom_point(size = 2.5) + theme_bw() +
