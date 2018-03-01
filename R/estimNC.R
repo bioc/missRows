@@ -1,4 +1,4 @@
-estimNCP <- function (X, min.ncp = 0, max.ncp) {
+estimNC <- function (X, min.ncp = 0, max.ncp) {
 
   crit <- NULL
   p <- ncol(X)

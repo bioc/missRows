@@ -163,7 +163,7 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
   #-- estimation of the number of components for data imputation -----------------#
   #-------------------------------------------------------------------------------#
   if (estim.ncp) {
-    ncp <- estimNCP(tmp$C.ro, min.ncp = 2, ncomp)
+    ncp <- estimNC(tmp$C.ro, min.ncp = 2, ncomp)
     attr(ncp, "estimated") <- TRUE
   } else {
     ncp <- ncomp
