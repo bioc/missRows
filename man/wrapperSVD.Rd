@@ -1,53 +1,46 @@
 \name{wrapperSVD}
+
 \alias{wrapperSVD}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-wrapperSVD
+Singular Value Decomposition of a Matrix
 }
+
 \description{
- A concise (1-5 lines) description of what the function does.
+Wrapper function from the \pkg{FactoMineR} package to perform
+Singular Value Decomposition of a matrix.
 }
+
 \usage{
 wrapperSVD(X, row.w = NULL, col.w = NULL, ncp = Inf)
 }
-%- maybe also 'usage' for other objects documented here.
-\arguments{
-  \item{X}{Describe \code{X} here
-}
-  \item{row.w}{Describe \code{row.w} here
-}
-  \item{col.w}{Describe \code{col.w} here
-}
-  \item{ncp}{Describe \code{ncp} here
-}
-}
-\details{
- If necessary, more details than the description above
-}
-\value{
-Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-put references to the literature/web site here
-}
-\author{
-who you are
-}
-%\note{
-%%  further notes
-%}
 
-%% Make other sections like Warning with \section{Warning }{....}
+\arguments{
+  \item{X}{a data matrix.}
+  
+  \item{row.w}{vector with the weights of each row 
+        (\code{NULL} by default and the weights are uniform).}
+        
+  \item{col.w}{vector with the weights of each column 
+        (\code{NULL} by default and the weights are uniform).}
+        
+  \item{ncp}{the number of components kept for the outputs.}
+}
+
+\value{
+A list that contains the following components:
+
+\item{vs}{a vector containing the singular values of \code{X}.}
+
+\item{U}{a matrix whose columns contain the left singular 
+      vectors of \code{X}.}
+
+\item{V}{a matrix whose columns contain the right singular 
+      vectors of \code{X}.}
+}
 
 \seealso{
-objects to See Also as %\code{\link{help}},
+\code{\link{svd}}, \code{\link[FactoMineR]{svd.triplet}}
 }
-%\examples{}
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ kwd1 }
-\keyword{ kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{algebra}
