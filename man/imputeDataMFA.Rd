@@ -9,7 +9,8 @@ Imputes Missing Rows and Estimates MFA axes
 
 \description{
 Impute the missing rows of data tables using the alternating least 
-squares algorithm used in PCA. This function is called internally by \code{\link{MIMFA}} and is not usually called directly by a user.
+squares algorithm used in PCA. This function is called internally by 
+\code{\link{MIMFA}} and is not usually called directly by a user.
 }
 
 \usage{
@@ -45,7 +46,11 @@ values is inspired from the alternating least squares algorithm
 used in PCA. This consists in finding matrices \eqn{F} and \eqn{U} 
 which minimize the following criterion:
 
-\deqn{||K-M-FU||^2 = \sum_{i}\sum_{k}\left( K_{ik} - M_{ik} - \sum_{d=1}^D F_{id} U_{kd} \right)^2,}
+\deqn{
+||K-M-FU||^2 = \sum_{i}\sum_{k}\left( K_{ik} - M_{ik} - 
+                     \sum_{d=1}^D F_{id} U_{kd} \right)^2,}{
+||K-M-FU||^2 = \sum_{i}\sum_{k}( K_{ik} - M_{ik} - 
+                     \sum_{d=1}^D F_{id} U_{kd})^2,}
 
 where \eqn{M} is a matrix with each row equal to a vector of the 
 mean of each variable and \eqn{D} is the kept dimensions in PCA. 
@@ -54,17 +59,17 @@ until convergence, one for estimating axes (loadings \eqn{\hat{U}})
 and one for components (scores \eqn{\hat{F}}):
 
   \deqn{
-    \hat{U}' = (\hat{F}'\hat{F})^{-1}\hat{F}'(K-\hat{M})
+    \hat{U}' = (\hat{F}'\hat{F})^{-1}\hat{F}'(K - \hat{M})
   }
   \deqn{
-    \hat{F} = (K-\hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
+    \hat{F} = (K - \hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
   }
 
 The \code{imputeDataMFA} algorithm first consists imputing missing 
 values in \eqn{K} with initial values (the column means on the 
 non-missing entries), then \eqn{\hat{M}} is computed. The second step 
 of the iterative algorithm is to calculate 
-\eqn{\hat{F} = (K-\hat{M})U(U'U)^{-1}} on the completed dataset by 
+\eqn{\hat{F} = (K - \hat{M})U(U'U)^{-1}} on the completed dataset by 
 using \eqn{D} components of \eqn{U}. Missing values are estimated as 
 \eqn{\hat{K} = \hat{M} + \hat{F}U'}. The new imputed data set \eqn{K} 
 is obtained by replacing the missing values of the original \eqn{K} 
