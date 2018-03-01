@@ -51,16 +51,16 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 \details{
 The appropriate number of imputations can be informally determined 
 by carrying out MI-MFA on \eqn{N} replicate sets of \eqn{M_l} 
-imputations for \eqn{l=0,1,2,\ldots ,} with 
-\eqn{M_0 < M_1< M_2 < \cdots < M_{max}}, until the estimate 
-compromise configurations are stabilized.
+imputations for \eqn{l=0,1,2,\ldots ,}{l = 0, 1, 2, . . . ,} with 
+\eqn{M_0 < M_1 < M_2 < \cdots < M_{max}}{M_0 < M_1 < M_2 < . . . < M_max}, until the estimate compromise configurations are stabilized.
 
 \code{tuneM} function implements such a procedure. Collections 
 of size \code{N} are generated for each number of imputations 
 \code{M}, with \code{M = seq(inc, M.max, by = inc)}. The stability 
 of the estimated MI-MFA configurations is then determined by 
 calculating the RV coefficient between the configurations obtained 
-using \code{M}\eqn{_{\,l}} and \code{M}\eqn{_{\,l+1}} imputations.
+using \code{M}\eqn{_{\,l}}{_l} and \code{M}\eqn{_{\,l+1}}{_{l+1}} 
+imputations.
 
 If \code{show.plot = TRUE} a plot showing the stability of the 
 estimated MFA configurations is displayed. The values shown are 
@@ -93,7 +93,16 @@ Ignacio González, Valentin Voillet
 \code{\link{MIMFA}}
 }
 
-%\examples{}
+\examples{
+#-- load data and create MIDTList object
+data(NCI60)
+midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
 
-\keyword{ kwd1 }
-\keyword{ kwd2 }
+#-- tune the number of imputations
+\dontrun{
+tune <- tuneM(midt, ncomp = 2, M.max = 100, inc = 10, N = 10)
+tune}
+}
+
+\keyword{multivariate}
+\keyword{dplot}
