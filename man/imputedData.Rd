@@ -46,5 +46,4 @@ midt <- MIMFA(midt, ncomp = 2, M = 5)
 completeData <- imputedData(midt)
 }
 
-\keyword{ kwd1 }
-\keyword{ kwd2 }
+\keyword{utilities}

@@ -123,5 +123,5 @@ plotVar(midt, var.names = "trans", cutoff = 0.55)
 plotVar(midt, var.names = TRUE, cutoff = 0.55)
 }
 
-\keyword{ kwd1 }
-\keyword{ kwd2 }
+\keyword{hplot}
+\keyword{dplot}

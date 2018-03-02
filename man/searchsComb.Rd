@@ -43,5 +43,4 @@ searchsComb(list(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female")), idx)
 }
 
-\keyword{ kwd1 }
-\keyword{ kwd2 }
+\keyword{utilities}

@@ -114,3 +114,4 @@ midt}
 }
 
 \keyword{multivariate}
+\keyword{datagen}
