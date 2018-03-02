@@ -34,12 +34,12 @@ plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
   \item{col.missing}{the fill color for imputated individuals.}
 
   \item{conf.areas}{character string indicating whether to plot
-        \code{'none'}, \code{'ellipse'} or \code{'convex.hull'}
+        \code{"none"}, \code{"ellipse"} or \code{"convex.hull"}
         confidence areas.}
 
   \item{conf.level}{numerical value indicating the confidence level
-        of ellipses being plotted when \code{conf.areas = 'ellipse'}.
-        The default is set to 0.95, for a 95\% region.}
+        of ellipses being plotted when \code{conf.areas = "ellipse"}.
+        The default is set to 0.95, for a 95\% confidence region.}
 
   \item{ellipse.type}{the type of ellipse. The default \code{"norm"}
         assumes a multivariate normal distribution, and \code{"t"}
@@ -77,9 +77,9 @@ for each individual. For ease of understanding, not all individuals for
 the \code{M} configurations obtained are plotted.
 
 Confidence ellipses can be created by setting the \code{conf.areas} 
-argument to \code{'ellipse'}. The 95\% confidence ellipses are showed by 
+argument to \code{"ellipse"}. The 95\% confidence ellipses are showed by 
 default. Convex hulls are plotted by setting the \code{conf.areas} argument 
-to \code{'convex.hull'}. The computed convex hull results in a polygon 
+to \code{"convex.hull"}. The computed convex hull results in a polygon 
 containing all \code{M} solutions.
 }
 

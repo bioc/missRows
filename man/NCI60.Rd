@@ -4,7 +4,7 @@
 
 \docType{data}
 
-\title{Data of the NCI-60 cell lines with missing rows}
+\title{Data of the NCI-60 Cell Lines with Missing Rows}
 
 \description{
 The \code{NCI60} data contained transcriptomic and proteomic
@@ -66,10 +66,10 @@ the inst/extdata folder of the \code{missRows} package.
 
 \references{
 Reinhold W.C., Sunshine M., Liu H., Varma S., Kohn K.W., Morris J.,
-Doroshow J., and Pommier Y.
+Doroshow J., Pommier Y. (2012).
 Cellminer: A web-based suite of genomic and pharmacologic tools to
 explore transcript and drug patterns in the NCI-60 cell line set.
-\emph{Cancer Research}, \bold{72}(14):3499-511, 2012.
+\emph{Cancer Research}, 72(14):3499-511.
 
 The CellMiner project website: http://discover.nci.nih.gov/cellminer
 }

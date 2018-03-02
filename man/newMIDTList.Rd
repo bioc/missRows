@@ -58,7 +58,7 @@ Ignacio González
 }
 
 \seealso{
-\code{\linkS4class{MIDTList}} and \code{\link{MIMFA}}.
+\code{\linkS4class{MIDTList}}, \code{\link{MIMFA}}
 }
 
 \examples{

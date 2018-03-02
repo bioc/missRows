@@ -7,7 +7,7 @@ Calculate the RV Coefficient
 }
 
 \description{
-Calculates the RV coefficient between two matrice 
+Calculate the RV coefficient between two matrice 
 \code{X} and \code{Y}. This function is called 
 internally by \code{\link{tuneM}} and is not usually 
 called directly by a user.
@@ -18,10 +18,7 @@ RVcoeff(X, Y)
 }
 
 \arguments{
-  \item{X}{a matrix with \eqn{n} rows (individuals) and 
-        \eqn{p} columns (variables).}
-        
-  \item{Y}{a matrix with \eqn{n} rows (individuals) and 
+  \item{X, Y}{a matrix with \eqn{n} rows (individuals) and 
         \eqn{p} columns (variables).}
 }
 

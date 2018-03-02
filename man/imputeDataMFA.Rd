@@ -4,7 +4,7 @@
 \alias{imputeDataMFA}
 
 \title{
-Imputes Missing Rows and Estimates MFA axes
+Imputes Missing Rows and Estimates MFA Axes
 }
 
 \description{
@@ -14,8 +14,7 @@ squares algorithm used in PCA. This function is called internally by
 }
 
 \usage{
-imputeDataMFA(datasets, U, missRows, comp, max.iter = 500,
-              tol = 1e-10)
+imputeDataMFA(datasets, U, missRows, comp, max.iter = 500, tol = 1e-10)
 }
 
 \arguments{
