@@ -72,7 +72,7 @@ standard deviation of the RV coefficients.
 \value{
 An list with the following components:
 
-  \item{RVcoeff}{\code{data.frame} containing the information
+  \item{stats}{\code{data.frame} containing the information
         used to generate the plot.}
 
   \item{ggp}{a object of class \code{ggplot}.}

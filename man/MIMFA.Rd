@@ -77,7 +77,7 @@ Handling missing rows in multi-omics data integration:
 Multiple Imputation in Multiple Factor Analysis framework.
 \emph{BMC Bioinformatics}, 17(40).
 
-Lavit C., Escoufier Y., Sabatier R., Traissac P. (1994)
+Lavit C., Escoufier Y., Sabatier R., Traissac P. (1994).
 The ACT (STATIS method).
 \emph{Computational Statistics & Data Analysis},
 18(1), 97--119.

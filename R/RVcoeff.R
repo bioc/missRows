@@ -1,4 +1,4 @@
-wrapperRVcoeff <- function(X, Y) {
+RVcoeff <- function(X, Y) {
   Y <- scale(Y, scale = FALSE)
   X <- scale(X, scale = FALSE)
   W1 <- X %*% t(X)
