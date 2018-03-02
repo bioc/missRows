@@ -155,12 +155,12 @@ setMethod(f = "compromise", signature = "MIDTList",
 
 #-- configurations
 setMethod(f = "configurations", signature = "MIDTList",
-          definition = function(object, M = NULL) {
+          definition = function(object, M = "all") {
             if (is.null(object@configurations)) {
               cat("No 'configurations' slot found in the MIDTList object.",
                   "Run MI first.")
             } else {
-              if (is.null(M)) {
+              if (M == "all") {
                 object@configurations
               } else {
                 object@configurations[[M]]
