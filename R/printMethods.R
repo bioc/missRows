@@ -14,5 +14,5 @@ print.missPattern <- function(x, ...) {
 #-------------------------------------------------------------------------------#
 print.tuneM <- function(x, ...) {
 
-  print(x$RVcoeff)
+  print(x$stats)
 }
