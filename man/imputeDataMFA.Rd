@@ -22,11 +22,11 @@ imputeDataMFA(datasets, U, missRows, comp, max.iter = 500,
 
   \item{datasets}{a list containing the data tables with missing
         rows. Tables in the list should be arranged in samples
-        \eqn{\times} variables, with samples order matching in all
+        \eqn{\times}{x} variables, with samples order matching in all
         data tables.}
 
   \item{U}{the compromise configuration, a matrix with the individuals
-        coordinates as returned by \code{\link{wrapperSTATIS}} function.}
+        coordinates as returned by \code{\link{STATIS}} function.}
 
   \item{missRows}{a character vector containing the name of
         the missing rows.}
