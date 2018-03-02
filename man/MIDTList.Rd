@@ -50,8 +50,8 @@ Initial slots:
     \item{\code{tableNames}:}{a character vector of the same length as
           \code{incompleteData} with the name of the each table.}
 
-    \item{\code{missingRows}:}{a character vector containing the name of
-          the missing rows.}\cr
+    \item{\code{missingRows}:}{a list containing character vectors with 
+          the name of the missing individuals (rows) per table.}\cr
 
   Slots returned after \code{\link{MIMFA}}:
 
@@ -81,21 +81,35 @@ Class-specific methods return the corresponding objects:
 
   \describe{
 
-    \item{incompleteData}{\code{signature(object = "MIDTList")}}
+    \item{incompleteData}{\code{signature(object = "MIDTList")}:
+          Returns list containing the initial data tables.}
 
-    \item{tableNames}{\code{signature(object = "MIDTList")}}
+    \item{tableNames}{\code{signature(object = "MIDTList")}:
+          Access table names in \code{incompleteData}.}
 
-    \item{strata}{\code{signature(object = "MIDTList")}}
+    \item{strata}{\code{signature(object = "MIDTList")}:
+          Returns factor of strata giving the stratum for
+          each individual.}
 
-    \item{missingRows}{\code{signature(object = "MIDTList")}}
+    \item{missingRows}{\code{signature(object = "MIDTList")}:
+          Returns list containing character vectors with 
+          the name of the missing individuals (rows) per table.}
 
-    \item{compromise}{\code{signature(object = "MIDTList")}}
+    \item{compromise}{\code{signature(object = "MIDTList")}:
+          Returns matrix with the individuals coordinates as returned 
+          by \code{\link{STATIS}} function.}
 
-    \item{configurations}{\code{signature(object = "MIDTList")}}
+    \item{configurations}{\code{signature(object = "MIDTList", M = "all")}:
+          Gets all configurations. If \code{M} is a positive integer, the
+          \code{M}th configuration is returned.}
 
-    \item{imputedRows}{\code{signature(object = "MIDTList")}}
+    \item{imputedRows}{\code{signature(object = "MIDTList")}:
+          Returns list containing the imputed rows
+          (individuals) for each data table.}
 
-    \item{MIparam}{\code{signature(object = "MIDTList")}}
+    \item{MIparam}{\code{signature(object = "MIDTList")}:
+          Returns list containing the parameters used
+          in the \code{\link{MIMFA}} function.}
   }
 
 Standard generic methods:
