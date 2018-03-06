@@ -20,14 +20,14 @@ plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
 
 \arguments{
 
-  \item{object}{object of class \code{MIDTList} as returned by
+  \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{MIMFA}} function.}
 
-  \item{comp}{integer vector of length two. The components that
+  \item{comp}{an integer vector of length two. The components that
         will be used on the horizontal and the vertical axis
         respectively to project the variables.}
 
-  \item{col}{character or integer vector of colors for plotted
+  \item{col}{a character or integer vector of colors for plotted
         character and symbols, it must be of length the total number 
         of data tables (see Details).}
 
@@ -36,7 +36,7 @@ plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
         labels. If \code{TRUE}, the variable names in the data
         tables are used as variable labels in the plot. See Details.}
 
-  \item{cex}{numeric vector of character expansion sizes for the
+  \item{cex}{a numeric vector of character expansion sizes for the
         plotted character and symbols, can be of length one
         or of length the total number of data tables. See Details.}
 
@@ -53,10 +53,10 @@ plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
         If \code{TRUE} (the default), a square plotting region is
         generated. If not, a maximal plotting region is produced.}
 
-  \item{cutoff}{numeric between 0 and 1. Variables with correlations
+  \item{cutoff}{a numeric between 0 and 1. Variables with correlations
         below this cutoff in absolute value are not plotted (see Details).}
 
-  \item{rad.in}{numeric between 0 and 1, the radius of the inner circle.
+  \item{rad.in}{a numeric between 0 and 1, the radius of the inner circle.
         Defaults to 0.5.}
 
   \item{overlap}{logical. Whether the variables in data tables should be
@@ -84,8 +84,8 @@ names in the \code{"table1"} are drawn.
 The arguments \code{cex} and \code{pch} can be either vectors 
 of length one or of length the total number of data tables. In the 
 first case, the single value determine the graphics attributes for 
-all data tables variables. Otherwise, multiple arguments values can 
-be specified so that each data table variables can be given its own 
+all data tables variables. Otherwise, multiple argument values can 
+be specified so that each data table variable can be given its own 
 graphic attributes. In this case, each component of the vector 
 correspond to the attributes of the each data table variables.
 }
@@ -93,7 +93,7 @@ correspond to the attributes of the each data table variables.
 \value{
 A list containing the following components:
 
-  \item{df}{data frame used to generate the \code{ggplot}.}
+  \item{df}{a data frame used to generate the \code{ggplot}.}
 
   \item{ggp}{an object of class \code{ggplot}.}
 }

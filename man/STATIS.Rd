@@ -8,9 +8,9 @@ STATIS Analysis of Multiple Data Tables
 
 \description{
 Partially borrowed from the \code{statis} 
-function in the \pkg{ade4} package, \code{STATIS} performs 
-a STATIS analysis of multiple data tables. This function is 
-called internally by \code{\link{MIMFA}} and is not usually 
+function implemented within the \pkg{ade4} package, \code{STATIS} 
+performs a STATIS analysis of multiple data tables. This function is 
+internally called by \code{\link{MIMFA}} and is not usually 
 called directly by a user.
 }
 

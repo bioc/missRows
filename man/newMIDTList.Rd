@@ -28,16 +28,16 @@ newMIDTList(..., strata = NULL, tableNames = NULL)
         arranged in samples \eqn{\times} variables, with samples
         order and row names matching in all data tables.}
 
-  \item{strata}{named vector or data frame giving the stratum for
+  \item{strata}{a named vector or data frame giving the stratum for
         each individual. Names (in vector) or row names (in data frame)
         must be equal to the row names among data tables.}
 
   \item{tableNames}{optional. A character vector giving the name for
         each table.}
 
-  \item{object}{object of class \code{MIDTList}.}
+  \item{object}{an object of class \code{MIDTList}.}
 
-  \item{value}{character vector of length the total number of
+  \item{value}{a character vector of length the total number of
         data tables.}
 }
 

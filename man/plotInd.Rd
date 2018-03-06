@@ -20,24 +20,24 @@ plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
 }
 
 \arguments{
-  \item{object}{object of class \code{MIDTList} as returned by
+  \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{MIMFA}} function.}
 
-  \item{comp}{integer vector of length two. The components
+  \item{comp}{an integer vector of length two. The components
         that will be used on the horizontal and the vertical axis
         respectively to project the individuals.}
 
-  \item{col.strata}{character vector of the same length than the
+  \item{col.strata}{a character vector of the same length than the
         number of strata containing the color names to be used to
         annotate the individuals per stratum.}
 
   \item{col.missing}{the fill color for imputated individuals.}
 
-  \item{conf.areas}{character string indicating whether to plot
+  \item{conf.areas}{a character string indicating whether to plot
         \code{"none"}, \code{"ellipse"} or \code{"convex.hull"}
         confidence areas.}
 
-  \item{conf.level}{numerical value indicating the confidence level
+  \item{conf.level}{a numerical value indicating the confidence level
         of ellipses being plotted when \code{conf.areas = "ellipse"}.
         The default is set to 0.95, for a 95\% confidence region.}
 

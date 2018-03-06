@@ -25,11 +25,11 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
   \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{newMIDTList}}.}
 
-  \item{x}{object of class inheriting from \code{tuneM}}
+  \item{x}{an object of class inheriting from \code{tuneM}.}
 
-  \item{ncomp}{number of components to include in MFA.}
+  \item{ncomp}{a number of components to include in MFA.}
 
-  \item{M.max}{integer corresponding to the maximum number of 
+  \item{M.max}{an integer corresponding to the maximum number of 
         imputed datasets. See Details.}
 
   \item{inc}{integer. The increment of the sequence for the
@@ -38,14 +38,14 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
   \item{N}{integer. Collections of size \code{N} are generated for 
         each number of imputations \code{M}. See Details.}
 
-  \item{tol}{positive value, the tolerance used for assessing 
+  \item{tol}{a positive value, the tolerance used for assessing 
         stabilization.}
 
   \item{show.plot}{logical. If \code{TRUE} (the default) a plot 
         showing the stability of the estimated MFA configurations 
         is displayed.}
 
-  \item{\ldots}{not used currently.}
+  \item{\ldots}{not currently used.}
 }
 
 \details{
@@ -70,12 +70,12 @@ standard deviation of the RV coefficients.
 }
 
 \value{
-An list with the following components:
+A list with the following components:
 
   \item{stats}{\code{data.frame} containing the information
         used to generate the plot.}
 
-  \item{ggp}{a object of class \code{ggplot}.}
+  \item{ggp}{an object of class \code{ggplot}.}
 }
 
 \references{
