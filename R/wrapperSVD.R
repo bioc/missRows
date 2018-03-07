@@ -4,7 +4,7 @@ wrapperSVD <- function (X, row.w = NULL, col.w = NULL, ncp = Inf) {
     W <- NULL
 
     w.handler <- function(w) {
-      W <<- w
+      W <- w
       invokeRestart("muffleWarning")
     }
 
