@@ -11,26 +11,24 @@ Handling Missing Rows in Multi-Omics Data Integration
 }
 
 \description{
-More about what it does (maybe more than one line)
- A concise (1-5 lines) description of the package
+The missRows package implements the MI-MFA method to deal with missing rows in multi-omics data integration. The MI-MFA method generates multiple imputed datasets from a Multiple Factor Analysis model, then the yield results are combined in a single consensus solution. The package provides functions for estimating coordinates of individuals and variables, imputing missing row values, and various diagnostic plots to inspect the pattern of missingness and visualize the uncertainty due to missing row values.
 }
 
 \details{
-\tabular{ll}{
-Package: \tab missRows\cr
-Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2017-04-22\cr
-License: \tab What license is it under?\cr
-Depends: \tab methods\cr
-}
- An overview of how to use the package, including the most important functions
+  \tabular{ll}{
+    Package: \tab missRows\cr
+    Type: \tab Package\cr
+    Version: \tab 1.0\cr
+    Date: \tab 2017-04-22\cr
+    License: \tab What license is it under?\cr
+    Depends: \tab methods\cr
+  }
 }
 
 \author{
 Ignacio González and Valentin Voillet
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Maintainer: Ignacio González <ignacio.gonzalez@somewhere.net>
 }
 
 \references{
@@ -41,16 +39,12 @@ Multiple Imputation in Multiple Factor Analysis framework.
 }
 
 \keyword{package}
-\seealso{
- Optional links to other man pages, e.g.
-% \code{\link[<pkg>:<pkg>-package]{<pkg>}}
-}
 
 \examples{
 ## A typical MI-MFA session might look like the following. 
 ## Here we assume there are two data tables with missing rows, 
 ## "table1" and "table2", and the stratum for each individual 
-## is stored in a data frame df.
+## is stored in a data frame "df".
 
 \dontrun{
 
