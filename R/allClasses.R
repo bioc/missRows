@@ -5,14 +5,14 @@
 #-- setClass -----------------------------------------------------------------#
 #-----------------------------------------------------------------------------#
 MIDTList <- setClass("MIDTList",
-                     slots = c(incompleteData = "ANY",
-                               strata = "ANY",
-                               tableNames = "ANY",
-                               missingRows = "ANY",
-                               compromise = "ANY",
-                               configurations = "ANY",
-                               imputedRows = "ANY",
-                               MIparam = "ANY"))
+                    slots = c(incompleteData = "ANY",
+                    strata = "ANY",
+                    tableNames = "ANY",
+                    missingRows = "ANY",
+                    compromise = "ANY",
+                    configurations = "ANY",
+                    imputedRows = "ANY",
+                    MIparam = "ANY"))
 
 
 #-- setGeneric ---------------------------------------------------------------#
@@ -20,38 +20,38 @@ MIDTList <- setClass("MIDTList",
 
 #-- incompleteData
 setGeneric(name = "incompleteData",
-           def = function(object) standardGeneric("incompleteData"))
+            def = function(object) standardGeneric("incompleteData"))
 
 #-- strata
 setGeneric(name = "strata",
-           def = function(object) standardGeneric("strata"))
+            def = function(object) standardGeneric("strata"))
 
 #-- tableNames
 setGeneric(name = "tableNames",
-           def = function(object, ...) standardGeneric("tableNames"))
+            def = function(object, ...) standardGeneric("tableNames"))
 
 setGeneric("tableNames<-",
-           def =function(object, value) standardGeneric("tableNames<-"))
+            def =function(object, value) standardGeneric("tableNames<-"))
 
 #-- missingRows
 setGeneric(name = "missingRows",
-           def = function(object) standardGeneric("missingRows"))
+            def = function(object) standardGeneric("missingRows"))
 
 #-- compromise
 setGeneric(name = "compromise",
-           def = function(object) standardGeneric("compromise"))
+            def = function(object) standardGeneric("compromise"))
 
 #-- configurations
 setGeneric(name = "configurations",
-           def = function(object, ...) standardGeneric("configurations"))
+            def = function(object, ...) standardGeneric("configurations"))
 
 #-- imputedRows
 setGeneric(name = "imputedRows",
-           def = function(object) standardGeneric("imputedRows"))
+            def = function(object) standardGeneric("imputedRows"))
 
 #-- MIparam
 setGeneric(name = "MIparam",
-           def = function(object) standardGeneric("MIparam"))
+            def = function(object) standardGeneric("MIparam"))
 
 
 
@@ -59,18 +59,18 @@ setGeneric(name = "MIparam",
 #-----------------------------------------------------------------------------#
 #-- show
 setMethod("show",
-          signature = "MIDTList",
-          definition = function(object) {
+            signature = "MIDTList",
+            definition = function(object) {
 
             nb.miss <- NULL
 
             for (j in seq_along(object@incompleteData)) {
-              id.miss <- apply(is.na(object@incompleteData[[j]]), 1, all)
-              if (any(id.miss)) {
-                nb.miss <- c(nb.miss, sum(id.miss))
-              } else {
-                nb.miss <- c(nb.miss, 0)
-              }
+                id.miss <- apply(is.na(object@incompleteData[[j]]), 1, all)
+                if (any(id.miss)) {
+                    nb.miss <- c(nb.miss, sum(id.miss))
+                } else {
+                    nb.miss <- c(nb.miss, 0)
+                }
             }
 
             nt <- length(object@incompleteData)
@@ -78,10 +78,10 @@ setMethod("show",
             cat("An object of class ", class(object), ".",
                 "\n\nTables:\n", sep = "")
             info <- data.frame(names(object@incompleteData),
-                               sapply(object@incompleteData, nrow),
-                               sapply(object@incompleteData, ncol),
-                               nb.miss,
-                               row.names = paste0("Table ", 1:nt, " "))
+                            sapply(object@incompleteData, nrow),
+                            sapply(object@incompleteData, ncol),
+                            nb.miss,
+                            row.names = paste0("Table ", 1:nt, " "))
             colnames(info) <- c("name", "rows", "columns", "missing")
             print(info)
 
