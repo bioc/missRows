@@ -27,8 +27,8 @@ imputeDataMFA(datasets, U, missRows, comp, max.iter = 500, tol = 1e-10)
   \item{U}{the compromise configuration, a matrix with the individuals
         coordinates as returned by \code{\link{STATIS}} function.}
 
-  \item{missRows}{a character vector containing the name of
-        the missing rows.}
+  \item{missRows}{a list containing character vectors with 
+        the name of the missing individuals (rows) per table.}
 
   \item{comp}{number of components kept for imputation.}
 
@@ -87,6 +87,19 @@ each data table.
 
 \author{
 Ignacio González
+}
+
+\examples{
+#-- load data and create MIDTList object
+data(NCI60)
+midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+
+#-- performs MIMFA
+midt <- MIMFA(midt, ncomp = 3, M = 10)
+
+#-- imputes missing rows and estimates MFA axes
+completeRows <- imputeDataMFA(incompleteData(midt), compromise(midt), 
+                              missRows = missingRows(midt), comp = 3)
 }
 
 \keyword{multivariate}
