@@ -20,8 +20,7 @@ estimNC(X, min.ncp = 0, max.ncp)
 \arguments{
   \item{X}{a numeric matrix.}
 
-  \item{min.ncp}{minimum number of components to consider, 
-	      by default 0.}
+  \item{min.ncp}{minimum number of components to consider, by default 0.}
 
   \item{max.ncp}{maximum number of components to test.}
 }
