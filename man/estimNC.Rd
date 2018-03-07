@@ -33,7 +33,7 @@ generalized cross-validation approximation method.
 }
 
 \value{
-Returns the number of MFA components to use in data imputation. 
+Return the number of MFA components to use in data imputation. 
 }
 
 \references{

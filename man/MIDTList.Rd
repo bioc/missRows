@@ -43,7 +43,7 @@ should be no need to create them directly.
           in samples \eqn{\times}{x} variables, with samples order 
           matching in all data tables.}
 
-    \item{\code{strata}:}{named vector with the individual names
+    \item{\code{strata}:}{a named vector with the individual names
           and the corresponding condition (stratum).}
 
     \item{\code{tableNames}:}{a character vector of the same length as
@@ -81,33 +81,33 @@ Class-specific methods return the corresponding objects:
   \describe{
 
     \item{incompleteData}{\code{signature(object = "MIDTList")}:
-          Returns list containing the initial data tables.}
+          Return list containing the initial data tables.}
 
     \item{tableNames}{\code{signature(object = "MIDTList")}:
           Access table names in \code{incompleteData}.}
 
     \item{strata}{\code{signature(object = "MIDTList")}:
-          Returns factor of strata giving the stratum for
+          Return factor of strata giving the stratum for
           each individual.}
 
     \item{missingRows}{\code{signature(object = "MIDTList")}:
-          Returns list containing character vectors with 
+          Return list containing character vectors with 
           the name of the missing individuals (rows) per table.}
 
     \item{compromise}{\code{signature(object = "MIDTList")}:
-          Returns matrix with the individuals coordinates as returned 
+          Return matrix with the individuals coordinates as returned 
           by \code{\link{STATIS}} function.}
 
     \item{configurations}{\code{signature(object = "MIDTList", M = "all")}:
-          Gets all configurations. If \code{M} is a positive integer, the
+          Get all configurations. If \code{M} is a positive integer, the
           \code{M}th configuration is returned.}
 
     \item{imputedRows}{\code{signature(object = "MIDTList")}:
-          Returns list containing the imputed rows
+          Return list containing the imputed rows
           (individuals) for each data table.}
 
     \item{MIparam}{\code{signature(object = "MIDTList")}:
-          Returns list containing the parameters used
+          Return list containing the parameters used
           in the \code{\link{MIMFA}} function.}
   }
 

@@ -8,8 +8,8 @@ Multiple Factor Analysis (MFA)
 }
 
 \description{
-Performs Multiple Factor Analysis on quantitative variables.
-This function is called internally by \code{\link{MIMFA}} and
+Perform Multiple Factor Analysis on quantitative variables.
+This function is internally called by \code{\link{MIMFA}} and
 is not usually called directly by a user.
 }
 
@@ -23,13 +23,13 @@ MFA(dataTables, ncomp, nb.rows, nb.tables, nc.table)
         \eqn{\times}{x} variables, with samples order matching in all
         data tables.}
 
-  \item{ncomp}{number of components to include in MFA.}
+  \item{ncomp}{a number of components to include in MFA.}
 
-  \item{nb.rows}{number of rows, equal for all data tables.}
+  \item{nb.rows}{a number of rows, equal for all data tables.}
 
-  \item{nb.tables}{number of data tables in \code{dataTables}.}
+  \item{nb.tables}{a number of data tables in \code{dataTables}.}
 
-  \item{nc.table}{vector containing the number of columns per data
+  \item{nc.table}{a vector containing the number of columns per data
         table.}
 }
 
