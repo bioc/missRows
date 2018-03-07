@@ -44,4 +44,16 @@ approximations.
 \emph{Computational Statistics and Data Analysis}, \bold{56}, 1869-1879.
 }
 
+\examples{
+#-- load data and create MIDTList object
+data(NCI60)
+midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+
+#-- estimates the number of MFA components for data imputation
+#-- ncomp is chosen to being enough large
+\dontrun{
+midt <- MIMFA(midt, ncomp = 50, M = 10, estim.ncp = TRUE)
+midt}
+}
+
 \keyword{multivariate}
