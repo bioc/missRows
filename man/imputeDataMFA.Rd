@@ -9,7 +9,7 @@ Imputes Missing Rows and Estimates MFA Axes
 
 \description{
 Impute the missing rows of data tables using the alternating least 
-squares algorithm used in PCA. This function is called internally by 
+squares algorithm used in PCA. This function is internally called by 
 \code{\link{MIMFA}} and is not usually called directly by a user.
 }
 
@@ -30,7 +30,7 @@ imputeDataMFA(datasets, U, missRows, comp, max.iter = 500, tol = 1e-10)
   \item{missRows}{a list containing character vectors with 
         the name of the missing individuals (rows) per table.}
 
-  \item{comp}{number of components kept for imputation.}
+  \item{comp}{a number of components kept for imputation.}
 
   \item{max.iter}{integer, maximum number of iterations for the 
         iterative algorithm.}
@@ -81,7 +81,7 @@ function \code{\link{MIMFA}}.
 }
 
 \value{
-An list containing components with the imputed rows for
+A list containing components with the imputed rows for
 each data table.
 }
 

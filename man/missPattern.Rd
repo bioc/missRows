@@ -9,7 +9,7 @@ Inspects Pattern of Missingness
 }
 
 \description{
-This function inspects and plot the structure of missing rows
+This function inspects and plots the structure of missing rows
 in data tables.
 }
 
@@ -24,9 +24,9 @@ missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
   \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{newMIDTList}}.}
 
-  \item{x}{object of class inheriting from \code{missPattern}}
+  \item{x}{an object of class inheriting from \code{missPattern}}
 
-  \item{col.strata}{character vector of the same length than the
+  \item{col.strata}{a character vector of the same length than the
         number of strata, containing the color names to be used to
         annotate the individuals per stratum.}
 
@@ -46,16 +46,16 @@ missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
 }
 
 \details{
-\code{missPattern} calculate and plot the amount of
+\code{missPattern} calculates and plots the amount of
 missing/available rows in each stratum per data table.
 Data tables are plotted separately on a same device showing
-the pattern of missingness. The individuals are colored with
-rapport to their stratum whereas missing rows are specific
+the pattern of missingness. The individuals are colored according
+to their stratum whereas missing rows are specific
 colored (see \code{col.missing}).
 }
 
 \value{
-An list with the following components:
+A list with the following components:
 
   \item{nbMissing}{\code{data.frame} containing the amount of
         missing/available rows in each stratum per data table.}
@@ -63,7 +63,7 @@ An list with the following components:
   \item{isMissing}{\code{data.frame} containing the indicator
         matrix for the missing rows.}
 
-  \item{ggp}{a object of class \code{ggplot}.}
+  \item{ggp}{an object of class \code{ggplot}.}
 }
 
 \author{

@@ -7,10 +7,10 @@ Scaled Firts Singular Value of the SVD of a Matrix
 }
 
 \description{
-Obtain the scaled firts singular value of the singular-value decomposition
+Obtain the scaled first singular value of the singular-value decomposition
 of a rectangular matrix \code{x} as computed by \code{\link{svd}}. Scaling 
 is done by dividing the firts singular value by the root square of the number 
-of rows in \code{x}. This function is called internally by \code{\link{MFA}} 
+of rows in \code{x}. This function is internally called by \code{\link{MFA}} 
 and is not usually called directly by a user.
 }
 
@@ -24,7 +24,7 @@ eigenvalue(x)
 }
 
 \value{
-The scaled firts singular value of \code{svd(x)}.
+The scaled first singular value of \code{svd(x)}.
 }
 
 \examples{

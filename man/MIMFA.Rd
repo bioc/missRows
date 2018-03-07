@@ -21,10 +21,10 @@ MIMFA(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
 }
 
 \arguments{
-  \item{object}{object of class \code{MIDTList} as returned by
+  \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{newMIDTList}}.}
 
-  \item{ncomp}{number of components to include in MFA when 
+  \item{ncomp}{a number of components to include in MFA when 
         \code{estim.ncp = FALSE} (default to 2). If 
         \code{estim.ncp = TRUE}, then \code{ncomp} correspond 
         to the maximum number of components to test.}
@@ -54,7 +54,7 @@ STATIS method to yield one consensus solution.
 
 If \code{estim.ncp = TRUE}, the number of MFA components for 
 data imputation is estimated using the generalized cross-validation 
-approximation method. In this case, \code{ncomp} correspond 
+approximation method. In this case, \code{ncomp} corresponds 
 to the maximum number of components to test.
 }
 

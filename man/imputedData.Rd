@@ -4,7 +4,7 @@
 \alias{imputedData}
 
 \title{
-Gets the Imputed Data Tables
+Get the Imputed Data Tables
 }
 
 \description{
@@ -17,12 +17,12 @@ imputedData(object)
 }
 
 \arguments{
-  \item{object}{object of class \code{MIDTList} as returned by
+  \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{MIMFA}} function.}
 }
 
 \value{
-An list of length the data tables number, each component
+A list of length the data tables number, each component
 containing a completed data table.
 }
 
