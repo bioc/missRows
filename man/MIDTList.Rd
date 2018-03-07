@@ -128,4 +128,18 @@ Ignacio González
 \code{\link{newMIDTList}}
 }
 
+\examples{
+#-- load data
+data(NCI60)
+K <- NCI60$incompleteData
+miss <- lapply(K, function(X) {rownames(X)[which(apply(is.na(X), 1, 
+                                                 function(x) { all(x) }))] })
+miss <- miss[sapply(miss, length) > 0]
+
+#-- MIDTList object
+midt <- MIDTList(incompleteData = K, strata = NCI60$cell.line, 
+                 tableNames = c("transcrip", "proteome"), missingRows = miss)
+midt
+}
+
 \keyword{classes}
