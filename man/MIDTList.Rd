@@ -36,7 +36,6 @@ should be no need to create them directly.
 }
 
 \section{Slots}{
-Initial slots:
 
   \describe{
     \item{\code{incompleteData}:}{a list containing the data tables 
@@ -53,7 +52,7 @@ Initial slots:
     \item{\code{missingRows}:}{a list containing character vectors with 
           the name of the missing individuals (rows) per table.}\cr
 
-  Slots returned after \code{\link{MIMFA}}:
+  \bold{Slots returned after} \code{\link{MIMFA}}:\cr
 
     \item{\code{compromise}:}{the compromise configuration, a 
           matrix with the individuals coordinates as returned by
