@@ -3,8 +3,8 @@ plotVar <- function(object, comp = 1:2, col = NULL, var.names = FALSE,
                     rad.in = 0.5, overlap = TRUE, ncols = 2,
                     legend.title = "Tables") {
 
-  #-- checking general input arguments & initialization of variables ---------#
-  #---------------------------------------------------------------------------#
+  #-- checking general input arguments & initialization of variables --------#
+  #--------------------------------------------------------------------------#
 
   #-- object
   if (class(object) != "MIDTList") {
