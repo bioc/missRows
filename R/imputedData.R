@@ -1,7 +1,7 @@
 imputedData <- function(object) {
 
-  #-- checking general input arguments -------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input arguments ----------------------------------------#
+  #----------------------------------------------------------------------------#
 
   #-- object is of 'MIDTList' S4 class
   if (class(object) != "MIDTList") {
@@ -9,7 +9,7 @@ imputedData <- function(object) {
          call. = FALSE)
   }
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking ------------------------------------------------------------#
 
   miss <- missingRows(object)
   X <- incompleteData(object)

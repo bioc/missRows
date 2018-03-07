@@ -2,8 +2,8 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
                   max.iter = 500, tol = 1e-10) {
 
 
-  #-- checking general input arguments -------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input arguments ---------------------------------------#
+  #---------------------------------------------------------------------------#
 
   #-- object
   if (class(object) != "MIDTList") {
@@ -11,15 +11,17 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
   }
 
   #-- ncomp
-  if (is.null(ncomp) || !is.numeric(ncomp) || (ncomp < 2) || !is.finite(ncomp)) {
-    stop("invalid number of components, 'ncomp'. It must be a positive integer",
+  if (is.null(ncomp) || !is.numeric(ncomp) || (ncomp < 2) || 
+      !is.finite(ncomp)) {
+  stop("invalid number of components, 'ncomp'. It must be a positive integer",
          call. = FALSE)
   }
 
   if (ncomp > min(length(strata(object)) - 1,
                   sum(sapply(incompleteData(object), ncol)))) {
     stop("'ncomp' must be a numeric value lower or equal to ",
-         min(length(strata(object)) - 1, sum(sapply(incompleteData(object), ncol))),
+         min(length(strata(object)) - 1, sum(sapply(incompleteData(object), 
+                                                    ncol))),
          call. = FALSE)
   }
 
@@ -61,11 +63,11 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
          call. = FALSE)
   }
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking -----------------------------------------------------------#
 
 
-  #-- initialization of variables ------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- initialization of variables --------------------------------------------#
+  #---------------------------------------------------------------------------#
   incompData <- incompleteData(object)
   strt <- strata(object)
   missRows <- missingRows(object)
@@ -75,8 +77,8 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
   nb.rows <- length(strt)
   str.levels <- levels(strt)
 
-  #-- creation of posible imputations in each stratum of each data ---------------#
-  #-------------------------------------------------------------------------------#
+  #-- creation of posible imputations in each stratum of each data -----------#
+  #---------------------------------------------------------------------------#
   perm <- strMissRows <- strMiss <- vector("list", length(missRows))
   nmMissRows <- names(missRows)
   names(perm) <- names(strMissRows) <- names(strMiss) <- nmMissRows
@@ -118,8 +120,8 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
 
   M <- min(M, M.total)
 
-  #-- selection of the donor indexes ---------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- selection of the donor indexes -----------------------------------------#
+  #---------------------------------------------------------------------------#
   M.idx <- sample.int(min(M.total, 1e15), M)
   id.donor <- NULL
 
@@ -127,8 +129,8 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
     id.donor <- rbind(id.donor, searchsComb(seq.perm.data, M.idx[i]))
   }
 
-  #-- realisation of the MFA on the imputed data ---------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- realisation of the MFA on the imputed data -----------------------------#
+  #---------------------------------------------------------------------------#
   U <- list()
   center <- sigma <- matrix(0, nrow = M, ncol = sum(nb.cols))
 
@@ -155,13 +157,13 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
 
   rm(perm)
 
-  #-- calculation of the compromise space (STATIS method) ------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- calculation of the compromise space (STATIS method) --------------------#
+  #---------------------------------------------------------------------------#
   tmp <- STATIS(U, nf = ncomp)
   colnames(tmp$C.li) <- paste0("comp ", 1:ncomp)
 
-  #-- estimation of the number of components for data imputation -----------------#
-  #-------------------------------------------------------------------------------#
+  #-- estimation of the number of components for data imputation -------------#
+  #---------------------------------------------------------------------------#
   if (estim.ncp) {
     ncp <- estimNC(tmp$C.ro, min.ncp = 2, ncomp)
     attr(ncp, "estimated") <- TRUE
@@ -170,13 +172,13 @@ MIMFA <- function(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
     attr(ncp, "estimated") <- FALSE
   }
 
-  #-- data imputation ------------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- data imputation --------------------------------------------------------#
+  #---------------------------------------------------------------------------#
   impD <- imputeDataMFA(incompData, tmp$C.li, missRows, comp = 1:ncp,
                         max.iter = max.iter, tol = tol)
 
-  #-- results: MIDTList S4 class -------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- results: MIDTList S4 class ---------------------------------------------#
+  #---------------------------------------------------------------------------#
   object <- new("MIDTList",
                 object,
                 compromise = tmp$C.li[, 1:ncp],

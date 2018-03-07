@@ -2,8 +2,8 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
                         cex.ttitle = 12, legend.title = "Strata",
                         miss.lab = "miss", show.plot = TRUE) {
 
-  #-- checking general input arguments -------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input arguments ---------------------------------------#
+  #---------------------------------------------------------------------------#
 
   #-- object
   if (class(object) != "MIDTList") {
@@ -53,11 +53,11 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
          call. = FALSE)
   }
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking -----------------------------------------------------------#
 
 
-  #-- initialization of variables ------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- initialization of variables --------------------------------------------#
+  #---------------------------------------------------------------------------#
   missData <- incompleteData(object)
   strt <- strata(object)
   nmTables <- tableNames(object)
@@ -70,8 +70,8 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
   rownames(nbmr) <- levels(strt)
   colnames(nbmr) <- nmTables
 
-  #-- finds the missing data pattern ---------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- finds the missing data pattern -----------------------------------------#
+  #---------------------------------------------------------------------------#
   for (i in 1:length(missData)) {
     id.miss <- apply(is.na(missData[[i]]), 1, all)
     tmp <- split(id.miss, strt)
@@ -85,8 +85,8 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
   colnames(nbmr)[ncol(nbmr)] <- "    "
   mrp <- data.frame(mrp, strata = strt)
 
-  #-- plot missing rows pattern --------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- plot missing rows pattern ----------------------------------------------#
+  #---------------------------------------------------------------------------#
   ymax <- cumsum(table(mrp$strata))
   ymin <- c(0, ymax[-length(ymax)])
 
@@ -140,8 +140,8 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
 
   if (show.plot) { print(g) }
 
-  #-- results --------------------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- results ----------------------------------------------------------------#
+  #---------------------------------------------------------------------------#
   res <- list(nbMissing = nbmr, isMissing = mrp, ggp = g)
   class(res) = "missPattern"
   return(invisible(res))

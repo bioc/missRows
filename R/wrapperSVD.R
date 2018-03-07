@@ -34,7 +34,8 @@ wrapperSVD <- function (X, row.w = NULL, col.w = NULL, ncp = Inf) {
         svd.usuelle$d[svd.usuelle$d < 0] = 0
         svd.usuelle$d <- sqrt(svd.usuelle$d)
         svd.usuelle$v <- bb$vec[, 1:ncp]
-        svd.usuelle$u <- t(t(crossprod(t(X), svd.usuelle$v))/svd.usuelle$d[1:ncp])
+        svd.usuelle$u <- t(t(crossprod(t(X), svd.usuelle$v))/
+                             svd.usuelle$d[1:ncp])
       }
     }
     U <- svd.usuelle$u

@@ -1,7 +1,7 @@
 newMIDTList <- function(..., strata = NULL, tableNames = NULL) {
 
-  #-- checking general input arguments -------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input arguments ---------------------------------------#
+  #---------------------------------------------------------------------------#
 
   #-- input tables
   K <- list(...)
@@ -42,12 +42,12 @@ newMIDTList <- function(..., strata = NULL, tableNames = NULL) {
   #-- the individual tables
   for (i in 1:length(K)) {
     if (length(dim(K[[i]])) != 2) {
-      stop("the '", names(K)[i], "' data table must be a matrix or data frame.",
+     stop("the '", names(K)[i], "' data table must be a matrix or data frame.",
            call. = FALSE)
     }
 
     if (!is.numeric(as.matrix(K[[i]]))) {
-      stop("the '", names(K)[i], "' data table must be a matrix or data frame.",
+     stop("the '", names(K)[i], "' data table must be a matrix or data frame.",
            call. = FALSE)
     }
   }
@@ -67,7 +67,8 @@ newMIDTList <- function(..., strata = NULL, tableNames = NULL) {
   #-- the tables are rows named
   for (i in 1:length(K)) {
     if (is.null(rownames(K[[i]]))) {
-      stop("the '", names(K)[i], "' data table must be rows named.", call. = FALSE)
+      stop("the '", names(K)[i], "' data table must be rows named.", 
+           call. = FALSE)
     }
   }
 
@@ -96,12 +97,12 @@ newMIDTList <- function(..., strata = NULL, tableNames = NULL) {
 
   miss <- miss[sapply(miss, length) > 0]
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking -----------------------------------------------------------#
 
 
-  #-- the S4 class ---------------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
-  object <- MIDTList(incompleteData = K, strata = strata, tableNames = tableNames,
-                     missingRows = miss)
+  #-- the S4 class -----------------------------------------------------------#
+  #---------------------------------------------------------------------------#
+  object <- MIDTList(incompleteData = K, strata = strata, 
+                     tableNames = tableNames, missingRows = miss)
   return(object)
 }

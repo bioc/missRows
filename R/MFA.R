@@ -8,7 +8,8 @@ MFA <- function(dataTables, ncomp, nb.rows, nb.tables, nc.table) {
     scaled.table <- scale(dataTables[[k]]) * sqrt(nb.rows/(nb.rows - 1))
     ## calculer sd, if(sd < 1e-08) sd <- 1 puis reduir
     center <- c(center, attr(scaled.table, "scaled:center"))
-    sigma <- c(sigma, attr(scaled.table, "scaled:scale") * sqrt((nb.rows - 1)/nb.rows))
+    sigma <- c(sigma, attr(scaled.table, "scaled:scale") * 
+                 sqrt((nb.rows - 1)/nb.rows))
     sigma[sigma < 1e-08] <- 1
     weights[k] <- 1/(eigenvalue(scaled.table))^2
     K.mat <- cbind(K.mat, scaled.table)
@@ -19,8 +20,7 @@ MFA <- function(dataTables, ncomp, nb.rows, nb.tables, nc.table) {
 
   eig <- tmp$vs[1:ncomp]
   U <- sweep(tmp$U, 2, eig, "*")
-  # V <- sweep(tmp$V, 2, sqrt(eig), "*")
 
-  res <- list(U = U) #, center = center, sd = sigma)
+  res <- list(U = U)
   return(res)
 }

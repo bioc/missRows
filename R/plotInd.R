@@ -10,8 +10,8 @@ plotInd <- function(object,
                     cex = 3,
                     legend.title = "Strata") {
 
-  #-- checking general input arguments -------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input arguments ---------------------------------------#
+  #---------------------------------------------------------------------------#
 
   #-- object
   if (class(object) != "MIDTList") {
@@ -145,19 +145,19 @@ plotInd <- function(object,
   #-- legend.title
   legend.title <- as.graphicsAnnot(legend.title)
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking -----------------------------------------------------------#
 
 
-  #-- individuals scatter plot ---------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- individuals scatter plot -----------------------------------------------#
+  #---------------------------------------------------------------------------#
   comprConf <- compromise(object)
   n <- nrow(comprConf)
   miss <- rep("not", n)
   miss[names(strata(object)) %in% unlist(missingRows(object))] <- "yes"
   pch <- 21
 
-  #-- none confidence areas ------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- none confidence areas --------------------------------------------------#
+  #---------------------------------------------------------------------------#
   if (conf.areas == 'none') {
     df <- data.frame(x = comprConf[, comp[1]], y = comprConf[, comp[2]],
                      ind = names(strata(object)), stratum = strata(object),
@@ -185,8 +185,8 @@ plotInd <- function(object,
       labs(x = paste0('Comp ', comp[1]), y = paste0('Comp ', comp[2]))
   }
 
-  #-- confidence ellipses --------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- confidence ellipses ----------------------------------------------------#
+  #---------------------------------------------------------------------------#
   if (conf.areas == 'ellipse') {
     df <- data.frame(x = comprConf[, comp[1]], y = comprConf[, comp[2]],
                      ind = names(strata(object)), stratum = strata(object),
@@ -216,30 +216,37 @@ plotInd <- function(object,
     g <- ggplot() + theme_bw() +
       geom_hline(yintercept = 0, color = 'grey30', size = 0.5, linetype = 2) +
       geom_vline(xintercept = 0, color = 'grey30', size = 0.5, linetype = 2) +
-      stat_ellipse(data = NULL, mapping = aes(x = df$x[df$conf == "imputed"],
-                                              y = df$y[df$conf == "imputed"],
-                                              fill = df$ind.conf[df$conf == "imputed"],
-                                              color = df$ind.conf[df$conf == "imputed"]),
-                   geom = 'polygon', type = ellipse.type, alpha = alpha, size = lwd) +
+      stat_ellipse(data = NULL, 
+                   mapping = aes(x = df$x[df$conf == "imputed"],
+                                 y = df$y[df$conf == "imputed"],
+                                 fill = df$ind.conf[df$conf == "imputed"],
+                                 color = df$ind.conf[df$conf == "imputed"]),
+                   geom = 'polygon', type = ellipse.type, alpha = alpha, 
+                   size = lwd) +
       geom_point(data = NULL,
                  aes(x = df$x[df$missing == "not" & df$conf == "compromise"],
                      y = df$y[df$missing == "not" & df$conf == "compromise"],
-                     fill = df$stratum[df$missing == "not" & df$conf == "compromise"],
-                     color = df$stratum[df$missing == "not" & df$conf == "compromise"]),
+                     fill = df$stratum[df$missing == "not" & 
+                                         df$conf == "compromise"],
+                     color = df$stratum[df$missing == "not" & 
+                                          df$conf == "compromise"]),
                  size = cex, shape = pch) +
       geom_point(data = NULL,
                  aes(x = df$x[df$missing == "yes" & df$conf == "compromise"],
                      y = df$y[df$missing == "yes" & df$conf == "compromise"],
-                     color = df$stratum[df$missing == "yes" & df$conf == "compromise"]),
+                     color = df$stratum[df$missing == "yes" & 
+                                          df$conf == "compromise"]),
                  size = cex, shape = pch, fill = col.missing) +
-      scale_colour_manual(breaks = df$ind.cong[df$conf == "compromise"], values = ind.cols) +
-      scale_fill_manual(name = legend.title, breaks = df$ind.conf[df$conf == "compromise"],
+      scale_colour_manual(breaks = df$ind.cong[df$conf == "compromise"], 
+                          values = ind.cols) +
+      scale_fill_manual(name = legend.title, 
+                        breaks = df$ind.conf[df$conf == "compromise"],
                         values = ind.cols) +
       labs(x = paste0('Comp ', comp[1]), y = paste0('Comp ', comp[2]))
   }
 
-  #-- convex hulls ---------------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- convex hulls -----------------------------------------------------------#
+  #---------------------------------------------------------------------------#
   if (conf.areas == 'convex.hull') {
     df <- data.frame(x = comprConf[, comp[1]], y = comprConf[, comp[2]],
                      ind = names(strata(object)), stratum = strata(object),
@@ -281,16 +288,21 @@ plotInd <- function(object,
       geom_point(data = NULL,
                  aes(x = df$x[df$missing == "not" & df$conf == "compromise"],
                      y = df$y[df$missing == "not" & df$conf == "compromise"],
-                     fill = df$stratum[df$missing == "not" & df$conf == "compromise"],
-                     color = df$stratum[df$missing == "not" & df$conf == "compromise"]),
+                     fill = df$stratum[df$missing == "not" & 
+                                         df$conf == "compromise"],
+                     color = df$stratum[df$missing == "not" & 
+                                          df$conf == "compromise"]),
                  size = cex, shape = pch) +
       geom_point(data = NULL,
                  aes(x = df$x[df$missing == "yes" & df$conf == "compromise"],
                      y = df$y[df$missing == "yes" & df$conf == "compromise"],
-                     color = df$stratum[df$missing == "yes" & df$conf == "compromise"]),
+                     color = df$stratum[df$missing == "yes" & 
+                                          df$conf == "compromise"]),
                  size = cex, shape = pch, fill = col.missing) +
-      scale_colour_manual(breaks = df$ind.cong[df$conf == "compromise"], values = ind.cols) +
-      scale_fill_manual(name = legend.title, breaks = df$ind.conf[df$conf == "compromise"],
+      scale_colour_manual(breaks = df$ind.cong[df$conf == "compromise"], 
+                          values = ind.cols) +
+      scale_fill_manual(name = legend.title, 
+                        breaks = df$ind.conf[df$conf == "compromise"],
                         values = ind.cols) +
       labs(x = paste0('Comp ', comp[1]), y = paste0('Comp ', comp[2]))
   }

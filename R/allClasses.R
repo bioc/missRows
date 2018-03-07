@@ -1,9 +1,9 @@
-###################################################################################
+###############################################################################
 ### MIDTList S4 class definition
-###################################################################################
+###############################################################################
 
-#-- setClass ---------------------------------------------------------------------#
-#---------------------------------------------------------------------------------#
+#-- setClass -----------------------------------------------------------------#
+#-----------------------------------------------------------------------------#
 MIDTList <- setClass("MIDTList",
                      slots = c(incompleteData = "ANY",
                                strata = "ANY",
@@ -15,8 +15,8 @@ MIDTList <- setClass("MIDTList",
                                MIparam = "ANY"))
 
 
-#-- setGeneric -------------------------------------------------------------------#
-#---------------------------------------------------------------------------------#
+#-- setGeneric ---------------------------------------------------------------#
+#-----------------------------------------------------------------------------#
 
 #-- incompleteData
 setGeneric(name = "incompleteData",
@@ -55,8 +55,8 @@ setGeneric(name = "MIparam",
 
 
 
-#-- setMethod --------------------------------------------------------------------#
-#---------------------------------------------------------------------------------#
+#-- setMethod ----------------------------------------------------------------#
+#-----------------------------------------------------------------------------#
 #-- show
 setMethod("show",
           signature = "MIDTList",
@@ -99,8 +99,8 @@ setMethod("show",
                 cat("\nEstimated number of components for data imputation:",
                     object@MIparam$ncomp)
               } else {
-                cat("\nNo estimated number of components for data imputation. ")
-                cat("Defaults", object@MIparam$ncomp)
+                cat("\nNo estimated number of components for data imputation.")
+                cat(" Defaults", object@MIparam$ncomp)
               }
             }
           })
@@ -121,7 +121,8 @@ setReplaceMethod(f = "tableNames", signature = "MIDTList",
                  definition = function(object, value) {
                    nt <- length(object@incompleteData)
 
-                   if (length(value) != nt | is.matrix(value) | is.list(value)) {
+                   if (length(value) != nt | is.matrix(value) | 
+                       is.list(value)) {
                      stop("'tableNames<-' accessor is only valid for vectors",
                           " of length ", nt, call. = FALSE)
                    }

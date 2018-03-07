@@ -15,15 +15,17 @@ estimNC <- function (X, min.ncp = 0, max.ncp) {
   for (q in max(min.ncp, 1):max.ncp) {
 
     if (q > 1) {
-      rec <- tcrossprod(sweep(rr$u[, 1:q, drop = FALSE], 2, rr$d[1:q], FUN = "*"),
-                        rr$v[, 1:q, drop = FALSE])
+      rec <- tcrossprod(sweep(rr$u[, 1:q, drop = FALSE], 2, rr$d[1:q], 
+                              FUN = "*"), rr$v[, 1:q, drop = FALSE])
     }
 
     if (q == 1) {
-      rec <- tcrossprod(rr$u[, 1, drop = FALSE] * rr$d[1], rr$v[, 1, drop = FALSE])
+      rec <- tcrossprod(rr$u[, 1, drop = FALSE] * rr$d[1], 
+                        rr$v[, 1, drop = FALSE])
     }
 
-    crit <- c(crit, mean((n * p * (X - rec)/((n - 1) * p - q * (n + p - q - 1)))^2,
+    crit <- c(crit, mean((n * p * (X - rec)/((n - 1) * 
+                                               p - q * (n + p - q - 1)))^2,
                          na.rm = TRUE))
   }
 

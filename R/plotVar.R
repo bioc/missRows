@@ -1,11 +1,10 @@
-
 plotVar <- function(object, comp = 1:2, col = NULL, var.names = FALSE,
                     cex = 3, pch = 19, alpha = 0.7, spty = TRUE, cutoff = 0,
                     rad.in = 0.5, overlap = TRUE, ncols = 2,
                     legend.title = "Tables") {
 
-  #-- checking general input arguments & initialization of variables -------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input arguments & initialization of variables ---------#
+  #---------------------------------------------------------------------------#
 
   #-- object
   if (class(object) != "MIDTList") {
@@ -202,13 +201,14 @@ plotVar <- function(object, comp = 1:2, col = NULL, var.names = FALSE,
   #-- legend.title
   legend.title <- as.graphicsAnnot(legend.title)
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking -----------------------------------------------------------#
 
 
-  #-- variables scatter plot -----------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- variables scatter plot -------------------------------------------------#
+  #---------------------------------------------------------------------------#
   #-- individuals coordinates --#
-  coord <- lapply(dtab, function(x) { cor(completeData[[x]], comprConf[, comp]) })
+  coord <- lapply(dtab, 
+                  function(x) { cor(completeData[[x]], comprConf[, comp]) })
   idx <- vector("list", nbTables)
 
   if (cutoff > 0) {
@@ -283,7 +283,8 @@ plotVar <- function(object, comp = 1:2, col = NULL, var.names = FALSE,
 
   g <- g + scale_colour_manual(name = legend.title, values = col,
                                breaks = nmTables) +
-    guides(colour = guide_legend(override.aes = list(shape = pch, size = cex))) +
+    guides(colour = guide_legend(override.aes = list(shape = pch, 
+                                                     size = cex))) +
     labs(x = paste0('Comp ', comp[1]), y = paste0('Comp ', comp[2])) +
     theme(legend.text = element_text(size = 12),
           legend.title = element_text(size = 12))

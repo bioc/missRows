@@ -1,8 +1,8 @@
 tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
                   show.plot = TRUE) {
 
-  #-- initialization of variables ------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- initialization of variables --------------------------------------------#
+  #---------------------------------------------------------------------------#
 
   #-- object
   if (class(object) != "MIDTList") {
@@ -15,7 +15,7 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 
   #-- datasets
   datasets <- incompleteData(object)
-  datasets <- lapply(datasets, function(x, ind) {rownames(x) <- ind; return(x)},
+  datasets <- lapply(datasets, function(x, ind) {rownames(x) <- ind; x},
                      names(strt))
   names(datasets) <- paste0("data", seq(length(datasets)))
 
@@ -23,18 +23,20 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
   nb.tables <- length(datasets)
   nb.rows <- length(strt)
 
-  #-- checking general input parameters ------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- checking general input parameters --------------------------------------#
+  #---------------------------------------------------------------------------#
 
   #-- ncomp
-  if (is.null(ncomp) || !is.numeric(ncomp) || (ncomp < 2) || !is.finite(ncomp)) {
+  if (is.null(ncomp) || !is.numeric(ncomp) || (ncomp < 2) || 
+      !is.finite(ncomp)) {
     stop("invalid number of components, 'ncomp'.", call. = FALSE)
   }
 
   ncomp <- round(ncomp)
 
   #-- M.max (number max of imputations)
-  if (is.null(M.max) || !is.numeric(M.max) || M.max < 1 || !is.finite(M.max)) {
+  if (is.null(M.max) || !is.numeric(M.max) || M.max < 1 || 
+      !is.finite(M.max)) {
     stop("invalid maximum number of imputations, 'M.max'.", call. = FALSE)
   }
 
@@ -50,11 +52,11 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 
   M <- N * M.max
 
-  #-- end checking ---------------------------------------------------------------#
+  #-- end checking -----------------------------------------------------------#
 
 
-  #-- creation of posible imputations in each stratum of each data ---------------#
-  #-------------------------------------------------------------------------------#
+  #-- creation of posible imputations in each stratum of each data -----------#
+  #---------------------------------------------------------------------------#
   perm <- miss.row <- list()
   k <- 1
   id.data <- NULL
@@ -103,8 +105,8 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 
   seq.perm.data <- alply(matrix(unlist(tmp)), 1, seq)
 
-  #-- selection of the donor indexes ---------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- selection of the donor indexes -----------------------------------------#
+  #---------------------------------------------------------------------------#
   M.idx <- sample.int(min(M.total, 1e15), M)
   id.donor <- NULL
 
@@ -112,8 +114,8 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
     id.donor <- rbind(id.donor, searchsComb(seq.perm.data, M.idx[i]))
   }
 
-  #-- iterative approach ---------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- iterative approach -----------------------------------------------------#
+  #---------------------------------------------------------------------------#
   variates.MFA <- list()
   Ml <- seq(inc, M.max, by = inc)
   nbMl <- length(Ml)
@@ -197,29 +199,32 @@ tuneM <- function(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
     m <- m + 1
   }
 
-  #-- graphic representation ------------------------------------------------------#
-  #--------------------------------------------------------------------------------#
-  df <- data.frame(x = 1:length(ave.RV.coef), avg = ave.RV.coef, sd = sd.RV.coef)
+  #-- graphic representation -------------------------------------------------#
+  #---------------------------------------------------------------------------#
+  df <- data.frame(x = 1:length(ave.RV.coef), avg = ave.RV.coef, 
+                   sd = sd.RV.coef)
   lab <- paste0("(", Ml[1:(nbMl - 1)], ",", Ml[2:nbMl], ")")
   res <- list(stats = df[, -1])
   res$stats <- data.frame(imputations = lab, res$stats)
 
   g <- ggplot(df, aes(x = df$x, y = df$avg)) +
     geom_point(size = 2.5) + theme_bw() +
-    geom_errorbar(aes(ymax = df$avg + df$sd, ymin = df$avg - df$sd), width = 0.15) +
+    geom_errorbar(aes(ymax = df$avg + df$sd, ymin = df$avg - df$sd), 
+                  width = 0.15) +
     theme(panel.spacing = unit(2, "lines")) +
     labs(x = expression(paste("number of imputations (",
                               italic(M[l]), ", ", italic(M[l + 1]), ")")),
          y = 'RV coefficient\n') +
     scale_x_continuous(breaks = seq(nbMl - 1), labels = lab) +
     theme(axis.title = element_text(size = 16)) +
-    theme(axis.text.x = element_text(size = 14, angle = 45, hjust = 1, vjust = 1)) +
+    theme(axis.text.x = element_text(size = 14, angle = 45, hjust = 1, 
+                                     vjust = 1)) +
     theme(axis.text.y = element_text(size = 14))
 
   if (show.plot) { print(g) }
 
-  #-- results --------------------------------------------------------------------#
-  #-------------------------------------------------------------------------------#
+  #-- results ----------------------------------------------------------------#
+  #---------------------------------------------------------------------------#
   res <- c(res, list(ggp = g))
   class(res) <- "tuneM"
   return(invisible(res))
