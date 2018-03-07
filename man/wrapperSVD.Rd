@@ -45,4 +45,11 @@ A list that contains the following components:
 \code{\link{svd}}, \code{\link[FactoMineR]{svd.triplet}}
 }
 
+\examples{
+hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
+X <- hilbert(9)[, 1:6]
+
+wrapperSVD(X)
+}
+
 \keyword{algebra}
