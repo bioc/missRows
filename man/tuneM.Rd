@@ -52,7 +52,8 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, tol = 1e-06,
 The appropriate number of imputations can be informally determined 
 by carrying out MI-MFA on \eqn{N} replicate sets of \eqn{M_l} 
 imputations for \eqn{l=0,1,2,\ldots ,}{l = 0, 1, 2, . . . ,} with 
-\eqn{M_0 < M_1 < M_2 < \cdots < M_{max}}{M_0 < M_1 < M_2 < . . . < M_max}, until the estimate compromise configurations are stabilized.
+\eqn{M_0 < M_1 < M_2 < \cdots < M_{max}}{M_0 < M_1 < M_2 < . . . < M_max},
+until the estimate compromise configurations are stabilized.
 
 \code{tuneM} function implements such a procedure. Collections 
 of size \code{N} are generated for each number of imputations 

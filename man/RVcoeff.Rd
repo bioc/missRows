@@ -8,8 +8,8 @@ Calculate the RV Coefficient
 
 \description{
 Calculate the RV coefficient between two matrices 
-\code{X} and \code{Y}. This function is internally called by \code{\link{tuneM}} and is not usually 
-called directly by a user.
+\code{X} and \code{Y}. This function is internally called by 
+\code{\link{tuneM}} and is not usually called directly by a user.
 }
 
 \usage{

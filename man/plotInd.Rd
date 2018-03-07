@@ -71,7 +71,8 @@ to the estimation of the missing row values. The \code{plotInd}
 function propose two approaches to visualize the uncertainty 
 due to missing data: confidence ellipses and convex hulls. The idea 
 is to project all the multiple imputed datasets onto the compromise 
-configuration. Each individual is represented by \code{M} points, each corresponding to one of the \code{M} configurations. Confidence ellipses 
+configuration. Each individual is represented by \code{M} points, each
+corresponding to one of the \code{M} configurations. Confidence ellipses 
 and convex hulls can then be constructed for the \code{M} configurations 
 for each individual. For ease of understanding, not all individuals for 
 the \code{M} configurations obtained are plotted.

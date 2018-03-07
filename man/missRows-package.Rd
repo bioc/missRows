@@ -11,7 +11,13 @@ Handling Missing Rows in Multi-Omics Data Integration
 }
 
 \description{
-The missRows package implements the MI-MFA method to deal with missing rows in multi-omics data integration. The MI-MFA method generates multiple imputed datasets from a Multiple Factor Analysis model, then the yield results are combined in a single consensus solution. The package provides functions for estimating coordinates of individuals and variables, imputing missing row values, and various diagnostic plots to inspect the pattern of missingness and visualize the uncertainty due to missing row values.
+The missRows package implements the MI-MFA method to deal with missing rows in
+multi-omics data integration. The MI-MFA method generates multiple imputed
+datasets from a Multiple Factor Analysis model, then the yield results are
+combined in a single consensus solution. The package provides functions for
+estimating coordinates of individuals and variables, imputing missing row
+values, and various diagnostic plots to inspect the pattern of missingness and
+visualize the uncertainty due to missing row values.
 }
 
 \details{
