@@ -116,8 +116,8 @@ Standard generic methods:
   \describe{
 
     \item{show}{\code{signature(object = "MIDTList")}: Informatively
-          display object contents.}
-	}
+                display object contents.}
+  }
 }
 
 \author{
