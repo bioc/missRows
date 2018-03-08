@@ -59,8 +59,8 @@ setGeneric(name = "MIparam",
 #-----------------------------------------------------------------------------#
 #-- show
 setMethod("show",
-            signature = "MIDTList",
-            definition = function(object) {
+        signature = "MIDTList",
+        definition = function(object) {
 
             nb.miss <- NULL
 
@@ -89,105 +89,105 @@ setMethod("show",
             print(table(object@strata))
 
             if (!is.null(object@MIparam)) {
-              cat("\nMultiple imputation in", object@MIparam$method)
-              cat("\n---------------------------")
-              cat("\nTotal number of possible imputations:",
-                  object@MIparam$M.total)
-              cat("\nNumber of multiple imputations:", object@MIparam$M)
+                cat("\nMultiple imputation in", object@MIparam$method)
+                cat("\n---------------------------")
+                cat("\nTotal number of possible imputations:",
+                    object@MIparam$M.total)
+                cat("\nNumber of multiple imputations:", object@MIparam$M)
 
-              if (attr(object@MIparam$ncomp, "estimated")) {
+                if (attr(object@MIparam$ncomp, "estimated")) {
                 cat("\nEstimated number of components for data imputation:",
                     object@MIparam$ncomp)
-              } else {
+                } else {
                 cat("\nNo estimated number of components for data imputation.")
                 cat(" Defaults", object@MIparam$ncomp)
-              }
+                }
             }
-          })
+        })
 
 #-- incompleteData
 setMethod(f = "incompleteData", signature = "MIDTList",
-          definition = function(object) object@incompleteData)
+        definition = function(object) object@incompleteData)
 
 #-- strata
 setMethod(f = "strata", signature = "MIDTList",
-          definition = function(object) object@strata)
+        definition = function(object) object@strata)
 
 #-- tableNames
 setMethod(f = "tableNames", signature = "MIDTList",
-          definition = function(object, ...) object@tableNames)
+        definition = function(object, ...) object@tableNames)
 
 setReplaceMethod(f = "tableNames", signature = "MIDTList",
-                 definition = function(object, value) {
-                   nt <- length(object@incompleteData)
+                definition = function(object, value) {
+                nt <- length(object@incompleteData)
 
-                   if (length(value) != nt | is.matrix(value) | 
-                       is.list(value)) {
-                     stop("'tableNames<-' accessor is only valid for vectors",
-                          " of length ", nt, call. = FALSE)
-                   }
+                if (length(value) != nt | is.matrix(value) | 
+                    is.list(value)) {
+                    stop("'tableNames<-' accessor is only valid for vectors",
+                        " of length ", nt, call. = FALSE)
+                }
 
-                   value <- as.character(value)
+                value <- as.character(value)
 
-                   if (any(duplicated(value))) {
-                     stop("'tableNames<-' accessor is only valid for vectors",
-                          " with unique values", call. = FALSE)
-                   }
+                if (any(duplicated(value))) {
+                    stop("'tableNames<-' accessor is only valid for vectors",
+                        " with unique values", call. = FALSE)
+                }
 
-                   object@tableNames  <- value
-                   names(object@incompleteData) <- value
-                   return(object)
-                   })
+                object@tableNames  <- value
+                names(object@incompleteData) <- value
+                return(object)
+            })
 
 #-- missingRows
 setMethod(f = "missingRows", signature = "MIDTList",
-          definition = function(object) object@missingRows)
+        definition = function(object) object@missingRows)
 
 #-- compromise
 setMethod(f = "compromise", signature = "MIDTList",
-          definition = function(object) {
+        definition = function(object) {
             if (is.null(object@compromise)) {
-              cat("No 'compromise' slot found in the MIDTList object.",
-                  "Run MI first.")
+                cat("No 'compromise' slot found in the MIDTList object.",
+                    "Run MI first.")
             } else {
-              object@compromise
+                object@compromise
             }
-          })
+        })
 
 #-- configurations
 setMethod(f = "configurations", signature = "MIDTList",
-          definition = function(object, M = "all") {
+        definition = function(object, M = "all") {
             if (is.null(object@configurations)) {
-              cat("No 'configurations' slot found in the MIDTList object.",
-                  "Run MI first.")
+                cat("No 'configurations' slot found in the MIDTList object.",
+                    "Run MI first.")
             } else {
-              if (M == "all") {
-                object@configurations
-              } else {
-                object@configurations[[M]]
-              }
+                if (M == "all") {
+                    object@configurations
+                } else {
+                    object@configurations[[M]]
+                }
             }
-          })
+        })
 
 #-- imputedRows
 setMethod(f = "imputedRows", signature = "MIDTList",
-          definition = function(object) {
+        definition = function(object) {
             if (is.null(object@imputedRows)) {
-              cat("No 'imputedRows' slot found in the MIDTList object.",
-                  "Run MI first.")
+                cat("No 'imputedRows' slot found in the MIDTList object.",
+                    "Run MI first.")
             } else {
-              object@imputedRows
+                object@imputedRows
             }
-          })
+        })
 
 #-- MIparam
 setMethod(f = "MIparam", signature = "MIDTList",
-          definition = function(object) {
+        definition = function(object) {
             if (is.null(object@MIparam)) {
-              cat("No 'MIparam' slot found in the MIDTList object.",
-                  "Run MI first.")
+                cat("No 'MIparam' slot found in the MIDTList object.",
+                    "Run MI first.")
             } else {
-              object@MIparam
+                object@MIparam
             }
-          })
+        })
 
