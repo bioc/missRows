@@ -18,27 +18,27 @@ wrapperSVD(X, row.w = NULL, col.w = NULL, ncp = Inf)
 }
 
 \arguments{
-  \item{X}{a data matrix.}
-  
-  \item{row.w}{vector with the weights of each row 
+    \item{X}{a data matrix.}
+
+    \item{row.w}{vector with the weights of each row 
         (\code{NULL} by default and the weights are uniform).}
-        
-  \item{col.w}{vector with the weights of each column 
+
+    \item{col.w}{vector with the weights of each column 
         (\code{NULL} by default and the weights are uniform).}
-        
-  \item{ncp}{the number of components kept for the outputs.}
+
+    \item{ncp}{the number of components kept for the outputs.}
 }
 
 \value{
 A list that contains the following components:
 
-\item{vs}{a vector containing the singular values of \code{X}.}
+    \item{vs}{a vector containing the singular values of \code{X}.}
 
-\item{U}{a matrix whose columns contain the left singular 
-      vectors of \code{X}.}
+    \item{U}{a matrix whose columns contain the left singular 
+        vectors of \code{X}.}
 
-\item{V}{a matrix whose columns contain the right singular 
-      vectors of \code{X}.}
+    \item{V}{a matrix whose columns contain the right singular 
+        vectors of \code{X}.}
 }
 
 \seealso{

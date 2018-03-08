@@ -16,31 +16,31 @@ with multiple tables in presence of missing individuals
 }
 
 \usage{
-MIMFA(object, ncomp = 2, M = NULL, estim.ncp = FALSE,
-      max.iter = 500, tol = 1e-10)
+MIMFA(object, ncomp = 2, M = NULL, estim.ncp = FALSE, 
+        max.iter = 500, tol = 1e-10)
 }
 
 \arguments{
-  \item{object}{an object of class \code{MIDTList} as returned by
+    \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{newMIDTList}}.}
 
-  \item{ncomp}{a number of components to include in MFA when 
+    \item{ncomp}{a number of components to include in MFA when 
         \code{estim.ncp = FALSE} (default to 2). If 
         \code{estim.ncp = TRUE}, then \code{ncomp} correspond 
         to the maximum number of components to test.}
 
-  \item{M}{integer, number of imputations. Default to 
+    \item{M}{integer, number of imputations. Default to 
         \code{min(30, M.total)}, where \code{M.total} is the 
         total number of possible imputations.}
 
-  \item{estim.ncp}{logical. If \code{TRUE} the number of MFA 
+    \item{estim.ncp}{logical. If \code{TRUE} the number of MFA 
         components for data imputation is estimated. Default 
         is \code{FALSE}.}
 
-  \item{max.iter}{integer, maximum number of iterations for the 
+    \item{max.iter}{integer, maximum number of iterations for the 
         \code{\link{imputeDataMFA}} function.}
 
-  \item{tol}{positive value, the threshold for assessing convergence
+    \item{tol}{positive value, the threshold for assessing convergence
         in the \code{\link{imputeDataMFA}} algorithm.}
 }
 
@@ -61,13 +61,13 @@ to the maximum number of components to test.
 \value{
 A \code{\link{MIDTList}} object containing additional slots for:
 
-  \describe{
+\describe{
     \item{\code{compromise}}{}
     \item{\code{configurations}}{}
     \item{\code{imputedRows}}{}
     \item{\code{MIparam}}{}
-  }
-  
+}
+
 See \code{\link{MIDTList}} for description.
 }
 

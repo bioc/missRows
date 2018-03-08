@@ -17,7 +17,7 @@ RVcoeff(X, Y)
 }
 
 \arguments{
-  \item{X, Y}{a matrix with \eqn{n} rows (individuals) and 
+    \item{X, Y}{a matrix with \eqn{n} rows (individuals) and 
         \eqn{p} columns (variables).}
 }
 

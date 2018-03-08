@@ -37,38 +37,39 @@ should be no need to create them directly.
 
 \section{Slots}{
 
-  \describe{
+    \describe{
+    
     \item{\code{incompleteData}:}{a list containing the data tables 
-          with missing rows. Tables in the list should be arranged 
-          in samples \eqn{\times}{x} variables, with samples order 
-          matching in all data tables.}
+        with missing rows. Tables in the list should be arranged 
+        in samples \eqn{\times}{x} variables, with samples order 
+        matching in all data tables.}
 
     \item{\code{strata}:}{a named vector with the individual names
-          and the corresponding condition (stratum).}
+        and the corresponding condition (stratum).}
 
     \item{\code{tableNames}:}{a character vector of the same length as
-          \code{incompleteData} with the name of the each table.}
+        \code{incompleteData} with the name of the each table.}
 
     \item{\code{missingRows}:}{a list containing character vectors with 
-          the name of the missing individuals (rows) per table.}\cr
+        the name of the missing individuals (rows) per table.}\cr
 
-  \bold{Slots returned after} \code{\link{MIMFA}}:\cr
+    \bold{Slots returned after} \code{\link{MIMFA}}:\cr
 
     \item{\code{compromise}:}{the compromise configuration, a 
-          matrix with the individuals coordinates as returned by
-          \code{\link{STATIS}} function.}
+        matrix with the individuals coordinates as returned by
+        \code{\link{STATIS}} function.}
 
     \item{\code{configurations}:}{a list containing the individuals
-          coordinates for each imputed dataset as returned by
-          \code{\link{MIMFA}} function.}
+        coordinates for each imputed dataset as returned by
+        \code{\link{MIMFA}} function.}
 
     \item{\code{imputedRows}:}{a list containing the imputed rows
-          (individuals) for each data table as returned by
-          \code{\link{imputeDataMFA}} function.}
+        (individuals) for each data table as returned by
+        \code{\link{imputeDataMFA}} function.}
 
     \item{\code{MIparam}:}{a list containing the parameters used
-          in the \code{\link{MIMFA}} function.}
-  }
+        in the \code{\link{MIMFA}} function.}
+    }
 }
 
 \section{Extends}{
@@ -78,46 +79,46 @@ Class \code{\linkS4class{MIDTList}}, directly.
 \section{Methods}{
 Class-specific methods return the corresponding objects:
 
-  \describe{
+\describe{
 
     \item{incompleteData}{\code{signature(object = "MIDTList")}:
-          Return list containing the initial data tables.}
+        Return list containing the initial data tables.}
 
     \item{tableNames}{\code{signature(object = "MIDTList")}:
-          Access table names in \code{incompleteData}.}
+        Access table names in \code{incompleteData}.}
 
     \item{strata}{\code{signature(object = "MIDTList")}:
-          Return factor of strata giving the stratum for
-          each individual.}
+        Return factor of strata giving the stratum for
+        each individual.}
 
     \item{missingRows}{\code{signature(object = "MIDTList")}:
-          Return list containing character vectors with 
-          the name of the missing individuals (rows) per table.}
+        Return list containing character vectors with 
+        the name of the missing individuals (rows) per table.}
 
     \item{compromise}{\code{signature(object = "MIDTList")}:
-          Return matrix with the individuals coordinates as returned 
-          by \code{\link{STATIS}} function.}
+        Return matrix with the individuals coordinates as returned 
+        by \code{\link{STATIS}} function.}
 
     \item{configurations}{\code{signature(object = "MIDTList", M = "all")}:
-          Get all configurations. If \code{M} is a positive integer, the
-          \code{M}th configuration is returned.}
+        Get all configurations. If \code{M} is a positive integer, the
+        \code{M}th configuration is returned.}
 
     \item{imputedRows}{\code{signature(object = "MIDTList")}:
-          Return list containing the imputed rows
-          (individuals) for each data table.}
+        Return list containing the imputed rows
+        (individuals) for each data table.}
 
     \item{MIparam}{\code{signature(object = "MIDTList")}:
-          Return list containing the parameters used
-          in the \code{\link{MIMFA}} function.}
-  }
+        Return list containing the parameters used
+        in the \code{\link{MIMFA}} function.}
+}
 
 Standard generic methods:
 
-  \describe{
+\describe{
 
     \item{show}{\code{signature(object = "MIDTList")}: Informatively
-                display object contents.}
-  }
+        display object contents.}
+    }
 }
 
 \author{
@@ -133,12 +134,12 @@ Ignacio González
 data(NCI60)
 K <- NCI60$incompleteData
 miss <- lapply(K, function(X) {rownames(X)[which(apply(is.na(X), 1, 
-                                                 function(x) { all(x) }))] })
+                                            function(x) { all(x) }))] })
 miss <- miss[sapply(miss, length) > 0]
 
 #-- MIDTList object
 midt <- MIDTList(incompleteData = K, strata = NCI60$cell.line, 
-                 tableNames = c("transcrip", "proteome"), missingRows = miss)
+                tableNames = c("transcrip", "proteome"), missingRows = miss)
 midt
 }
 

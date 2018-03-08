@@ -21,28 +21,28 @@ missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
 }
 
 \arguments{
-  \item{object}{an object of class \code{MIDTList} as returned by
+    \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{newMIDTList}}.}
 
-  \item{x}{an object of class inheriting from \code{missPattern}}
+    \item{x}{an object of class inheriting from \code{missPattern}}
 
-  \item{col.strata}{a character vector of the same length than the
+    \item{col.strata}{a character vector of the same length than the
         number of strata, containing the color names to be used to
         annotate the individuals per stratum.}
 
-  \item{col.missing}{the fill color for missing individuals (rows).}
+    \item{col.missing}{the fill color for missing individuals (rows).}
 
-  \item{cex.ttitle}{a positive number. The amount by which table
+    \item{cex.ttitle}{a positive number. The amount by which table
         titles should be magnified.}
 
-  \item{legend.title}{character. The legend title.}
+    \item{legend.title}{character. The legend title.}
 
-  \item{miss.lab}{character. The label legend for missing rows.}
+    \item{miss.lab}{character. The label legend for missing rows.}
 
-  \item{show.plot}{logical. Whether the plot will be displayed. 
+    \item{show.plot}{logical. Whether the plot will be displayed. 
         Default is \code{TRUE}.}
 
-  \item{\ldots}{not used currently.}
+    \item{\ldots}{not used currently.}
 }
 
 \details{
@@ -57,13 +57,13 @@ colored (see \code{col.missing}).
 \value{
 A list with the following components:
 
-  \item{nbMissing}{\code{data.frame} containing the amount of
+    \item{nbMissing}{\code{data.frame} containing the amount of
         missing/available rows in each stratum per data table.}
 
-  \item{isMissing}{\code{data.frame} containing the indicator
+    \item{isMissing}{\code{data.frame} containing the indicator
         matrix for the missing rows.}
 
-  \item{ggp}{an object of class \code{ggplot}.}
+    \item{ggp}{an object of class \code{ggplot}.}
 }
 
 \author{

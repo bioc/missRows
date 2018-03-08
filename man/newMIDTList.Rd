@@ -22,22 +22,22 @@ newMIDTList(..., strata = NULL, tableNames = NULL)
 }
 
 \arguments{
-  \item{\dots}{data tables with missing rows. Two or more objects
+    \item{\dots}{data tables with missing rows. Two or more objects
         which can be interpreted as matrices (or data frames).
         Data tables passed as arguments in \code{\dots} must be
         arranged in samples \eqn{\times} variables, with samples
         order and row names matching in all data tables.}
 
-  \item{strata}{a named vector or data frame giving the stratum for
+    \item{strata}{a named vector or data frame giving the stratum for
         each individual. Names (in vector) or row names (in data frame)
         must be equal to the row names among data tables.}
 
-  \item{tableNames}{optional. A character vector giving the name for
+    \item{tableNames}{optional. A character vector giving the name for
         each table.}
 
-  \item{object}{an object of class \code{MIDTList}.}
+    \item{object}{an object of class \code{MIDTList}.}
 
-  \item{value}{a character vector of length the total number of
+    \item{value}{a character vector of length the total number of
         data tables.}
 }
 

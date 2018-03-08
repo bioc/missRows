@@ -19,23 +19,23 @@ imputeDataMFA(datasets, U, missRows, comp, max.iter = 500, tol = 1e-10)
 
 \arguments{
 
-  \item{datasets}{a list containing the data tables with missing
+    \item{datasets}{a list containing the data tables with missing
         rows. Tables in the list should be arranged in samples
         \eqn{\times}{x} variables, with samples order matching in all
         data tables.}
 
-  \item{U}{the compromise configuration, a matrix with the individuals
+    \item{U}{the compromise configuration, a matrix with the individuals
         coordinates as returned by \code{\link{STATIS}} function.}
 
-  \item{missRows}{a list containing character vectors with 
+    \item{missRows}{a list containing character vectors with 
         the name of the missing individuals (rows) per table.}
 
-  \item{comp}{a number of components kept for imputation.}
+    \item{comp}{a number of components kept for imputation.}
 
-  \item{max.iter}{integer, maximum number of iterations for the 
+    \item{max.iter}{integer, maximum number of iterations for the 
         iterative algorithm.}
 
- \item{tol}{positive value, the threshold for assessing convergence.}
+    \item{tol}{positive value, the threshold for assessing convergence.}
 }
 
 \details{
@@ -47,9 +47,9 @@ which minimize the following criterion:
 
 \deqn{
 ||K-M-FU||^2 = \sum_{i}\sum_{k}\left( K_{ik} - M_{ik} - 
-                     \sum_{d=1}^D F_{id} U_{kd} \right)^2,}{
+                    \sum_{d=1}^D F_{id} U_{kd} \right)^2,}{
 ||K-M-FU||^2 = \sum_{i}\sum_{k}( K_{ik} - M_{ik} - 
-                     \sum_{d=1}^D F_{id} U_{kd})^2,}
+                    \sum_{d=1}^D F_{id} U_{kd})^2,}
 
 where \eqn{M} is a matrix with each row equal to a vector of the 
 mean of each variable and \eqn{D} is the kept dimensions in PCA. 
@@ -57,12 +57,12 @@ The solution is obtained by alternating two multiple regressions
 until convergence, one for estimating axes (loadings \eqn{\hat{U}}) 
 and one for components (scores \eqn{\hat{F}}):
 
-  \deqn{
-    \hat{U}' = (\hat{F}'\hat{F})^{-1}\hat{F}'(K - \hat{M})
-  }
-  \deqn{
-    \hat{F} = (K - \hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
-  }
+    \deqn{
+        \hat{U}' = (\hat{F}'\hat{F})^{-1}\hat{F}'(K - \hat{M})
+    }
+    \deqn{
+        \hat{F} = (K - \hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
+    }
 
 The \code{imputeDataMFA} algorithm first consists imputing missing 
 values in \eqn{K} with initial values (the column means on the 
@@ -99,7 +99,7 @@ midt <- MIMFA(midt, ncomp = 3, M = 10)
 
 #-- imputes missing rows and estimates MFA axes
 completeRows <- imputeDataMFA(incompleteData(midt), compromise(midt), 
-                              missRows = missingRows(midt), comp = 3)
+                                missRows = missingRows(midt), comp = 3)
 }
 
 \keyword{multivariate}

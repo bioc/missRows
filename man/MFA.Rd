@@ -18,18 +18,18 @@ MFA(dataTables, ncomp, nb.rows, nb.tables, nc.table)
 }
 
 \arguments{
-  \item{dataTables}{a list containing data tables without missing
+    \item{dataTables}{a list containing data tables without missing
         data. Tables in the list should be arranged in samples
         \eqn{\times}{x} variables, with samples order matching in all
         data tables.}
 
-  \item{ncomp}{a number of components to include in MFA.}
+    \item{ncomp}{a number of components to include in MFA.}
 
-  \item{nb.rows}{a number of rows, equal for all data tables.}
+    \item{nb.rows}{a number of rows, equal for all data tables.}
 
-  \item{nb.tables}{a number of data tables in \code{dataTables}.}
+    \item{nb.tables}{a number of data tables in \code{dataTables}.}
 
-  \item{nc.table}{a vector containing the number of columns per data
+    \item{nc.table}{a vector containing the number of columns per data
         table.}
 }
 
@@ -62,7 +62,7 @@ dataTables <- NCI60$completeData
 nc <- sapply(dataTables, ncol)
 
 mfa <- MFA(dataTables, ncomp = 3, nb.rows = nrow(dataTables[[1]]), 
-           nb.tables = length(dataTables), nc.table = nc)
+            nb.tables = length(dataTables), nc.table = nc)
 }
 
 \keyword{multivariate}

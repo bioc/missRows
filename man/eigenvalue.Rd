@@ -19,8 +19,8 @@ eigenvalue(x)
 }
 
 \arguments{
-  \item{x}{a numeric or complex matrix whose SVD decomposition
-        can be computed.}
+    \item{x}{a numeric or complex matrix whose SVD decomposition
+            can be computed.}
 }
 
 \value{

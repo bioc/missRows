@@ -19,27 +19,27 @@ generated for illustration purposes.
 A list with three components, \code{cell.line}, \code{completeData} and
 \code{incompleteData}:
 
-  \describe{
-  \item{\code{cell.line}}{a character vector of cancer types:
-          colon (CO), renal (RE), ovarian (OV), breast (BR),
-          prostate (PR), lung (LC), central nervous system (CNS),
-          leukemia (LE) and melanoma (ME).}
-  }
+\describe{
+    \item{\code{cell.line}}{a character vector of cancer types:
+        colon (CO), renal (RE), ovarian (OV), breast (BR),
+        prostate (PR), lung (LC), central nervous system (CNS),
+        leukemia (LE) and melanoma (ME).}
+}
 
-  \code{completeData} and \code{incompleteData}, each one containing a
-  list with the following components:
+\code{completeData} and \code{incompleteData}, each one containing a
+list with the following components:
 
-  \describe{
-  \item{\code{trans}}{a matrix containing 60 rows and 300 columns.
-          The mRNA transcription levels of the NCI60 cell lines. The
-          \code{trans} \code{incompleteData} table containing 12 missing
-          rows.}
+\describe{
+    \item{\code{trans}}{a matrix containing 60 rows and 300 columns.
+        The mRNA transcription levels of the NCI60 cell lines. The
+        \code{trans} \code{incompleteData} table containing 12 missing
+        rows.}
 
     \item{\code{prote}}{a matrix containing 60 rows and 162 columns.
-          The protein abundance levels of the NCI60 cell lines. The
-          \code{prote} \code{incompleteData} table containing 8 missing
-          rows.}
-  }
+        The protein abundance levels of the NCI60 cell lines. The
+        \code{prote} \code{incompleteData} table containing 8 missing
+        rows.}
+}
 }
 
 \details{

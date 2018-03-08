@@ -17,7 +17,7 @@ imputedData(object)
 }
 
 \arguments{
-  \item{object}{an object of class \code{MIDTList} as returned by
+    \item{object}{an object of class \code{MIDTList} as returned by
         \code{\link{MIMFA}} function.}
 }
 

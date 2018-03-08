@@ -19,14 +19,14 @@ STATIS(Ktab, nf = 3, tol = 1e-07)
 }
 
 \arguments{
-  \item{Ktab}{a list containing the data tables. Tables in the 
+    \item{Ktab}{a list containing the data tables. Tables in the 
         list should be arranged in samples \eqn{\times}{x} variables, 
         with samples order matching in all data tables.}
-  
-  \item{nf}{an integer indicating the number of kept axes for the 
+
+    \item{nf}{an integer indicating the number of kept axes for the 
         compromise configuration.}
-  
-  \item{tol}{a tolerance threshold to test whether an eigenvalue 
+
+    \item{tol}{a tolerance threshold to test whether an eigenvalue 
         is positive.}
 }
 

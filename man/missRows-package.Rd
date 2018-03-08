@@ -21,14 +21,14 @@ visualize the uncertainty due to missing row values.
 }
 
 \details{
-  \tabular{ll}{
-    Package: \tab missRows\cr
-    Type: \tab Package\cr
-    Version: \tab 1.0\cr
-    Date: \tab 2017-04-22\cr
-    License: \tab What license is it under?\cr
-    Depends: \tab methods\cr
-  }
+    \tabular{ll}{
+        Package: \tab missRows\cr
+        Type: \tab Package\cr
+        Version: \tab 1.0\cr
+        Date: \tab 2017-04-22\cr
+        License: \tab What license is it under?\cr
+        Depends: \tab methods\cr
+    }
 }
 
 \author{
