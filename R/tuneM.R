@@ -150,7 +150,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     
     for (n in 1:N) {
         ##- calculation of the compromise space (STATIS method)
-        conf0[[n]] <- STATIS(variatesMFA[In[[n]]], nf=ncomp)$C.li
+        conf0[[n]] <- STATIS(variatesMFA[In[[n]]], nf=ncomp)$Cli
     }
     
     ##- configurations for M_l, l > 1
@@ -186,7 +186,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
         
         for (n in 1:N) {
             ##- calculation of the compromise space (STATIS method)
-            conf <- STATIS(variatesMFA[In[[n]]], nf=ncomp)$C.li
+            conf <- STATIS(variatesMFA[In[[n]]], nf=ncomp)$Cli
             RV <- c(RV, RVcoeff(conf0[[n]], conf))
             conf0[[n]] <- conf
         }
