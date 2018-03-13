@@ -238,7 +238,7 @@ table. \medskip
 \end{description}
 
 Here, we demonstrate how to construct a \Rclass{MIDTList} object from
-\Rcode{NCI-60} data. We first load the data \medskip
+\Rcode{NCI60} data. We first load the data \medskip
 
 <<>>=
 data(NCI60)
@@ -297,7 +297,7 @@ We then performs MI-MFA on the incomplete data tables contained in
 \Rcode{midt} by using \Rcode{M = 30} imputed \medskip
 
 <<MIMFA>>=
-midt <- MIMFA(midt, ncomp = 50, M = 30, estim.ncp = TRUE)
+midt <- MIMFA(midt, ncomp = 50, M = 30, estimeNC = TRUE)
 @
 
 \Rcode{MIMFA} returns an object of class \Rclass{MIDTList}. A short summary 
@@ -366,14 +366,14 @@ Inspect the missingness pattern for the \Rcode{NCI60} incomplete data by
 \medskip
 
 <<missingPattern, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-patt <- missPattern(midt, col.missing = "grey70")
+patt <- missPattern(midt, colMissing = "grey70")
 @
 
 \Rcode{missPattern} calculate and plot the amount of missing/available rows 
 in each stratum per data table. Data tables are plotted separately on a same
 device showing the pattern of missingness. The individuals are colored with
 rapport to their stratum whereas missing rows are colored according to the
-\Rcode{col.missing} argument.
+\Rcode{colMissing} argument.
 
 The object \Rcode{patt} encapsulates information from  the structure of
 missingness, such as the the amount of missing/available rows in each 
@@ -400,11 +400,11 @@ the two-dimensional configuration defined by the MFA components.
 \Rcode{plotInd} function makes scatter plot for individuals representation
 from \Rcode{MIMFA} results. Each point corresponds to an individual. The 
 color of each individual reflects their corresponding stratum, whereas 
-imputed individuals are colored according to the \Rcode{col.missing} 
+imputed individuals are colored according to the \Rcode{colMissing} 
 argument. \medskip
 
 <<plotInd, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotInd(midt, col.missing = "white")
+plotInd(midt, colMissing = "white")
 @
 
 
@@ -424,21 +424,21 @@ Confidence ellipses and convex hulls can be then constructed for the
 results in a polygon containing all \Rcode{M} solutions.
 
 Confidence ellipses can be created using the function \Rcode{plotInd} by
-setting the \Rcode{conf.areas} argument to \Rcode{'ellipse'} \medskip
+setting the \Rcode{confAreas} argument to \Rcode{'ellipse'} \medskip
 
 <<plotInd-ellipses, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotInd(midt, conf.areas = 'ellipse', conf.level = 0.95)
+plotInd(midt, confAreas = 'ellipse', confLevel = 0.95)
 @
 
 The 95\% confidence ellipses show the uncertainty for each individual. For
 ease of understanding, not all individuals for the \Rcode{M} configurations
 obtained are plotted.
 
-Convex hulls are plotted by setting the \Rcode{conf.areas} argument to
+Convex hulls are plotted by setting the \Rcode{confAreas} argument to
 \Rcode{'convex.hull'} \medskip
 
 <<plotInd-convexhull, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotInd(midt, conf.areas = 'convex.hull')
+plotInd(midt, confAreas = 'convex.hull')
 @
 
 These graphical representations provide scientists with considerable guidance
@@ -452,12 +452,12 @@ scientist should remain really careful regarding its interpretation.
 %----------------------------------------------------------------------------
 \Rcode{plotVar} produce a "correlation circle", \textit{i.e.} the correlations
 between each variable and the selected components are plotted as scatter plot,
-with concentric circles of radius one and radius given by \Rcode{rad.in}.
+with concentric circles of radius one and radius given by \Rcode{radIn}.
 Variables are represented by points (symbols) and colored according to the
 data table to which they belong. \medskip
 
 <<plotVar, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotVar(midt, rad.in = 0.5)
+plotVar(midt, radIn = 0.5)
 @
 
 This plot is an enlightening tool for data interpretation, as it enables a
@@ -477,7 +477,7 @@ between variables from two or more data tables can be difficult, and a
 \Rcode{cutoff} can be chosen to remove some weaker associations. \medskip
 
 <<plotVar-cutoff, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotVar(midt, rad.in = 0.5, var.names = TRUE, cutoff = 0.55)
+plotVar(midt, radIn = 0.5, varNames = TRUE, cutoff = 0.55)
 @
 
 
@@ -497,14 +497,14 @@ configurations are stabilized.
 
 \Rcode{tuneM} function implements such a procedure. Collections of size
 \Rcode{N} are generated for each number of imputations \Rcode{M}, with
-\Rcode{M = seq(inc, M.max, by = inc)}. The stability of the estimated MI-MFA
+\Rcode{M = seq(inc, Mmax, by = inc)}. The stability of the estimated MI-MFA
 configurations is then determined by calculating the RV coefficient between
 the configurations obtained using \Rcode{M}$_{\,l}$ and \Rcode{M}$_{\,l+1}$
 imputations. \medskip
 
 <<tuneM, echo=2:3, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
 set.seed(1)
-res.tuneM <- tuneM(midt, ncomp = 2, M.max = 100, inc = 10, N = 20)
+res.tuneM <- tuneM(midt, ncomp = 2, Mmax = 100, inc = 10, N = 20)
 res.tuneM
 @
 
