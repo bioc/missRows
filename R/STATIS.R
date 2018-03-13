@@ -1,4 +1,4 @@
-STATIS <- function (Ktab, nf = 3, tol = 1e-07) {
+STATIS <- function (Ktab, nf=3, tol=1e-07) {
     
     nlig <- nrow(Ktab[[1]]) 
     ntab <- length(Ktab)
@@ -16,7 +16,7 @@ STATIS <- function (Ktab, nf = 3, tol = 1e-07) {
     RV <- sweep(RV, 1, ak, "/")
     RV <- sweep(RV, 2, ak, "/")
     
-    eig1 <- eigen(RV, symmetric = TRUE)
+    eig1 <- eigen(RV, symmetric=TRUE)
     
     if (any(eig1$vectors[, 1] < 0)) {
         eig1$vectors[, 1] <- -eig1$vectors[, 1]
@@ -25,11 +25,11 @@ STATIS <- function (Ktab, nf = 3, tol = 1e-07) {
     tabw <- eig1$vectors[, 1]
     
     sep <- t(t(sep)/ak)
-    C.ro <- rowSums(sweep(sep, 2, tabw, "*"))
-    C.ro <- matrix(unlist(C.ro), nlig, nlig)
-    eig1 <- eigen(C.ro, symmetric = TRUE)
-    result$C.ro <- C.ro
-    rm(C.ro)
+    Cro <- rowSums(sweep(sep, 2, tabw, "*"))
+    Cro <- matrix(unlist(Cro), nlig, nlig)
+    eig1 <- eigen(Cro, symmetric=TRUE)
+    result$Cro <- Cro
+    rm(Cro)
     eig <- eig1$values
     rank <- sum((eig/eig[1]) > tol)
     
@@ -41,7 +41,7 @@ STATIS <- function (Ktab, nf = 3, tol = 1e-07) {
     rm(eig1)
     w <- data.frame(t(t(wref) * sqrt(eig[1:nf])))
     names(w) <- paste("C", 1:nf, sep = "")
-    result$C.li <- w
+    result$Cli <- w
     
     return(result)
 }

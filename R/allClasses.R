@@ -2,74 +2,74 @@
 ### MIDTList S4 class definition
 ###############################################################################
 
-#-- setClass -----------------------------------------------------------------#
-#-----------------------------------------------------------------------------#
+##- setClass -----------------------------------------------------------------#
+##----------------------------------------------------------------------------#
 MIDTList <- setClass("MIDTList",
-                    slots = c(incompleteData = "ANY",
-                    strata = "ANY",
-                    tableNames = "ANY",
-                    missingRows = "ANY",
-                    compromise = "ANY",
-                    configurations = "ANY",
-                    imputedRows = "ANY",
-                    MIparam = "ANY"))
+                    slots=c(incompleteData="ANY",
+                    strata="ANY",
+                    tableNames="ANY",
+                    missingRows="ANY",
+                    compromise="ANY",
+                    configurations="ANY",
+                    imputedRows="ANY",
+                    MIparam="ANY"))
 
 
-#-- setGeneric ---------------------------------------------------------------#
-#-----------------------------------------------------------------------------#
+##- setGeneric ---------------------------------------------------------------#
+##----------------------------------------------------------------------------#
 
-#-- incompleteData
-setGeneric(name = "incompleteData",
-            def = function(object) standardGeneric("incompleteData"))
+##- incompleteData
+setGeneric(name="incompleteData",
+            def=function(object) standardGeneric("incompleteData"))
 
-#-- strata
-setGeneric(name = "strata",
-            def = function(object) standardGeneric("strata"))
+##- strata
+setGeneric(name="strata",
+            def=function(object) standardGeneric("strata"))
 
-#-- tableNames
-setGeneric(name = "tableNames",
-            def = function(object, ...) standardGeneric("tableNames"))
+##- tableNames
+setGeneric(name="tableNames",
+            def=function(object, ...) standardGeneric("tableNames"))
 
 setGeneric("tableNames<-",
             def =function(object, value) standardGeneric("tableNames<-"))
 
-#-- missingRows
-setGeneric(name = "missingRows",
-            def = function(object) standardGeneric("missingRows"))
+##- missingRows
+setGeneric(name="missingRows",
+            def=function(object) standardGeneric("missingRows"))
 
-#-- compromise
-setGeneric(name = "compromise",
-            def = function(object) standardGeneric("compromise"))
+##- compromise
+setGeneric(name="compromise",
+            def=function(object) standardGeneric("compromise"))
 
-#-- configurations
-setGeneric(name = "configurations",
-            def = function(object, ...) standardGeneric("configurations"))
+##- configurations
+setGeneric(name="configurations",
+            def=function(object, ...) standardGeneric("configurations"))
 
-#-- imputedRows
-setGeneric(name = "imputedRows",
-            def = function(object) standardGeneric("imputedRows"))
+##- imputedRows
+setGeneric(name="imputedRows",
+            def=function(object) standardGeneric("imputedRows"))
 
-#-- MIparam
-setGeneric(name = "MIparam",
-            def = function(object) standardGeneric("MIparam"))
+##- MIparam
+setGeneric(name="MIparam",
+            def=function(object) standardGeneric("MIparam"))
 
 
 
-#-- setMethod ----------------------------------------------------------------#
-#-----------------------------------------------------------------------------#
-#-- show
+##- setMethod ----------------------------------------------------------------#
+##----------------------------------------------------------------------------#
+##- show
 setMethod("show",
-        signature = "MIDTList",
-        definition = function(object) {
+        signature="MIDTList",
+        definition=function(object) {
 
-            nb.miss <- NULL
+            nbMiss <- NULL
 
             for (j in seq_along(object@incompleteData)) {
-                id.miss <- apply(is.na(object@incompleteData[[j]]), 1, all)
-                if (any(id.miss)) {
-                    nb.miss <- c(nb.miss, sum(id.miss))
+                idMiss <- apply(is.na(object@incompleteData[[j]]), 1, all)
+                if (any(idMiss)) {
+                    nbMiss <- c(nbMiss, sum(idMiss))
                 } else {
-                    nb.miss <- c(nb.miss, 0)
+                    nbMiss <- c(nbMiss, 0)
                 }
             }
 
@@ -80,7 +80,7 @@ setMethod("show",
             info <- data.frame(names(object@incompleteData),
                             sapply(object@incompleteData, nrow),
                             sapply(object@incompleteData, ncol),
-                            nb.miss,
+                            nbMiss,
                             row.names = paste0("Table ", 1:nt, " "))
             colnames(info) <- c("name", "rows", "columns", "missing")
             print(info)
@@ -92,7 +92,7 @@ setMethod("show",
                 cat("\nMultiple imputation in", object@MIparam$method)
                 cat("\n---------------------------")
                 cat("\nTotal number of possible imputations:",
-                    object@MIparam$M.total)
+                    object@MIparam$Mtotal)
                 cat("\nNumber of multiple imputations:", object@MIparam$M)
 
                 if (attr(object@MIparam$ncomp, "estimated")) {
@@ -105,33 +105,33 @@ setMethod("show",
             }
         })
 
-#-- incompleteData
-setMethod(f = "incompleteData", signature = "MIDTList",
-        definition = function(object) object@incompleteData)
+##- incompleteData
+setMethod(f="incompleteData", signature="MIDTList",
+        definition=function(object) object@incompleteData)
 
-#-- strata
-setMethod(f = "strata", signature = "MIDTList",
-        definition = function(object) object@strata)
+##- strata
+setMethod(f="strata", signature="MIDTList",
+        definition=function(object) object@strata)
 
-#-- tableNames
-setMethod(f = "tableNames", signature = "MIDTList",
-        definition = function(object, ...) object@tableNames)
+##- tableNames
+setMethod(f="tableNames", signature="MIDTList",
+        definition=function(object, ...) object@tableNames)
 
-setReplaceMethod(f = "tableNames", signature = "MIDTList",
-                definition = function(object, value) {
+setReplaceMethod(f="tableNames", signature="MIDTList",
+                definition=function(object, value) {
                 nt <- length(object@incompleteData)
 
                 if (length(value) != nt | is.matrix(value) | 
                     is.list(value)) {
                     stop("'tableNames<-' accessor is only valid for vectors",
-                        " of length ", nt, call. = FALSE)
+                        " of length ", nt, call.=FALSE)
                 }
 
                 value <- as.character(value)
 
                 if (any(duplicated(value))) {
                     stop("'tableNames<-' accessor is only valid for vectors",
-                        " with unique values", call. = FALSE)
+                        " with unique values", call.=FALSE)
                 }
 
                 object@tableNames  <- value
@@ -139,13 +139,13 @@ setReplaceMethod(f = "tableNames", signature = "MIDTList",
                 return(object)
             })
 
-#-- missingRows
-setMethod(f = "missingRows", signature = "MIDTList",
-        definition = function(object) object@missingRows)
+##- missingRows
+setMethod(f="missingRows", signature="MIDTList",
+        definition=function(object) object@missingRows)
 
-#-- compromise
-setMethod(f = "compromise", signature = "MIDTList",
-        definition = function(object) {
+##- compromise
+setMethod(f="compromise", signature="MIDTList",
+        definition=function(object) {
             if (is.null(object@compromise)) {
                 cat("No 'compromise' slot found in the MIDTList object.",
                     "Run MI first.")
@@ -154,9 +154,9 @@ setMethod(f = "compromise", signature = "MIDTList",
             }
         })
 
-#-- configurations
-setMethod(f = "configurations", signature = "MIDTList",
-        definition = function(object, M = "all") {
+##- configurations
+setMethod(f="configurations", signature="MIDTList",
+        definition=function(object, M="all") {
             if (is.null(object@configurations)) {
                 cat("No 'configurations' slot found in the MIDTList object.",
                     "Run MI first.")
@@ -169,9 +169,9 @@ setMethod(f = "configurations", signature = "MIDTList",
             }
         })
 
-#-- imputedRows
-setMethod(f = "imputedRows", signature = "MIDTList",
-        definition = function(object) {
+##- imputedRows
+setMethod(f="imputedRows", signature="MIDTList",
+        definition=function(object) {
             if (is.null(object@imputedRows)) {
                 cat("No 'imputedRows' slot found in the MIDTList object.",
                     "Run MI first.")
@@ -180,9 +180,9 @@ setMethod(f = "imputedRows", signature = "MIDTList",
             }
         })
 
-#-- MIparam
-setMethod(f = "MIparam", signature = "MIDTList",
-        definition = function(object) {
+##- MIparam
+setMethod(f="MIparam", signature="MIDTList",
+        definition=function(object) {
             if (is.null(object@MIparam)) {
                 cat("No 'MIparam' slot found in the MIDTList object.",
                     "Run MI first.")

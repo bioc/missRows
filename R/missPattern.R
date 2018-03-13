@@ -1,77 +1,77 @@
-missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
-                        cex.ttitle = 12, legend.title = "Strata",
-                        miss.lab = "miss", show.plot = TRUE) {
+missPattern <- function(object, colStrata=NULL, colMissing="grey70",
+                        cexTtitle=12, legTitle="Strata",
+                        missLab="miss", showPlot=TRUE) {
     
-    #-- checking general input arguments -------------------------------------#
-    #-------------------------------------------------------------------------#
+    ##- checking general input arguments -------------------------------------#
+    ##------------------------------------------------------------------------#
     
-    #-- object
+    ##- object
     if (class(object) != "MIDTList") {
-        stop("'object' must be an object of class 'MIDTList'.", call. = FALSE)
+        stop("'object' must be an object of class 'MIDTList'.", call.=FALSE)
     }
     
-    #-- col.strata
+    ##- colStrata
     
-    #-- internal function for character color checking -----------#
-    #-------------------------------------------------------------#
+    ##- internal function for character color checking -----------#
+    ##------------------------------------------------------------#
     isColor <- function(x) { sapply(x, function(x) {
-        tryCatch(is.matrix(col2rgb(x)), error = function(e) FALSE) })
+        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) })
     }
-    #-------------------------------------------------------------#
+    ##------------------------------------------------------------#
     
-    if (is.null(col.strata)) {
-        col.strata <- rainbow(length(levels(strata(object))))
-        names(col.strata) <- levels(strata(object))
+    if (is.null(colStrata)) {
+        colStrata <- rainbow(length(levels(strata(object))))
+        names(colStrata) <- levels(strata(object))
     } else {
-        if (length(col.strata) != length(levels(strata(object)))) {
-            stop("'col.strata' must be a color names vector of length ",
-                length(levels(strata(object))), ".", call. = FALSE)
+        if (length(colStrata) != length(levels(strata(object)))) {
+            stop("'colStrata' must be a color names vector of length ",
+                length(levels(strata(object))), ".", call.=FALSE)
         } else {
-            if (any(!isColor(col.strata))) {
-                stop("'col.strata' must be a character vector of recognized",
-                    " colors.", call. = FALSE)
+            if (any(!isColor(colStrata))) {
+                stop("'colStrata' must be a character vector of recognized",
+                    " colors.", call.=FALSE)
             }
         }
     }
     
-    if (is.null(names(col.strata))) {
-        names(col.strata) <- levels(strata(object))
+    if (is.null(names(colStrata))) {
+        names(colStrata) <- levels(strata(object))
     } else {
-        if (any(!(names(col.strata) %in% levels(strata(object)))))
-            stop("names of 'col.strata' must be a character from: ",
-                toString(levels(strata(object))), call. = FALSE)
+        if (any(!(names(colStrata) %in% levels(strata(object)))))
+            stop("names of 'colStrata' must be a character from: ",
+                toString(levels(strata(object))), call.=FALSE)
     }
     
-    #-- col.missing
-    if (length(as.vector(col.missing)) != 1) {
-        stop("'col.missing' must be a single character of recognized colors.",
-            call. = FALSE)
+    ##- colMissing
+    if (length(as.vector(colMissing)) != 1) {
+        stop("'colMissing' must be a single character of recognized colors.",
+            call.=FALSE)
     }
     
-    if (!isColor(col.missing) | is.na(col.missing)) {
-        stop("'col.missing' must be a single character of recognized colors.",
-            call. = FALSE)
+    if (!isColor(colMissing) | is.na(colMissing)) {
+        stop("'colMissing' must be a single character of recognized colors.",
+            call.=FALSE)
     }
     
-    #-- end checking ---------------------------------------------------------#
+    ##- end checking ---------------------------------------------------------#
     
     
-    #-- initialization of variables ------------------------------------------#
-    #-------------------------------------------------------------------------#
+    ##- initialization of variables ------------------------------------------#
+    ##------------------------------------------------------------------------#
     missData <- incompleteData(object)
     strt <- strata(object)
     nmTables <- tableNames(object)
     
-    mrp <- matrix(nrow = length(strt), ncol = length(missData))
+    mrp <- matrix(nrow=length(strt), ncol=length(missData))
     rownames(mrp) <- names(strt)
     colnames(mrp) <- nmTables
     
-    nbmr <- matrix(nrow = length(levels(strt)), ncol = length(missData))
+    nbmr <- matrix(nrow=length(levels(strt)), ncol=length(missData))
     rownames(nbmr) <- levels(strt)
     colnames(nbmr) <- nmTables
     
-    #-- finds the missing data pattern ---------------------------------------#
-    #-------------------------------------------------------------------------#
+    ##- finds the missing data pattern ---------------------------------------#
+    ##------------------------------------------------------------------------#
     for (i in 1:length(missData)) {
         id.miss <- apply(is.na(missData[[i]]), 1, all)
         tmp <- split(id.miss, strt)
@@ -85,8 +85,8 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
     colnames(nbmr)[ncol(nbmr)] <- "    "
     mrp <- data.frame(mrp, strata = strt)
     
-    #-- plot missing rows pattern --------------------------------------------#
-    #-------------------------------------------------------------------------#
+    ##- plot missing rows pattern --------------------------------------------#
+    ##------------------------------------------------------------------------#
     ymax <- cumsum(table(mrp$strata))
     ymin <- c(0, ymax[-length(ymax)])
     
@@ -103,7 +103,7 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
         
         id <- mrp[, i]
         tmp <- data.frame(ymin = ymin.m, ymax = ymax.m,
-                            strata = rep(miss.lab, nrow(mrp)),
+                            strata = rep(missLab, nrow(mrp)),
                             Table = rep(nmTables[i], nrow(mrp)))
         tmp <- tmp[id, ]
         df.m <- rbind(df.m, tmp)
@@ -111,36 +111,36 @@ missPattern <- function(object, col.strata = NULL, col.missing = "grey70",
     
     df <- df[-1, ]
     df$strata <- factor(df$strata,
-                        levels = c(sort(unique(df$strata)), "", miss.lab))
-    df.m$strata <- factor(df.m$strata, levels = c("", miss.lab))
-    df$Table <- factor(df$Table, levels = nmTables)
-    df.m$Table <- factor(df.m$Table, levels = nmTables)
+                        levels=c(sort(unique(df$strata)), "", missLab))
+    df.m$strata <- factor(df.m$strata, levels=c("", missLab))
+    df$Table <- factor(df$Table, levels=nmTables)
+    df.m$Table <- factor(df.m$Table, levels=nmTables)
     
-    ind.cols <- c(col.strata, "transparent", col.missing)
-    names(ind.cols)[length(col.strata) + 1:2] <- c("", miss.lab)
+    ind.cols <- c(colStrata, "transparent", colMissing)
+    names(ind.cols)[length(colStrata) + 1:2] <- c("", missLab)
     
     g <- ggplot() + theme_bw() + facet_wrap(~ Table) +
-        scale_y_reverse(expand = c(0, 1.5)) +
-        geom_rect(data = df, aes(xmin = 0, xmax = 1, ymin = ymin, ymax = ymax,
-                                    fill = strata), colour = "white") +
-        geom_rect(data = df.m, aes(xmin = 0, xmax = 1, ymin = ymin, 
-                                    ymax = ymax, fill = strata),
-                    colour = "white") +
-        scale_fill_manual(values = ind.cols, breaks = names(ind.cols),
-                            name = legend.title) +
-        theme(panel.grid.major = element_blank(),
-                panel.grid.minor = element_blank(),
-                axis.title = element_blank(),
-                axis.text = element_blank(),
-                axis.ticks = element_blank(),
-                strip.text = element_text(size = cex.ttitle)) +
+        scale_y_reverse(expand=c(0, 1.5)) +
+        geom_rect(data=df, aes(xmin=0, xmax=1, ymin=ymin, ymax=ymax,
+                                    fill=strata), colour="white") +
+        geom_rect(data=df.m, aes(xmin=0, xmax=1, ymin=ymin, 
+                                    ymax=ymax, fill=strata),
+                    colour="white") +
+        scale_fill_manual(values=ind.cols, breaks=names(ind.cols),
+                            name=legTitle) +
+        theme(panel.grid.major=element_blank(),
+                panel.grid.minor=element_blank(),
+                axis.title=element_blank(),
+                axis.text=element_blank(),
+                axis.ticks=element_blank(),
+                strip.text=element_text(size=cexTtitle)) +
         ggtitle("Missingness pattern") +
-        theme(plot.title = element_text(hjust = 0.5))
+        theme(plot.title=element_text(hjust=0.5))
     
-    if (show.plot) { print(g) }
+    if (showPlot) { print(g) }
     
-    #-- results --------------------------------------------------------------#
-    #-------------------------------------------------------------------------#
+    ##- results --------------------------------------------------------------#
+    ##------------------------------------------------------------------------#
     res <- list(nbMissing = nbmr, isMissing = mrp, ggp = g)
     class(res) = "missPattern"
     return(invisible(res))
