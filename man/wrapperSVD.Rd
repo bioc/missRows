@@ -14,16 +14,16 @@ called directly by a user.
 }
 
 \usage{
-wrapperSVD(X, row.w = NULL, col.w = NULL, ncp = Inf)
+wrapperSVD(X, rWeights=NULL, cWeights=NULL, ncp=Inf)
 }
 
 \arguments{
     \item{X}{a data matrix.}
 
-    \item{row.w}{vector with the weights of each row 
+    \item{rWeights}{vector with the weights of each row 
         (\code{NULL} by default and the weights are uniform).}
 
-    \item{col.w}{vector with the weights of each column 
+    \item{cWeights}{vector with the weights of each column 
         (\code{NULL} by default and the weights are uniform).}
 
     \item{ncp}{the number of components kept for the outputs.}

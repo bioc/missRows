@@ -15,7 +15,7 @@ called directly by a user.
 }
 
 \usage{
-STATIS(Ktab, nf = 3, tol = 1e-07)
+STATIS(Ktab, nf=3, tol=1e-07)
 }
 
 \arguments{
@@ -50,7 +50,7 @@ The ACT (STATIS method).
 data(NCI60)
 
 #-- STATIS analysis of two data tables
-result <- STATIS(NCI60$completeData, nf = 3)
+result <- STATIS(NCI60$completeData, nf=3)
 }
 
 \keyword{multivariate}

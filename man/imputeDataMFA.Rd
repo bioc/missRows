@@ -14,7 +14,7 @@ squares algorithm used in PCA. This function is internally called by
 }
 
 \usage{
-imputeDataMFA(datasets, U, missRows, comp, max.iter = 500, tol = 1e-10)
+imputeDataMFA(datasets, U, missRows, comp, maxIter=500, tol=1e-10)
 }
 
 \arguments{
@@ -32,7 +32,7 @@ imputeDataMFA(datasets, U, missRows, comp, max.iter = 500, tol = 1e-10)
 
     \item{comp}{a number of components kept for imputation.}
 
-    \item{max.iter}{integer, maximum number of iterations for the 
+    \item{maxIter}{integer, maximum number of iterations for the 
         iterative algorithm.}
 
     \item{tol}{positive value, the threshold for assessing convergence.}
@@ -92,14 +92,14 @@ Ignacio González
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 
 #-- performs MIMFA
-midt <- MIMFA(midt, ncomp = 3, M = 10)
+midt <- MIMFA(midt, ncomp=3, M=10)
 
 #-- imputes missing rows and estimates MFA axes
 completeRows <- imputeDataMFA(incompleteData(midt), compromise(midt), 
-                                missRows = missingRows(midt), comp = 3)
+                                missRows=missingRows(midt), comp=3)
 }
 
 \keyword{multivariate}

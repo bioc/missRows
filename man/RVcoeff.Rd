@@ -39,7 +39,7 @@ data(NCI60)
 midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
 
 #-- performs MIMFA
-midt <- MIMFA(midt, ncomp = 3, M = 10)
+midt <- MIMFA(midt, ncomp=3, M=10)
 
 #-- RV coefficient between two configurations
 RVcoeff(configurations(midt, 1), configurations(midt, 2))

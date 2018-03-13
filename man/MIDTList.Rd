@@ -81,33 +81,33 @@ Class-specific methods return the corresponding objects:
 
 \describe{
 
-    \item{incompleteData}{\code{signature(object = "MIDTList")}:
+    \item{incompleteData}{\code{signature(object="MIDTList")}:
         Return list containing the initial data tables.}
 
-    \item{tableNames}{\code{signature(object = "MIDTList")}:
+    \item{tableNames}{\code{signature(object="MIDTList")}:
         Access table names in \code{incompleteData}.}
 
-    \item{strata}{\code{signature(object = "MIDTList")}:
+    \item{strata}{\code{signature(object="MIDTList")}:
         Return factor of strata giving the stratum for
         each individual.}
 
-    \item{missingRows}{\code{signature(object = "MIDTList")}:
+    \item{missingRows}{\code{signature(object="MIDTList")}:
         Return list containing character vectors with 
         the name of the missing individuals (rows) per table.}
 
-    \item{compromise}{\code{signature(object = "MIDTList")}:
+    \item{compromise}{\code{signature(object="MIDTList")}:
         Return matrix with the individuals coordinates as returned 
         by \code{\link{STATIS}} function.}
 
-    \item{configurations}{\code{signature(object = "MIDTList", M = "all")}:
+    \item{configurations}{\code{signature(object="MIDTList", M="all")}:
         Get all configurations. If \code{M} is a positive integer, the
         \code{M}th configuration is returned.}
 
-    \item{imputedRows}{\code{signature(object = "MIDTList")}:
+    \item{imputedRows}{\code{signature(object="MIDTList")}:
         Return list containing the imputed rows
         (individuals) for each data table.}
 
-    \item{MIparam}{\code{signature(object = "MIDTList")}:
+    \item{MIparam}{\code{signature(object="MIDTList")}:
         Return list containing the parameters used
         in the \code{\link{MIMFA}} function.}
 }
@@ -116,7 +116,7 @@ Standard generic methods:
 
 \describe{
 
-    \item{show}{\code{signature(object = "MIDTList")}: Informatively
+    \item{show}{\code{signature(object="MIDTList")}: Informatively
         display object contents.}
     }
 }
@@ -138,8 +138,8 @@ miss <- lapply(K, function(X) {rownames(X)[which(apply(is.na(X), 1,
 miss <- miss[sapply(miss, length) > 0]
 
 #-- MIDTList object
-midt <- MIDTList(incompleteData = K, strata = NCI60$cell.line, 
-                tableNames = c("transcrip", "proteome"), missingRows = miss)
+midt <- MIDTList(incompleteData=K, strata=NCI60$cell.line, 
+                tableNames=c("transcrip", "proteome"), missingRows=miss)
 midt
 }
 

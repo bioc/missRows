@@ -37,10 +37,10 @@ Ignacio González
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 
 #-- performs MIMFA
-midt <- MIMFA(midt, ncomp = 2, M = 5)
+midt <- MIMFA(midt, ncomp=2, M=5)
 
 #-- exports the imputed data tables
 completeData <- imputedData(midt)

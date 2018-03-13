@@ -55,10 +55,10 @@ Multiple Imputation in Multiple Factor Analysis framework.
 \dontrun{
 
 #-- Data preparation
-midt <- newMIDTList(table1, table2, strata = df)
+midt <- newMIDTList(table1, table2, strata=df)
 
 #-- Performing MI
-midt <- MIMFA(midt, ncomp = 2, M = 30)
+midt <- MIMFA(midt, ncomp=2, M=30)
 
 #-- Analysis of the results
 plotInd(midt)

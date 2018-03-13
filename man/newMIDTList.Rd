@@ -16,7 +16,7 @@ for each individual and table names (optional).
 }
 
 \usage{
-newMIDTList(..., strata = NULL, tableNames = NULL)
+newMIDTList(..., strata=NULL, tableNames=NULL)
 
 \S4method{tableNames}{MIDTList}(object) <- value
 }
@@ -66,15 +66,15 @@ Ignacio González
 data(NCI60)
 
 #-- MIDTList object directly from a list of data tables
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 midt
 
 #-- MIDTList object from separate data tables
 table1 <- NCI60$incompleteData$trans
 table2 <- NCI60$incompleteData$prote
 
-midt <- newMIDTList(table1, table2, strata = NCI60$cell.line,
-                    tableNames = c("transcrip", "proteome"))
+midt <- newMIDTList(table1, table2, strata=NCI60$cell.line,
+                    tableNames=c("transcrip", "proteome"))
 midt
 }
 

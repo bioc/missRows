@@ -13,10 +13,10 @@ representation from \code{\link{MIMFA}} results.
 }
 
 \usage{
-plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
-        conf.areas = c("none", "ellipse", "convex.hull"), conf.level = 0.95,
-        ellipse.type = c("norm", "t"), alpha = 0.1, lwd = 0.3, cex = 3,
-        legend.title = "Strata")
+plotInd(object, comp=1:2, colStrata=NULL, colMissing="white",
+        confAreas=c("none", "ellipse", "convex.hull"), confLevel=0.95,
+        ellipseType=c("norm", "t"), alpha=0.1, lwd=0.3, cex=3,
+        legTitle="Strata")
 }
 
 \arguments{
@@ -27,21 +27,21 @@ plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
         that will be used on the horizontal and the vertical axis
         respectively to project the individuals.}
 
-    \item{col.strata}{a character vector of the same length than the
+    \item{colStrata}{a character vector of the same length than the
         number of strata containing the color names to be used to
         annotate the individuals per stratum.}
 
-    \item{col.missing}{the fill color for imputated individuals.}
+    \item{colMissing}{the fill color for imputated individuals.}
 
-    \item{conf.areas}{a character string indicating whether to plot
+    \item{confAreas}{a character string indicating whether to plot
         \code{"none"}, \code{"ellipse"} or \code{"convex.hull"}
         confidence areas.}
 
-    \item{conf.level}{a numerical value indicating the confidence level
-        of ellipses being plotted when \code{conf.areas = "ellipse"}.
+    \item{confLevel}{a numerical value indicating the confidence level
+        of ellipses being plotted when \code{confAreas = "ellipse"}.
         The default is set to 0.95, for a 95\% confidence region.}
 
-    \item{ellipse.type}{the type of ellipse. The default \code{"norm"}
+    \item{ellipseType}{the type of ellipse. The default \code{"norm"}
         assumes a multivariate normal distribution, and \code{"t"}
         assumes a multivariate t-distribution.}
 
@@ -55,7 +55,7 @@ plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
     \item{cex}{a positive number. The amount by which plotting
         symbols should be magnified.}
 
-    \item{legend.title}{character. The legend title.}
+    \item{legTitle}{character. The legend title.}
 }
 
 \details{
@@ -63,7 +63,7 @@ plotInd(object, comp = 1:2, col.strata = NULL, col.missing = "white",
 representation from \code{\link{MIMFA}} results. Each point
 corresponds to an individual. The individuals are colored with
 rapport to their stratum, whereas imputed individuals are colored 
-according to the \code{col.missing} argument.
+according to the \code{colMissing} argument.
 
 Multiple imputation generates \code{M} imputed datasets and 
 the variance between-imputations reflects the uncertainty associated 
@@ -77,9 +77,9 @@ and convex hulls can then be constructed for the \code{M} configurations
 for each individual. For ease of understanding, not all individuals for 
 the \code{M} configurations obtained are plotted.
 
-Confidence ellipses can be created by setting the \code{conf.areas} 
+Confidence ellipses can be created by setting the \code{confAreas} 
 argument to \code{"ellipse"}. The 95\% confidence ellipses are showed by 
-default. Convex hulls are plotted by setting the \code{conf.areas} argument 
+default. Convex hulls are plotted by setting the \code{confAreas} argument 
 to \code{"convex.hull"}. The computed convex hull results in a polygon 
 containing all \code{M} solutions.
 }
@@ -99,19 +99,19 @@ Ignacio González and Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 
 #-- performs MIMFA
-midt <- MIMFA(midt, ncomp = 2, M = 5)
+midt <- MIMFA(midt, ncomp=2, M=5)
 
 #-- default plot
 plotInd(midt)
 
 #-- with confidence ellipses
-plotInd(midt, conf.areas = "ellipse")
+plotInd(midt, confAreas="ellipse")
 
 #-- with convex hull areas
-plotInd(midt, conf.areas = "convex.hull")
+plotInd(midt, confAreas="convex.hull")
 }
 
 \keyword{hplot}

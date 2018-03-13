@@ -34,13 +34,13 @@ Ignacio González
 }
 
 \examples{
-comb <- expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
-                    sex = c("Male","Female"))
+comb <- expand.grid(height=seq(60, 80, 5), weight=seq(100, 300, 50),
+                    sex=c("Male","Female"))
 idx <- sample(nrow(comb), 1)
 comb[idx, ]
 
-searchsComb(list(height = seq(60, 80, 5), weight = seq(100, 300, 50),
-            sex = c("Male","Female")), idx)
+searchsComb(list(height=seq(60, 80, 5), weight=seq(100, 300, 50),
+            sex=c("Male","Female")), idx)
 }
 
 \keyword{utilities}

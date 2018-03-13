@@ -14,8 +14,8 @@ in data tables.
 }
 
 \usage{
-missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
-            legend.title = "Strata", miss.lab = "miss", show.plot = TRUE)
+missPattern(object, colStrata=NULL, colMissing="grey70", cexTtitle=12,
+            legTitle="Strata", missLab="miss", showPlot=TRUE)
 
 \method{print}{missPattern}(x, \ldots)
 }
@@ -26,20 +26,20 @@ missPattern(object, col.strata = NULL, col.missing = "grey70", cex.ttitle = 12,
 
     \item{x}{an object of class inheriting from \code{missPattern}}
 
-    \item{col.strata}{a character vector of the same length than the
+    \item{colStrata}{a character vector of the same length than the
         number of strata, containing the color names to be used to
         annotate the individuals per stratum.}
 
-    \item{col.missing}{the fill color for missing individuals (rows).}
+    \item{colMissing}{the fill color for missing individuals (rows).}
 
-    \item{cex.ttitle}{a positive number. The amount by which table
+    \item{cexTtitle}{a positive number. The amount by which table
         titles should be magnified.}
 
-    \item{legend.title}{character. The legend title.}
+    \item{legTitle}{character. The legend title.}
 
-    \item{miss.lab}{character. The label legend for missing rows.}
+    \item{missLab}{character. The label legend for missing rows.}
 
-    \item{show.plot}{logical. Whether the plot will be displayed. 
+    \item{showPlot}{logical. Whether the plot will be displayed. 
         Default is \code{TRUE}.}
 
     \item{\ldots}{not used currently.}
@@ -51,7 +51,7 @@ missing/available rows in each stratum per data table.
 Data tables are plotted separately on a same device showing
 the pattern of missingness. The individuals are colored according
 to their stratum whereas missing rows are specific
-colored (see \code{col.missing}).
+colored (see \code{colMissing}).
 }
 
 \value{
@@ -73,7 +73,7 @@ Ignacio González
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 
 #-- inspects pattern of missingness
 patt <- missPattern(midt)

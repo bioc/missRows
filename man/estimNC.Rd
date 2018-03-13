@@ -14,15 +14,15 @@ directly by a user.
 }
 
 \usage{
-estimNC(X, min.ncp = 0, max.ncp)
+estimNC(X, minNC=0, maxNC)
 }
 
 \arguments{
     \item{X}{a numeric matrix.}
 
-    \item{min.ncp}{minimum number of components to consider, by default 0.}
+    \item{minNC}{minimum number of components to consider, by default 0.}
 
-    \item{max.ncp}{maximum number of components to test.}
+    \item{maxNC}{maximum number of components to test.}
 }
 
 \details{
@@ -46,12 +46,12 @@ approximations.
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 
 #-- estimates the number of MFA components for data imputation
 #-- ncomp is chosen to being enough large
 \dontrun{
-midt <- MIMFA(midt, ncomp = 50, M = 10, estim.ncp = TRUE)
+midt <- MIMFA(midt, ncomp=50, M=10, estimNC=TRUE)
 midt}
 }
 

@@ -15,8 +15,7 @@ in MI-MFA.
 }
 
 \usage{
-tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10, 
-        tol = 1e-06, show.plot = TRUE)
+tuneM(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06, showPlot=TRUE)
 
 \method{print}{tuneM}(x, \ldots)
 }
@@ -29,7 +28,7 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10,
 
     \item{ncomp}{a number of components to include in MFA.}
 
-    \item{M.max}{an integer corresponding to the maximum number of 
+    \item{Mmax}{an integer corresponding to the maximum number of 
         imputed datasets. See Details.}
 
     \item{inc}{integer. The increment of the sequence for the
@@ -41,7 +40,7 @@ tuneM(object, ncomp = 2, M.max = 30, inc = 5, N = 10,
     \item{tol}{a positive value, the tolerance used for assessing 
         stabilization.}
 
-    \item{show.plot}{logical. If \code{TRUE} (the default) a plot 
+    \item{showPlot}{logical. If \code{TRUE} (the default) a plot 
         showing the stability of the estimated MFA configurations 
         is displayed.}
 
@@ -57,13 +56,13 @@ until the estimate compromise configurations are stabilized.
 
 \code{tuneM} function implements such a procedure. Collections 
 of size \code{N} are generated for each number of imputations 
-\code{M}, with \code{M = seq(inc, M.max, by = inc)}. The stability 
+\code{M}, with \code{M = seq(inc, Mmax, by = inc)}. The stability 
 of the estimated MI-MFA configurations is then determined by 
 calculating the RV coefficient between the configurations obtained 
 using \code{M}\eqn{_{\,l}}{_l} and \code{M}\eqn{_{\,l+1}}{_{l+1}} 
 imputations.
 
-If \code{show.plot = TRUE} a plot showing the stability of the 
+If \code{showPlot = TRUE} a plot showing the stability of the 
 estimated MFA configurations is displayed. The values shown are 
 the mean RV coefficients for the \code{N} configurations as a 
 function of the number of imputations. Error bars represent the 
@@ -97,11 +96,11 @@ Ignacio González, Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
 
 #-- tune the number of imputations
 \dontrun{
-tune <- tuneM(midt, ncomp = 2, M.max = 100, inc = 10, N = 10)
+tune <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=10)
 tune}
 }
 

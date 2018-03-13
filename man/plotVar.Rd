@@ -13,9 +13,9 @@ representation from \code{\link{MIMFA}} results.
 }
 
 \usage{
-plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
-        pch = 19, alpha = 0.7, spty = TRUE, cutoff = 0, rad.in = 0.5,
-        overlap = TRUE, ncols = 2, legend.title = "Tables")
+plotVar(object, comp =1:2, col=NULL, varNames=FALSE, cex=3,
+        pch=19, alpha=0.7, spty=TRUE, cutoff=0, radIn=0.5,
+        overlap=TRUE, ncols=2, legTitle="Tables")
 }
 
 \arguments{
@@ -31,7 +31,7 @@ plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
         character and symbols, it must be of length the total number 
         of data tables (see Details).}
 
-    \item{var.names}{either a character vector with data table 
+    \item{varNames}{either a character vector with data table 
         names, or \code{FALSE} for no plotting variable
         labels. If \code{TRUE}, the variable names in the data
         tables are used as variable labels in the plot. See Details.}
@@ -56,7 +56,7 @@ plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
     \item{cutoff}{a numeric between 0 and 1. Variables with correlations
         below this cutoff in absolute value are not plotted (see Details).}
 
-    \item{rad.in}{a numeric between 0 and 1, the radius of the inner circle.
+    \item{radIn}{a numeric between 0 and 1, the radius of the inner circle.
         Defaults to 0.5.}
 
     \item{overlap}{logical. Whether the variables in data tables should be
@@ -65,20 +65,20 @@ plotVar(object, comp = 1:2, col = NULL, var.names = FALSE, cex = 3,
     \item{ncols}{numeric. When \code{overlap = FALSE} subsequent figures will
         be drawn in a multipanel on the device with \code{ncols} columns.}
 
-    \item{legend.title}{character. The legend title.}
+    \item{legTitle}{character. The legend title.}
 }
 
 \details{
 \code{plotVar} produce a "correlation circle", \emph{i.e.} the 
 correlations between each variable and the selected components 
 are plotted as scatter plot, with concentric circles of radius 
-one and radius given by \code{rad.in}. Each point corresponds 
+one and radius given by \code{radIn}. Each point corresponds 
 to a variable.
 
-The \code{var.names} argument can be used in order to select a 
+The \code{varNames} argument can be used in order to select a 
 part of the data table variable labels that are drawn. For example 
 if you have data tables named \code{"table1"} and \code{"table2"}, 
-you can use \code{var.names = "table1"} and then the variable 
+you can use \code{varNames = "table1"} and then the variable 
 names in the \code{"table1"} are drawn.
 
 The arguments \code{cex} and \code{pch} can be either vectors 
@@ -109,18 +109,18 @@ Ignacio González
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line,
-                    tableNames = c("trans", "prote"))
+midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line,
+                    tableNames=c("trans", "prote"))
 
 #-- performs MIMFA
-midt <- MIMFA(midt, ncomp = 2, M = 5)
+midt <- MIMFA(midt, ncomp=2, M=5)
 
 #-- default plot
 plotVar(midt)
 
 #-- select data table variables to draw and cutoff
-plotVar(midt, var.names = "trans", cutoff = 0.55)
-plotVar(midt, var.names = TRUE, cutoff = 0.55)
+plotVar(midt, varNames="trans", cutoff=0.55)
+plotVar(midt, varNames=TRUE, cutoff=0.55)
 }
 
 \keyword{hplot}

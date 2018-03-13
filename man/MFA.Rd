@@ -14,7 +14,7 @@ is not usually called directly by a user.
 }
 
 \usage{
-MFA(dataTables, ncomp, nb.rows, nb.tables, nc.table)
+MFA(dataTables, ncomp, nbRows, nbTables, ncTables)
 }
 
 \arguments{
@@ -25,11 +25,11 @@ MFA(dataTables, ncomp, nb.rows, nb.tables, nc.table)
 
     \item{ncomp}{a number of components to include in MFA.}
 
-    \item{nb.rows}{a number of rows, equal for all data tables.}
+    \item{nbRows}{a number of rows, equal for all data tables.}
 
-    \item{nb.tables}{a number of data tables in \code{dataTables}.}
+    \item{nbTables}{a number of data tables in \code{dataTables}.}
 
-    \item{nc.table}{a vector containing the number of columns per data
+    \item{ncTables}{a vector containing the number of columns per data
         table.}
 }
 
@@ -61,8 +61,8 @@ data(NCI60)
 dataTables <- NCI60$completeData
 nc <- sapply(dataTables, ncol)
 
-mfa <- MFA(dataTables, ncomp = 3, nb.rows = nrow(dataTables[[1]]), 
-            nb.tables = length(dataTables), nc.table = nc)
+mfa <- MFA(dataTables, ncomp=3, nbRows=nrow(dataTables[[1]]), 
+            nbTables=length(dataTables), ncTable=nc)
 }
 
 \keyword{multivariate}
