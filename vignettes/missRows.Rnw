@@ -19,7 +19,7 @@ BiocStyle::latex()
 @
 
 <<setup, echo=FALSE>>=
-knitr::opts_chunk$set(message=FALSE, fig.align="center", comment = "")
+knitr::opts_chunk$set(message=FALSE, fig.align="center", comment="")
 @
 
 \bioctitle[Handling Missing Rows]{\Huge{missRows}\\[0.25cm]
@@ -35,26 +35,89 @@ Data Integration}}}}
 \maketitle
 
 \begin{abstract}
-In omics data integration studies, it is common, for a variety of reasons, 
-for some individuals to not be present in all data tables. Missing row values
-are challenging to deal with because most statistical methods cannot be
-directly applied to incomplete datasets. To overcome this issue, we propose 
-\Rpackage{missRows}...
+The \Rpackage{missRows} package implements the MI-MFA method to deal with
+missing rows in multi-omics data integration. The MI-MFA method generates
+multiple imputed (MI) datasets from a Multiple Factor Analysis (MFA) model,
+then the results yield are combined in a single consensus solution. The package
+provides functions for estimating coordinates of individuals and variables in
+presence of missing individuals (rows), and various diagnostic plots to inspect
+the pattern of missingness and visualize the uncertainty due to missing row
+values.
 \end{abstract}
 
 %\newpage
 \tableofcontents
 
-% path files
-%============
-% \graphicspath{{/home/igonzalez/Projets/Formation_ARNseq/Tutorial/figure/}}
-
-\newpage
+%\newpage
 %============================================================================
 \section{Introduction}
 %============================================================================
-\Rpackage{missRows} is an \R{} package that implements the MI-MFA approach
-\cite{Voillet_2016} ...
+In omics data integration studies, it is common, for a variety of reasons, 
+for some individuals to not be present in all data tables. Missing row values
+are challenging to deal with because most statistical methods cannot be
+directly applied to incomplete datasets. To overcome this issue, we propose
+\Rpackage{missRows}, an \R{} package that implements the MI-MFA method in
+\cite{Voillet_2016}, a multiple imputation (MI) approach in a multiple factor
+analysis (MFA) framework. MI was proposed by Rubin (1987) \cite{Rubin_2004} 
+in order to estimate both the parameters of interest and their variability in 
+a data missingness framework. It relies on the principle that a single value
+cannot reflect the uncertainty of the estimation of a missing value. 
+
+Figure~\ref{overview_method} illustrates the three main steps in MI-MFA:
+imputation, analysis and combination. \Rpackage{missRows} stores the results 
+of each step in a \Rcode{S4} class: \Rclass{MIDTList}. The top part of the
+graphic indicates that analysis starts with observed, incomplete data tables
+$\boldsymbol{K}$. First, MI is used to generate plausible synthetic data 
+values, called imputations, for missing values in the data. This step results
+in a number ($M$) of imputed datasets in which the missing data are replaced 
+by random draws of plausible values according to a specific statistical model.
+The second step consists of analyzing each imputed dataset using MFA to
+estimates the parameter of interest. This step results in $M$ analyses 
+(instead of just one) which differ only because the imputations differ. 
+Finally, MI combines all the results together to obtain a single consensus
+estimate, thereby combining variation within and across the $M$ imputed
+datasets. In \Rpackage{missRows} these three steps are being done by the
+ function \Rcode{MIMFA}, and are described in detail in the ``Methods
+behind \Rpackage{missRows}'' section.
+
+The package provides functions for data exploration and visualization of 
+the results. The structure of missing values can be explored using the
+\Rcode{missPattern} function. It can give to the user an indication on how 
+much information is missing and how the missingness is distributed. The
+\Rcode{plotInd} and \Rcode{plotVar} functions provides scatter plots for
+individuals and variables representation respectively.
+
+In the MI-MFA framework, after estimating the configurations from the imputed
+datasets, a new source of variability due to missing values can be taken into
+account. The \Rpackage{missRows} package propose two approaches to visualize
+the uncertainty of the estimated MFA configurations attributable to missing 
+row values: confidence ellipses and convex hulls. The function \Rcode{plotInd}
+contains methods implementing these two approaches.
+
+\begin{figure}[H]
+\begingroup
+\centering
+
+\includegraphics[scale=0.9]{fig_overview_MIMFA.pdf}
+
+\caption{\textbf{Overview of the MI-MFA approach to handling missing rows in
+multi-omics data integration.} The top part of the graphic indicates that
+analysis starts with observed, incomplete data tables $\boldsymbol{K}$. In a
+first step, multiple imputation is performed using the hot-deck imputation
+approach: $M$ imputed versions $\boldsymbol{K}^{(1)},\ldots ,
+\boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ are obtained by replacing the
+missing values by plausible data values. These plausible values are drawn 
+from donor pools. The imputed sets are identical for the non-missing data
+entries, but differ in the imputed values. The second step is to estimate the
+configuration matrix $\boldsymbol{F}_{\!m}$ for each imputed dataset 
+$\boldsymbol{K}^{(m)}$ using MFA. The estimated configurations differ from
+each other because their input data differ. The last step is to combine the
+$M$ estimated configurations $\boldsymbol{F}_{\!1},\ldots ,
+\boldsymbol{F}_{\!M}$ into a compromise configuration $\boldsymbol{F_{\!c}}$
+using the STATIS method.} \label{overview_method}
+
+\endgroup
+\end{figure}
 
 
 \subsection{Citing \Rpackage{missRows}}
@@ -282,7 +345,7 @@ midt
 @
 
 
-\subsection{Performing Multiple Imputation}
+\subsection{Performing Multiple Imputation in MFA}
 %============================================================================
 The main function for performing MI is \Rcode{MIMFA} and it has four main
 arguments. The first argument is an instance of class \Rclass{MIDTList}. 
@@ -369,11 +432,12 @@ Inspect the missingness pattern for the \Rcode{NCI60} incomplete data by
 patt <- missPattern(midt, colMissing = "grey70")
 @
 
-\Rcode{missPattern} calculate and plot the amount of missing/available rows 
-in each stratum per data table. Data tables are plotted separately on a same
-device showing the pattern of missingness. The individuals are colored with
-rapport to their stratum whereas missing rows are colored according to the
-\Rcode{colMissing} argument.
+\Rcode{missPattern} calculate the amount of missing/available rows 
+in each stratum per table and plots a missingness map showing where
+missingness occurs in the data tables. Data tables are plotted separately 
+on a same device showing the pattern of missingness. The individuals are
+colored with rapport to their stratum whereas missing rows are colored
+according to the \Rcode{colMissing} argument.
 
 The object \Rcode{patt} encapsulates information from  the structure of
 missingness, such as the the amount of missing/available rows in each 
@@ -412,7 +476,7 @@ plotInd(midt, colMissing = "white")
 %----------------------------------------------------------------------------
 Multiple imputation generates \Rcode{M} imputed datasets and the variance
 between-imputations reflects the uncertainty associated to the estimation of
-the missing row values. In the \Rpackage{missRows} package we propose two
+the missing row values. The \Rpackage{missRows} package propose two
 approaches to visualize and assess the uncertainty due to missing data:
 confidence ellipses and convex hulls.
 
@@ -502,7 +566,7 @@ configurations is then determined by calculating the RV coefficient between
 the configurations obtained using \Rcode{M}$_{\,l}$ and \Rcode{M}$_{\,l+1}$
 imputations. \medskip
 
-<<tuneM, echo=2:3, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
+<<tuneM, eval=FALSE, echo=2:3, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
 set.seed(1)
 res.tuneM <- tuneM(midt, ncomp = 2, Mmax = 100, inc = 10, N = 20)
 res.tuneM
@@ -540,34 +604,6 @@ the merged and weighted data matrix $\boldsymbol{K} = [\boldsymbol{K}_{\!1},
 \endgroup
 \end{figure}
 
-\subsection{Multiple Imputation Multiple Factor Analysis approach (MI-MFA)}
-%============================================================================
-
-\begin{figure}[H]
-\begingroup
-\centering
-
-\includegraphics[scale=0.9]{fig_overview_MIMFA.pdf}
-
-\caption{\textbf{Overview of our MI-MFA approach to handling missing rows in
-multi-omics data integration.} The top part of the graphic indicates that
-analysis starts with observed, incomplete data tables $\boldsymbol{K}$. In a
-second step, multiple imputation is performed using the hot-deck imputation
-approach: $M$ imputed versions $\boldsymbol{K}^{(1)},\ldots ,
-\boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ are obtained by replacing the
-missing values by plausible data values. These plausible values are drawn 
-from donor pools. The imputed sets are identical for the non-missing data
-entries, but differ in the imputed values. The third step is to estimate the
-configuration matrix $\boldsymbol{F}_{\!m}$ for each imputed dataset 
-$\boldsymbol{K}^{(m)}$ using MFA. The estimated configurations differ from
-each other because their input data differ. The last step is to combine the
-$M$ estimated configurations $\boldsymbol{F}_{\!1},\ldots ,
-\boldsymbol{F}_{\!M}$ into a compromise configuration 
-$\boldsymbol{F_{\!c}}$ using the STATIS method.}
-\label{overview_method}
-
-\endgroup
-\end{figure}
 
 \subsubsection{Generating imputed data: multiple hot-deck imputation}
 %----------------------------------------------------------------------------
