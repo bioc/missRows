@@ -91,8 +91,8 @@ estimates the parameter of interest. This step results in $M$ analyses
 Finally, MI combines all the results together to obtain a single consensus
 estimate, thereby combining variation within and across the $M$ imputed
 datasets. In \Rpackage{missRows} these three steps are being done by the
-function \Rcode{MIMFA}, and are described in detail in the ``Methods
-behind \Rpackage{missRows}'' section.
+function \Rcode{MIMFA}, and are described in detail in our publication
+(Voillet \textit{et al.} 2016, \cite{Voillet_2016}).
 
 The package provides functions for data exploration and visualization of 
 the results. The structure of missing values can be explored using the
@@ -152,12 +152,12 @@ x <- citation("missRows")
 
 \begin{center}
 \begin{minipage}{16cm}
-\Sexpr{x$textVersion}\bigskip
+Gonz{\'a}lez I., Voillet V. 
+\Sexpr{paste0("(", x$year, "). ", x$title, ". ", x$note, ".")} \bigskip
 
 Voillet V., Besse P., Liaubet L., San Cristobal M., Gonz{\'a}lez I. (2016).
 Handling missing rows in multi-omics data integration: Multiple Imputation 
-in Multiple Factor Analysis framework. \textit{BMC Bioinformatics}, 
-\textbf{17}(40).
+in Multiple Factor Analysis framework. \textit{BMC Bioinformatics}, 17(40).
 \end{minipage}
 \end{center}
 
@@ -363,7 +363,7 @@ midt
 @
 
 
-\subsection{Performing Multiple Imputation in MFA}
+\subsection{Performing MI-MFA}
 %============================================================================
 The main function for performing MI is \Rcode{MIMFA} and it has four main
 arguments. The first argument is an instance of class \Rclass{MIDTList}. 
@@ -375,9 +375,10 @@ maximum number of components is determined by the second argument
 \Rcode{ncomp}.
 
 We then performs MI-MFA on the incomplete data tables contained in 
-\Rcode{midt} by using \Rcode{M = 30} imputed \medskip
+\Rcode{midt} by using \Rcode{M=30} imputations \medskip
 
-<<MIMFA>>=
+<<MIMFA, echo=2>>=
+set.seed(123)
 midt <- MIMFA(midt, ncomp=50, M=30, estimeNC=TRUE)
 @
 
@@ -412,7 +413,7 @@ table(cell.line)
 
 Multiple imputation calculates \Rcode{M} configurations associated to each
 imputed datasets. In order to get the \Rcode{M}th configuration, use the
-\Rcode{configurations} function. For \Rcode{M = 5}, \medskip
+\Rcode{configurations} function. For \Rcode{M=5}, \medskip
 
 <<MthConf>>=
 conf <- configurations(midt, M=5)
@@ -579,7 +580,7 @@ configurations are stabilized.
 
 \Rcode{tuneM} function implements such a procedure. Collections of size
 \Rcode{N} are generated for each number of imputations \Rcode{M}, with
-\Rcode{M = seq(inc, Mmax, by = inc)}. The stability of the estimated MI-MFA
+\Rcode{M = seq(inc, Mmax, by=inc)}. The stability of the estimated MI-MFA
 configurations is then determined by calculating the RV coefficient between
 the configurations obtained using \Rcode{M}$_{\,l}$ and \Rcode{M}$_{\,l+1}$
 imputations. \medskip
@@ -590,73 +591,48 @@ res.tuneM <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=20)
 res.tuneM
 @
 
-The values shown are the mean RV coefficients for the \Rcode{N = 20} 
+The values shown are the mean RV coefficients for the \Rcode{N=20} 
 two-dimensional configurations as a function of the number of imputations.
 Error bars represent the standard deviation of the RV coefficients.
 
-
+\newpage
 %============================================================================
 \section{Methods behind \Rpackage{missRows}}
 %============================================================================
 
-\subsection{Multiple Factor Analysis (MFA)}
+\subsection{The MI-MFA approach}
 %============================================================================
+To deal with multiple tables with missing rows, \Rpackage{missRows} implements
+the MI-MFA method in \cite{Voillet_2016}, a multiple imputation approach in a
+multiple factor analysis framework. According to MI methodology, the MI-MFA
+approach is carried out by performing the following three steps: \smallskip
+\begin{center}
+\begin{minipage}{15cm}
 
-\begin{figure}[H]
-\begingroup
-\centering
+Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},\ldots ,\boldsymbol{K}_{\!J}\}$ a
+set of $J$ data tables, where each $\boldsymbol{K}_{\!j}$ corresponds to a 
+table of quantitative variables measured on the same individuals.\medskip
 
-\includegraphics[scale=0.95]{fig_overview_MFA.pdf}
+\begin{itemize}
+ \item[1.] Imputation: generate $M$ different imputed datasets 
+ $\boldsymbol{K}^{(1)},\ldots ,\boldsymbol{K}^{(m)},\ldots ,
+ \boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$.\medskip
+ 
+ \item[2.] MFA analysis: perform an MFA on each $\boldsymbol{K}^{(m)}$ imputed
+ dataset leading to $M$ different configurations $\boldsymbol{F}_{\!1},
+ \dots ,\boldsymbol{F}_{\!m},\dots ,\boldsymbol{F}_{\!M}$.\medskip
+  
+ \item[3.] Combination: find a consensus configuration between all 
+ $\boldsymbol{F}_{\!1},\dots ,\boldsymbol{F}_{\!M}$ configurations
+ using the STATIS method.\medskip
+\end{itemize}
 
-\caption{\textbf{Schematic overview of Multiple Factor Analysis.} (i) MFA
-analyzes a set of $J$-data tables, where each $\boldsymbol{K}_{\!j}$ 
-corresponds to an omics table of quantitative variables measured on the 
-same $I$ individuals. (ii) $J$ separate PCA are executed on each data table
-$\boldsymbol{K}_{\!j}$ and its largest eigenvalue $\lambda_1^j$ is derived.
-Then, each variable belonging to $\boldsymbol{K}_{\!j}$ is weighted by 
-$1/\sqrt{\lambda_1^j}$. (iii) A global analysis (PCA) is then performed on 
-the merged and weighted data matrix $\boldsymbol{K} = [\boldsymbol{K}_{\!1},
-\ldots, \boldsymbol{K}_{\!J}]$.}
-\label{overview_MFA}
+\end{minipage}
+\end{center}
 
-\endgroup
-\end{figure}
+These steps are outlined in Figure~\ref{overview_method} and described in
+detail in our publication (Voillet \textit{et al.} 2016, \cite{Voillet_2016}).
 
-
-\subsubsection{Generating imputed data: multiple hot-deck imputation}
-%----------------------------------------------------------------------------
-
-%\newpage
-\subsubsection{The combination procedure: the STATIS method}
-%============================================================================
-
-\begin{figure}[H]
-\begingroup
-\centering
-
-\includegraphics[scale=0.95]{fig_overview_STATIS.pdf}
-
-\caption{\textbf{Schematic overview of STATIS.} The top-left part of the
-graphic indicates that the method starts with a set of $N$ data tables
-$\boldsymbol{X}_{\!1},\ldots ,\boldsymbol{X}_{\!N}$, where each 
-$\boldsymbol{X}_{\!n}$ is a data table of quantitative variables on the same
-$I$ individuals. The first stage of STATIS consists of calculating a matrix 
-of cross-products between individuals for each table $\boldsymbol{W}_{\!\!n} 
-= \boldsymbol{X}_{\!n} \boldsymbol{X}_{\!n}^T$ reflecting the similarities
-between individuals within this table. Second, a distance matrix 
-$\boldsymbol{R}$ between the $\boldsymbol{W}_{\!\!n}$ is calculated. Third,
-the matrix $\boldsymbol{R}$ is diagonalized using PCA and the first 
-eigenvector is derived. Finally, STATIS finds the compromise space 
-$\boldsymbol{W_{\!c}} = \sum_{n=1}^N \alpha_n \boldsymbol{W}_{\!\!n}$ by a
-suitable optimal set of weights $\alpha_1,\ldots ,\alpha_N$. These weights 
-are obtained from coefficients of the first eigenvector ($\mbox{PC}_1$) of 
-the diagonalization of the matrix $\boldsymbol{R}$. The PCA of 
-$\boldsymbol{W_{\!c}}$ then gives the coordinates of the individuals in the
-compromise space -- the \textit{compromise} configuration.}
-\label{overview_STATIS}
-
-\endgroup
-\end{figure}
 
 \subsection{Imputation of missing rows and estimation of MFA axes}
 %============================================================================
@@ -667,51 +643,68 @@ as a single imputation method. Moreover, since the imputation is based on a
 MFA model (on the components and axes), it takes into account similarities
 between individuals and relationships between variables.
 
-Since the core of MFA is a PCA of the weighted data table $K$, the algorithm
-suggested to estimate MFA axes and impute missing values is inspired from the
-alternating least squares algorithm used in PCA. This consists in finding
-matrices $F$ and $U$ which minimize the following criterion:
-$$||K-M-FU||^2 = \sum_{i}\sum_{k}\left( K_{ik} - M_{ik} - 
-\sum_{d=1}^D F_{id} U_{kd} \right)^2,$$
+Since the core of MFA is a PCA of the weighted data table $\boldsymbol{K}$, 
+the algorithm suggested to estimate MFA axes and impute missing values is
+inspired from the alternating least squares algorithm used in PCA. This
+consists in finding matrices $\boldsymbol{F}$ and $\boldsymbol{U}$ which
+minimize the following criterion:
+$$||\boldsymbol{K}-\boldsymbol{M}-\boldsymbol{F}\boldsymbol{U}||^2 = 
+\sum_{i}\sum_{k}\left( \boldsymbol{K}_{ik} - \boldsymbol{M}_{ik} - 
+\sum_{d=1}^D \boldsymbol{F}_{id} \boldsymbol{U}_{kd} \right)^2,$$
 
-\noindent where $M$ is a matrix with each row equal to a vector of the mean 
-of each variable and $D$ is the kept dimensions in PCA. The solution is
-obtained by alternating two multiple regressions until convergence, one for
-estimating axes (loadings $\hat{U}$) and one for components 
-(scores $\hat{F}$):
+\noindent where $\boldsymbol{M}$ is a matrix with each row equal to a vector 
+of the mean of each variable and $D$ is the kept dimensions in PCA. 
+The solution is obtained by alternating two multiple regressions until
+convergence, one for estimating axes (loadings $\hat{\boldsymbol{U}}$) and 
+one for components (scores $\hat{\boldsymbol{F}}$):
 $$
 \begin{array}{rcl}
-    \hat{U}' & = & (\hat{F}'\hat{F})^{-1}\hat{F}'(K-\hat{M})\\
-    \hat{F} & = & (K-\hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
+    \hat{\boldsymbol{U}}' \!\!\!& = &\!\!\!
+    (\hat{\boldsymbol{F}}'\hat{\boldsymbol{F}})^{-1}
+    \hat{\boldsymbol{F}}'(\boldsymbol{K}-\hat{\boldsymbol{M}})\\ \\
+    \hat{\boldsymbol{F}} \!\!\!& = &\!\!\!
+    (\boldsymbol{K}-\hat{\boldsymbol{M}})\hat{\boldsymbol{U}}
+    (\hat{\boldsymbol{U}}'\hat{\boldsymbol{U}})^{-1}.
 \end{array}
 $$
 
 The algorithm to estimate MFA axes and impute missing values works as follows.
-Let $K = [K_1,\ldots, K_J]$ the merged matrix containing missing values and
-$F$ the matrix containing the compromise components of the MI-MFA, then carry
-out the following steps: \smallskip
+Let $\boldsymbol{K} = [\boldsymbol{K}_1,\ldots, \boldsymbol{K}_J]$ the merged
+matrix containing missing values and $\boldsymbol{F}$ the matrix containing 
+the compromise components of the MI-MFA, then carry out the following 
+steps: \smallskip
+
+\begin{center}
+\begin{minipage}{15.5cm}
 
 \begin{description}
-    \item[] Step 0. Initialization $l = 0$: $K^0$ is obtained by substituting
-    missing values with initial values (for example with column means on the
-    non-missing entries); $\hat{M}^0$ is computed.\smallskip
+    \item[] Step 0. Initialization $l = 0$: $\boldsymbol{K}^0$ is obtained by
+    substituting missing values with initial values (for example with column
+    means on the non-missing entries or zeros); $\hat{\boldsymbol{M}}^0$ is
+    computed.\medskip
 
-    \item[] Step 1. Calculate $(\hat{U}^l)' = (F'F)^{-1} F'(K^{(l-1)} -
-    \hat{M}^{(l-1)})$ and force orthonormality of the vector columns of
-    $\hat{U}^l$.\smallskip
+    \item[] Step 1. Calculate $(\hat{\boldsymbol{U}}^l)' = 
+    (\boldsymbol{F}'\boldsymbol{F})^{-1} \boldsymbol{F}'
+    (\boldsymbol{K}^{(l-1)} - \hat{\boldsymbol{M}}^{(l-1)})$.\medskip
 
     \item[] Step 2. Missing values are estimated as 
-    $\hat{K}^l = \hat{M}^{(l-1)} + F(\hat{U}^l)'$.\smallskip
+    $\hat{\boldsymbol{K}}^l = \hat{\boldsymbol{M}}^{(l-1)} + 
+    \boldsymbol{F}(\hat{\boldsymbol{U}}^l)'$.\medskip
 
-    \item[] Step 3. The new imputed data set $K^l$ is obtained by replacing
-    the missing values of the original $K$ matrix with the corresponding
-    elements of $\hat{K}^l$, whilst keeping the observed values unaltered.
-    \smallskip
+    \item[] Step 3. The new imputed data set $\boldsymbol{K}^l$ is obtained 
+    by replacing the missing values of the original $K$ matrix with the
+    corresponding elements of $\hat{\boldsymbol{K}}^l$, whilst keeping the
+    observed values unaltered.\medskip
 
-    \item[] Step 4. $\hat{M}^l$ is computed on $K^l$.\smallskip
+    \item[] Step 4. $\hat{\boldsymbol{M}}^l$ is computed on 
+    $\boldsymbol{K}^l$.\medskip
 
     \item[] Step 5. Steps 1 to 4 are repeated until convergence.
 \end{description}
+
+\end{minipage}
+\end{center}
+
 
 \newpage
 %============================================================================
