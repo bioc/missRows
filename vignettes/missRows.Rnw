@@ -35,14 +35,21 @@ Data Integration}}}}
 \maketitle
 
 \begin{abstract}
-The \Rpackage{missRows} package implements the MI-MFA method to deal with
-missing rows in multi-omics data integration. The MI-MFA method generates
-multiple imputed (MI) datasets from a Multiple Factor Analysis (MFA) model,
-then the results yield are combined in a single consensus solution. The package
-provides functions for estimating coordinates of individuals and variables in
-presence of missing individuals (rows), and various diagnostic plots to inspect
-the pattern of missingness and visualize the uncertainty due to missing row
-values.
+In omics data integration studies, it is common, for a variety of reasons, 
+for some individuals to not be present in all data tables. Missing row values
+are challenging to deal with because most statistical methods cannot be
+directly applied to incomplete datasets. To overcome this issue, we propose 
+\Rpackage{missRows}, an \R{} package that implements the MI-MFA method in
+Voillet \textit{et al.} (2016) \cite{Voillet_2016}, a multiple imputation (MI)
+approach in a multiple factor analysis (MFA) framework. The MI-MFA method
+generates multiple imputed datasets from a multiple factor analysis 
+model, then the results yield are combined in a single consensus solution. 
+The package provides functions for estimating coordinates of individuals and
+variables in presence of missing individuals (rows), graphical outputs to
+display the results and improve interpretation, and various diagnostic plots 
+to inspect the pattern of missingness and visualize the uncertainty due to
+missing row values. This vignette explains the use of the package and 
+demonstrates typical workflows.
 \end{abstract}
 
 %\newpage
@@ -52,10 +59,17 @@ values.
 %============================================================================
 \section{Introduction}
 %============================================================================
-In omics data integration studies, it is common, for a variety of reasons, 
-for some individuals to not be present in all data tables. Missing row values
-are challenging to deal with because most statistical methods cannot be
-directly applied to incomplete datasets. To overcome this issue, we propose
+Due to the increase in available data information, integrating large amounts 
+of heterogeneous data is currently one of the major challenges in systems
+biology. Biological data integration provides scientists with a deeper insight
+into complex biological processes. However, when dealing with multiple data
+tables, the presence of missing values is a common situation for a variety of
+reasons. In omics data integration studies, it is common for some individuals
+to not be present in all data tables, resulting in a specific missing data
+pattern for multiple tables. Missing row values for a table of variables are
+challenging to handle because most statistical methods cannot be directly
+applied to incomplete datasets. To overcome one of the major 
+issues associated with multiple omics data tables, we propose 
 \Rpackage{missRows}, an \R{} package that implements the MI-MFA method in
 \cite{Voillet_2016}, a multiple imputation (MI) approach in a multiple factor
 analysis (MFA) framework. MI was proposed by Rubin (1987) \cite{Rubin_2004} 
@@ -77,7 +91,7 @@ estimates the parameter of interest. This step results in $M$ analyses
 Finally, MI combines all the results together to obtain a single consensus
 estimate, thereby combining variation within and across the $M$ imputed
 datasets. In \Rpackage{missRows} these three steps are being done by the
- function \Rcode{MIMFA}, and are described in detail in the ``Methods
+function \Rcode{MIMFA}, and are described in detail in the ``Methods
 behind \Rpackage{missRows}'' section.
 
 The package provides functions for data exploration and visualization of 
@@ -93,6 +107,10 @@ account. The \Rpackage{missRows} package propose two approaches to visualize
 the uncertainty of the estimated MFA configurations attributable to missing 
 row values: confidence ellipses and convex hulls. The function \Rcode{plotInd}
 contains methods implementing these two approaches.
+
+This vignette explains the basics of using \Rpackage{missRows} by showing an
+example analysis including advanced material for fine tuning some options. 
+The vignette also includes description of the methods behind the package.
 
 \begin{figure}[H]
 \begingroup
@@ -173,10 +191,10 @@ stratum for each individual is stored in a data frame \Rcode{df}. \medskip
 
 <<quickStart, eval=FALSE>>=
 ## Data preparation
-midt <- newMIDTList(table1, table2, strata = df)
+midt <- newMIDTList(table1, table2, strata=df)
 
 ## Performing MI
-midt <- MIMFA(midt, ncomp = 2, M = 30)
+midt <- MIMFA(midt, ncomp=2, M=30)
 
 ## Analysis of the results
 plotInd(midt)
@@ -315,8 +333,8 @@ cell line, then a \Rclass{MIDTList} object can be created by \medskip
 tableList <- NCI60$incompleteData
 cell.line <- NCI60$cell.line
 
-midt <- newMIDTList(tableList, strata = cell.line, 
-                    tableNames = c("trans", "prote"))
+midt <- newMIDTList(tableList, strata=cell.line, 
+                    tableNames=c("trans", "prote"))
 @
 
 The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from
@@ -326,15 +344,15 @@ separated data tables directly by \medskip
 table1 <- NCI60$incompleteData$trans
 table2 <- NCI60$incompleteData$prote
 
-midt <- newMIDTList(table1, table2, strata = NCI60$cell.line,
-                    tableNames = c("trans", "prote"))
+midt <- newMIDTList(table1, table2, strata=NCI60$cell.line,
+                    tableNames=c("trans", "prote"))
 @
 
 or by \medskip
 
 <<sepMIDTList2>>=
 midt <- newMIDTList("trans" = table1, "prote" = table2,
-                    strata = NCI60$cell.line)
+                    strata=NCI60$cell.line)
 @
 
 A summary of the \Rcode{midt} object can be seen by typing the object name 
@@ -360,7 +378,7 @@ We then performs MI-MFA on the incomplete data tables contained in
 \Rcode{midt} by using \Rcode{M = 30} imputed \medskip
 
 <<MIMFA>>=
-midt <- MIMFA(midt, ncomp = 50, M = 30, estimeNC = TRUE)
+midt <- MIMFA(midt, ncomp=50, M=30, estimeNC=TRUE)
 @
 
 \Rcode{MIMFA} returns an object of class \Rclass{MIDTList}. A short summary 
@@ -397,7 +415,7 @@ imputed datasets. In order to get the \Rcode{M}th configuration, use the
 \Rcode{configurations} function. For \Rcode{M = 5}, \medskip
 
 <<MthConf>>=
-conf <- configurations(midt, M = 5)
+conf <- configurations(midt, M=5)
 dim(conf)
 @
 
@@ -429,7 +447,7 @@ Inspect the missingness pattern for the \Rcode{NCI60} incomplete data by
 \medskip
 
 <<missingPattern, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-patt <- missPattern(midt, colMissing = "grey70")
+patt <- missPattern(midt, colMissing="grey70")
 @
 
 \Rcode{missPattern} calculate the amount of missing/available rows 
@@ -468,7 +486,7 @@ imputed individuals are colored according to the \Rcode{colMissing}
 argument. \medskip
 
 <<plotInd, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotInd(midt, colMissing = "white")
+plotInd(midt, colMissing="white")
 @
 
 
@@ -491,7 +509,7 @@ Confidence ellipses can be created using the function \Rcode{plotInd} by
 setting the \Rcode{confAreas} argument to \Rcode{'ellipse'} \medskip
 
 <<plotInd-ellipses, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotInd(midt, confAreas = 'ellipse', confLevel = 0.95)
+plotInd(midt, confAreas="ellipse", confLevel=0.95)
 @
 
 The 95\% confidence ellipses show the uncertainty for each individual. For
@@ -502,7 +520,7 @@ Convex hulls are plotted by setting the \Rcode{confAreas} argument to
 \Rcode{'convex.hull'} \medskip
 
 <<plotInd-convexhull, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotInd(midt, confAreas = 'convex.hull')
+plotInd(midt, confAreas="convex.hull")
 @
 
 These graphical representations provide scientists with considerable guidance
@@ -521,7 +539,7 @@ Variables are represented by points (symbols) and colored according to the
 data table to which they belong. \medskip
 
 <<plotVar, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotVar(midt, radIn = 0.5)
+plotVar(midt, radIn=0.5)
 @
 
 This plot is an enlightening tool for data interpretation, as it enables a
@@ -541,7 +559,7 @@ between variables from two or more data tables can be difficult, and a
 \Rcode{cutoff} can be chosen to remove some weaker associations. \medskip
 
 <<plotVar-cutoff, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotVar(midt, radIn = 0.5, varNames = TRUE, cutoff = 0.55)
+plotVar(midt, radIn=0.5, varNames=TRUE, cutoff=0.55)
 @
 
 
@@ -568,7 +586,7 @@ imputations. \medskip
 
 <<tuneM, eval=FALSE, echo=2:3, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
 set.seed(1)
-res.tuneM <- tuneM(midt, ncomp = 2, Mmax = 100, inc = 10, N = 20)
+res.tuneM <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=20)
 res.tuneM
 @
 
