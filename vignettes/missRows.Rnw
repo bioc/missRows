@@ -644,21 +644,6 @@ Error bars represent the standard deviation of the RV coefficients.
 
 \subsection{The MI-MFA approach}
 %============================================================================
- Multiple  hot-deck  imputation  proceeds  as  follows.  Let
-K
-= [
-K
-1
-,...,
-K
-J
-] be the merged data table containing missing rows with strata
-s
-= 1
-,...,S
-, then carry out the following steps 
-
-
 To deal with multiple tables with missing rows, \Rpackage{missRows} implements
 the MI-MFA method in \cite{Voillet_2016}, a multiple imputation approach in a
 multiple factor analysis framework. According to MI methodology, the MI-MFA
