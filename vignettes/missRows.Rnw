@@ -164,6 +164,36 @@ in Multiple Factor Analysis framework. \textit{BMC Bioinformatics}, 17(40).
 
 \subsection{How to get help for \Rpackage{missRows}}
 %============================================================================
+Most questions about individual functions will hopefully be answered by the
+documentation. To get more information on any specific named function, for
+example \Rcode{MIMFA}, you can bring up the documentation by typing at the 
+\R{} prompt \medskip
+
+<<eval=FALSE>>=
+help("MIMFA")
+@
+
+or \medskip
+
+<<eval=FALSE>>=
+?MIMFA
+@
+
+The authors of \Rpackage{missRows} always appreciate receiving reports 
+of bugs in the package functions or in the documentation. The same goes 
+for well-considered suggestions for improvements. If you've run into a 
+question that isn't addressed by the documentation, or you've found a 
+conflict between the documentation and what the software does, then there 
+is an active community that can offer help. Send your questions or problems
+concerning \Rpackage{missRows} to the Bioconductor support site at 
+\url{https://support.bioconductor.org}. 
+
+Please send requests for general assistance and advice to the support site,
+rather than to the individual authors. It is particularly critical that you
+provide a small reproducible example and your session information so package
+developers can track down the source of the error. Users posting to the 
+support site for the first time will find it helpful to read the posting 
+guide at \url{http://www.bioconductor.org/help/support/posting-guide}.
 
 
 \subsection{Quick start}
@@ -425,7 +455,6 @@ The list of the imputed data tables can be exported by the function
 
 <<imputData>>=
 completeData <- imputedData(midt)
-str(completeData)
 @
 
 
@@ -452,8 +481,8 @@ patt <- missPattern(midt, colMissing="grey70")
 @
 
 \Rcode{missPattern} calculate the amount of missing/available rows 
-in each stratum per table and plots a missingness map showing where
-missingness occurs in the data tables. Data tables are plotted separately 
+in each stratum per data table and plots a missingness map showing where
+missingness occurs. Data tables are plotted separately 
 on a same device showing the pattern of missingness. The individuals are
 colored with rapport to their stratum whereas missing rows are colored
 according to the \Rcode{colMissing} argument.
@@ -486,7 +515,7 @@ color of each individual reflects their corresponding stratum, whereas
 imputed individuals are colored according to the \Rcode{colMissing} 
 argument. \medskip
 
-<<plotInd, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
+<<plotInd, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotInd(midt, colMissing="white")
 @
 
@@ -507,9 +536,9 @@ Confidence ellipses and convex hulls can be then constructed for the
 results in a polygon containing all \Rcode{M} solutions.
 
 Confidence ellipses can be created using the function \Rcode{plotInd} by
-setting the \Rcode{confAreas} argument to \Rcode{'ellipse'} \medskip
+setting the \Rcode{confAreas} argument to \Rcode{"ellipse"} \medskip
 
-<<plotInd-ellipses, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
+<<plotInd-ellipses, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotInd(midt, confAreas="ellipse", confLevel=0.95)
 @
 
@@ -518,9 +547,9 @@ ease of understanding, not all individuals for the \Rcode{M} configurations
 obtained are plotted.
 
 Convex hulls are plotted by setting the \Rcode{confAreas} argument to
-\Rcode{'convex.hull'} \medskip
+\Rcode{"convex.hull"} \medskip
 
-<<plotInd-convexhull, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
+<<plotInd-convexhull, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotInd(midt, confAreas="convex.hull")
 @
 
@@ -539,7 +568,7 @@ with concentric circles of radius one and radius given by \Rcode{radIn}.
 Variables are represented by points (symbols) and colored according to the
 data table to which they belong. \medskip
 
-<<plotVar, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
+<<plotVar, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotVar(midt, radIn=0.5)
 @
 
@@ -559,8 +588,8 @@ In the high dimensional case, the interpretation of the correlation structure
 between variables from two or more data tables can be difficult, and a
 \Rcode{cutoff} can be chosen to remove some weaker associations. \medskip
 
-<<plotVar-cutoff, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
-plotVar(midt, radIn=0.5, varNames=TRUE, cutoff=0.55)
+<<plotVar-cutoff, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
+plotVar(midt, radIn=0.55, varNames=TRUE, cutoff=0.55)
 @
 
 
@@ -585,17 +614,29 @@ configurations is then determined by calculating the RV coefficient between
 the configurations obtained using \Rcode{M}$_{\,l}$ and \Rcode{M}$_{\,l+1}$
 imputations. \medskip
 
-<<tuneM, eval=FALSE, echo=2:3, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
+<<tuneM, echo=FALSE>>=
 set.seed(1)
-res.tuneM <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=20)
-res.tuneM
+tune <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=20, showPlot=FALSE)
+@
+
+<<eval=FALSE>>=
+tune <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=20)
+tune
+@
+
+<<echo=FALSE>>=
+tune
+@
+
+<<echo=FALSE, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
+tune$ggp
 @
 
 The values shown are the mean RV coefficients for the \Rcode{N=20} 
 two-dimensional configurations as a function of the number of imputations.
 Error bars represent the standard deviation of the RV coefficients.
 
-\newpage
+
 %============================================================================
 \section{Methods behind \Rpackage{missRows}}
 %============================================================================
@@ -712,9 +753,9 @@ steps: \smallskip
 %============================================================================
 The following is the session info that generated this tutorial: \medskip
 
-% <<session-info, echo=FALSE>>=
-% sessionInfo()
-% @
+<<session-info, echo=FALSE>>=
+sessionInfo()
+@
 
 \newpage
 %============================================================================
