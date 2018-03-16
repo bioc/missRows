@@ -46,12 +46,12 @@ missPattern(object, colStrata=NULL, colMissing="grey70", cexTtitle=12,
 }
 
 \details{
-\code{missPattern} calculates and plots the amount of
-missing/available rows in each stratum per data table.
-Data tables are plotted separately on a same device showing
-the pattern of missingness. The individuals are colored according
-to their stratum whereas missing rows are specific
-colored (see \code{colMissing}).
+\code{missPattern} calculate the amount of missing/available rows 
+in each stratum per data table and plots a missingness map showing where
+missingness occurs. Data tables are plotted separately on a same device 
+showing the pattern of missingness. The individuals are colored according
+to their stratum whereas missing rows are specific colored 
+(see \code{colMissing}).
 }
 
 \value{
