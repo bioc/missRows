@@ -16,7 +16,7 @@ Description: The missRows package implements the MI-MFA method to deal with
 License: Artistic-2.0
 Depends: methods, gtools, plyr, ggplot2, stats, grDevices
 VignetteBuilder: knitr
-Suggests: BiocStyle, knitr
+Suggests: BiocStyle, knitr, testthat
 biocViews: 
     Software, 
     StatisticalMethod, 
