@@ -657,18 +657,19 @@ steps: \smallskip
 \begin{minipage}{15cm}
 
 \begin{itemize}
- \item[1.] Imputation: generate $M$ different imputed datasets 
- $\boldsymbol{K}^{(1)},\ldots ,\boldsymbol{K}^{(m)},\ldots ,
- \boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ using multiple hot-deck 
- imputation \cite{Kalton_1986}.\medskip
- 
- \item[2.] MFA analysis: perform an MFA on each $\boldsymbol{K}^{(m)}$ imputed
- dataset leading to $M$ different configurations $\boldsymbol{F}_{\!1},
- \dots ,\boldsymbol{F}_{\!m},\dots ,\boldsymbol{F}_{\!M}$.\medskip
-  
- \item[3.] Combination: find a consensus configuration between all 
- $\boldsymbol{F}_{\!1},\dots ,\boldsymbol{F}_{\!M}$ configurations
- using the STATIS method \cite{Lavit_1994}.\medskip
+    \item[1.] Imputation: generate $M$ different imputed datasets 
+    $\boldsymbol{K}^{(1)},\ldots ,\boldsymbol{K}^{(m)},\ldots ,
+    \boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ using multiple hot-deck 
+    imputation \cite{Kalton_1986}.\medskip
+
+    \item[2.] MFA analysis: perform an MFA on each $\boldsymbol{K}^{(m)}$
+    imputed dataset leading to $M$ different configurations 
+    $\boldsymbol{F}_{\!1}, \dots ,\boldsymbol{F}_{\!m},\dots ,
+    \boldsymbol{F}_{\!M}$.\medskip
+
+    \item[3.] Combination: find a consensus configuration between all 
+    $\boldsymbol{F}_{\!1},\dots ,\boldsymbol{F}_{\!M}$ configurations
+    using the STATIS method \cite{Lavit_1994}.\medskip
 \end{itemize}
 
 \end{minipage}
