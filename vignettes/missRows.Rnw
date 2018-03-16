@@ -72,7 +72,8 @@ applied to incomplete datasets. To overcome one of the major
 issues associated with multiple omics data tables, we propose 
 \Rpackage{missRows}, an \R{} package that implements the MI-MFA method in
 \cite{Voillet_2016}, a multiple imputation (MI) approach in a multiple factor
-analysis (MFA) framework. MI was proposed by Rubin (1987) \cite{Rubin_2004} 
+analysis (MFA, \cite{Escofier_1994}) framework. 
+MI was proposed by Rubin (1987) \cite{Rubin_2004} 
 in order to estimate both the parameters of interest and their variability in 
 a data missingness framework. It relies on the principle that a single value
 cannot reflect the uncertainty of the estimation of a missing value. 
@@ -643,21 +644,38 @@ Error bars represent the standard deviation of the RV coefficients.
 
 \subsection{The MI-MFA approach}
 %============================================================================
+ Multiple  hot-deck  imputation  proceeds  as  follows.  Let
+K
+= [
+K
+1
+,...,
+K
+J
+] be the merged data table containing missing rows with strata
+s
+= 1
+,...,S
+, then carry out the following steps 
+
+
 To deal with multiple tables with missing rows, \Rpackage{missRows} implements
 the MI-MFA method in \cite{Voillet_2016}, a multiple imputation approach in a
 multiple factor analysis framework. According to MI methodology, the MI-MFA
-approach is carried out by performing the following three steps: \smallskip
+proceeds as follows. Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},\ldots ,
+\boldsymbol{K}_{\!J}\}$ a set of $J$ data tables, where each 
+$\boldsymbol{K}_{\!j}$ corresponds to a table of quantitative variables
+measured on the same individuals, then carry out the following three 
+steps: \smallskip
+
 \begin{center}
 \begin{minipage}{15cm}
-
-Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},\ldots ,\boldsymbol{K}_{\!J}\}$ a
-set of $J$ data tables, where each $\boldsymbol{K}_{\!j}$ corresponds to a 
-table of quantitative variables measured on the same individuals.\medskip
 
 \begin{itemize}
  \item[1.] Imputation: generate $M$ different imputed datasets 
  $\boldsymbol{K}^{(1)},\ldots ,\boldsymbol{K}^{(m)},\ldots ,
- \boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$.\medskip
+ \boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ using multiple hot-deck 
+ imputation \cite{Kalton_1986}.\medskip
  
  \item[2.] MFA analysis: perform an MFA on each $\boldsymbol{K}^{(m)}$ imputed
  dataset leading to $M$ different configurations $\boldsymbol{F}_{\!1},
@@ -665,7 +683,7 @@ table of quantitative variables measured on the same individuals.\medskip
   
  \item[3.] Combination: find a consensus configuration between all 
  $\boldsymbol{F}_{\!1},\dots ,\boldsymbol{F}_{\!M}$ configurations
- using the STATIS method.\medskip
+ using the STATIS method \cite{Lavit_1994}.\medskip
 \end{itemize}
 
 \end{minipage}
