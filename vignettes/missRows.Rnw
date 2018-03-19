@@ -36,18 +36,18 @@ Data Integration}}}}
 
 \begin{abstract}
 In omics data integration studies, it is common, for a variety of reasons, 
-for some individuals to not be present in all data tables. Missing row values
-are challenging to deal with because most statistical methods cannot be
+for some individuals to not be present in all data tables. Missing row values 
+are challenging to deal with because most statistical methods cannot be 
 directly applied to incomplete datasets. To overcome this issue, we propose 
 \Rpackage{missRows}, an \R{} package that implements the MI-MFA method published 
-in Voillet \textit{et al.} (2016) \cite{Voillet_2016}, a multiple imputation (MI)
-approach in a multiple factor analysis (MFA) framework. The MI-MFA method
-generates multiple imputed datasets from a MFA model, then the results yield
+in Voillet \textit{et al.} (2016) \cite{Voillet_2016}, a multiple imputation (MI) 
+approach in a multiple factor analysis (MFA) framework. The MI-MFA method 
+generates multiple imputed datasets from a MFA model, then the results yield 
 are combined in a single consensus solution. The package provides functions for 
-estimating coordinates of individuals and variables in presence of missing
-individuals (rows), graphical outputs to display the results and improve
-interpretation, and various diagnostic plots to inspect the pattern of
-missingness and visualize the uncertainty due to missing row values.
+estimating coordinates of individuals and variables in presence of missing 
+individuals (rows), graphical outputs to display the results and improve 
+interpretation, and various diagnostic plots to inspect the pattern of 
+missingness and visualize the uncertainty due to missing row values. 
 This vignette explains the use of the package and demonstrates 
 typical workflows.
 \end{abstract}
@@ -60,56 +60,56 @@ typical workflows.
 \section{Introduction}
 %============================================================================
 Due to the increase in available data information, integrating large amounts 
-of heterogeneous data is currently one of the major challenges in systems
-biology. Biological data integration provides scientists with a deeper insight
-into complex biological processes. However, when dealing with multiple data
-tables, the presence of missing values is a common situation for a variety of
-reasons. In omics data integration studies, it is common for some individuals
-to not be present in all data tables, resulting in a specific missing data
-pattern for multiple tables. Missing row values for a table of variables are
-challenging to handle because most statistical methods cannot be directly
+of heterogeneous data is currently one of the major challenges in systems 
+biology. Biological data integration provides scientists with a deeper insight 
+into complex biological processes. However, when dealing with multiple data 
+tables, the presence of missing values is a common situation for a variety of 
+reasons. In omics data integration studies, it is common for some individuals 
+to not be present in all data tables, resulting in a specific missing data 
+pattern for multiple tables. Missing row values for a table of variables are 
+challenging to handle because most statistical methods cannot be directly 
 applied to incomplete datasets. To overcome one of the major 
 issues associated with multiple omics data tables, we propose 
 \Rpackage{missRows}, an \R{} package that implements the MI-MFA method published 
-in \cite{Voillet_2016}, a multiple imputation (MI) approach in a multiple factor
+in \cite{Voillet_2016}, a multiple imputation (MI) approach in a multiple factor 
 analysis (MFA, \cite{Escofier_1994}) framework. 
-Proposed by Rubin (1987) \cite{Rubin_2004}, MI estimates both the parameters
-of interest and their variability in a data missingness framework, and it
-relies on the principle that a single value cannot reflect the uncertainty
-of the estimation of a missing value. 
+Proposed by Rubin (1987) \cite{Rubin_2004}, MI estimates both the parameters 
+of interest and their variability in a data missingness framework, and it 
+relies on the principle that a single value cannot reflect the uncertainty 
+of the estimation of a missing value.
 
-Figure~\ref{overview_method} illustrates the three main steps in MI-MFA:
+Figure~\ref{overview_method} illustrates the three main steps in MI-MFA: 
 imputation, analysis and combination. \Rpackage{missRows} stores the results 
 of each step in a \Rcode{S4} class: \Rclass{MIDTList}. 
-The analysis starts with observed and incomplete data tables $\boldsymbol{K}$.
+The analysis starts with observed and incomplete data tables $\boldsymbol{K}$. 
 First, MI is used to generate plausible synthetic data 
-values, called imputations, for missing values in the data. This step results
+values, called imputations, for missing values in the data. This step results 
 in a number ($M$) of imputed datasets in which the missing data are replaced 
-by random draws of plausible values according to a specific statistical model.
-The second step consists in analyzing each imputed dataset using MFA to
-estimates the parameters of interest. This step results in $M$ analyses 
+by random draws of plausible values according to a specific statistical model. 
+The second step consists in analyzing each imputed dataset using MFA to 
+estimate the parameters of interest. This step results in $M$ analyses 
 (instead of just one) which differ only because the imputations differ. 
-Finally, MI combines all the results together to obtain a single consensus
-estimate, thereby combining variation within and across the $M$ imputed
-datasets. In \Rpackage{missRows}, these three steps are performed using the
-function \Rcode{MIMFA}, and are described in detail in our publication
+Finally, MI combines all the results together to obtain a single consensus 
+estimate, thereby combining variation within and across the $M$ imputed 
+datasets. In \Rpackage{missRows}, these three steps are performed using the 
+function \Rcode{MIMFA}, and are described in detail in our publication 
 (Voillet \textit{et al.} 2016, \cite{Voillet_2016}).
 
-The package provides functions for data exploration, and visualization of 
-the results. The structure of missing values can be explored using the
+The package provides functions for data exploration, and result visualization. 
+The structure of missing values can be explored using the 
 \Rcode{missPattern} function. It gives to the user an indication of how 
-much information is missing and how the missingness is distributed. The
-\Rcode{plotInd} and \Rcode{plotVar} functions provide scatter plots for
+much information is missing and how the missingness is distributed. The 
+\Rcode{plotInd} and \Rcode{plotVar} functions provide scatter plots for 
 individual and variable representations respectively.
 
-In the MI-MFA framework, after estimating the configurations from the imputed
-datasets, a new source of variability due to missing values can be taken into
-account. The \Rpackage{missRows} package proposes two approaches to visualize
+In the MI-MFA framework, after estimating the configurations from the imputed 
+datasets, a new source of variability due to missing values can be taken into 
+account. The \Rpackage{missRows} package proposes two approaches to visualize 
 the uncertainty of the estimated MFA configurations attributable to missing 
-row values: confidence ellipses and convex hulls. The function \Rcode{plotInd}
+row values: confidence ellipses and convex hulls. The function \Rcode{plotInd} 
 contains methods implementing these two approaches.
 
-This vignette explains the basics of using \Rpackage{missRows} by showing an
+This vignette explains the basics of using \Rpackage{missRows} by showing an 
 example, including advanced material for fine tuning some options. 
 The vignette also includes description of the methods behind the package.
 
@@ -119,20 +119,20 @@ The vignette also includes description of the methods behind the package.
 
 \includegraphics[scale=0.9]{fig_overview_MIMFA.pdf}
 
-\caption{\textbf{Overview of the MI-MFA approach to handling missing rows in
-multi-omics data integration.} The top part of the graphic indicates that
-analysis starts with observed, incomplete data tables $\boldsymbol{K}$. In a
-first step, multiple imputation is performed using the hot-deck imputation
-approach: $M$ imputed versions $\boldsymbol{K}^{(1)},\ldots ,
-\boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ are obtained by replacing the
+\caption{\textbf{Overview of the MI-MFA approach to handling missing rows in 
+multi-omics data integration.} The top part of the graphic indicates that 
+analysis starts with observed, incomplete data tables $\boldsymbol{K}$. In a 
+first step, multiple imputation is performed using the hot-deck imputation 
+approach: $M$ imputed versions $\boldsymbol{K}^{(1)},\ldots , 
+\boldsymbol{K}^{(M)}$ of $\boldsymbol{K}$ are obtained by replacing the 
 missing values by plausible data values. These plausible values are drawn 
-from donor pools. The imputed sets are identical for the non-missing data
-entries, but differ in the imputed values. The second step is to estimate the
+from donor pools. The imputed sets are identical for the non-missing data 
+entries, but differ in the imputed values. The second step is to estimate the 
 configuration matrix $\boldsymbol{F}_{\!m}$ for each imputed dataset 
-$\boldsymbol{K}^{(m)}$ using MFA. The estimated configurations differ from
-each other because their input data differ. The last step is to combine the
-$M$ estimated configurations $\boldsymbol{F}_{\!1},\ldots ,
-\boldsymbol{F}_{\!M}$ into a compromise configuration $\boldsymbol{F_{\!c}}$
+$\boldsymbol{K}^{(m)}$ using MFA. The estimated configurations differ from 
+each other because their input data differ. The last step is to combine the 
+$M$ estimated configurations $\boldsymbol{F}_{\!1},\ldots , 
+\boldsymbol{F}_{\!M}$ into a compromise configuration $\boldsymbol{F_{\!c}}$ 
 using the STATIS method.} \label{overview_method}
 
 \endgroup
@@ -141,10 +141,10 @@ using the STATIS method.} \label{overview_method}
 
 \subsection{Citing \Rpackage{missRows}}
 %============================================================================
-We hope that \Rpackage{missRows} will be useful for your research. Please use
-the following information to cite \Rpackage{missRows} and the overall approach
-when you publish results obtained using this package, as such citation is the
-main means by which the authors receive credit for their work. Thank you!
+We hope that \Rpackage{missRows} will be useful for your research. Please use 
+the following information to cite \Rpackage{missRows} and the overall approach 
+when you publish results obtained using this package, as such citation is the 
+main means by which the authors receive credit for their work. Thank you! 
 \medskip
 
 <<echo=FALSE>>=
@@ -165,8 +165,8 @@ in Multiple Factor Analysis framework. \textit{BMC Bioinformatics}, 17(40).
 
 \subsection{How to get help for \Rpackage{missRows}}
 %============================================================================
-Most questions about individual functions will hopefully be answered by the
-documentation. To get more information on any specific named function, for
+Most questions about individual functions will hopefully be answered by the 
+documentation. To get more information on any specific named function, for 
 example \Rcode{MIMFA}, you can bring up the documentation by typing at the 
 \R{} prompt \medskip
 
@@ -185,13 +185,13 @@ of bugs in the package functions or in the documentation. The same goes
 for well-considered suggestions for improvements. If you've run into a 
 question that isn't addressed by the documentation, or you've found a 
 conflict between the documentation and what the software does, then there 
-is an active community that can offer help. Send your questions or problems
+is an active community that can offer help. Send your questions or problems 
 concerning \Rpackage{missRows} to the Bioconductor support site at 
-\url{https://support.bioconductor.org}. 
+\url{https://support.bioconductor.org}.
 
-Please send requests for general assistance and advice to the support site,
-rather than to the individual authors. It is particularly critical that you
-provide a small reproducible example and your session information so package
+Please send requests for general assistance and advice to the support site, 
+rather than to the individual authors. It is particularly critical that you 
+provide a small reproducible example and your session information so package 
 developers can track down the source of the error. Users posting to the 
 support site for the first time will find it helpful to read the posting 
 guide at \url{http://www.bioconductor.org/help/support/posting-guide}.
@@ -202,22 +202,22 @@ guide at \url{http://www.bioconductor.org/help/support/posting-guide}.
 A typical MI-MFA session can be divided into three steps:
 
 \begin{enumerate}
-\item {\it Data preparation:} In this first step, a convenient \R{} object of
+\item {\it Data preparation:} In this first step, a convenient \R{} object of 
 class \Rclass{MIDTList} is created containing all the information required 
-for the two remaining steps. The user needs to provide the data tables with
-missing rows, an indicator vector giving the stratum for each individual and
+for the two remaining steps. The user needs to provide the data tables with 
+missing rows, an indicator vector giving the stratum for each individual and 
 optionally the name for each table. \medskip
 
-\item {\it Performing MI:} Using the object created in the first step the user
+\item {\it Performing MI:} Using the object created in the first step the user 
 can perform MI-MFA to estimate the coordinates of individuals and variables 
 on the MFA components, and the imputation of missing data values. \medskip
 
-\item {\it Analysis of the results:} The results obtained in the second step
+\item {\it Analysis of the results:} The results obtained in the second step 
 are analyzed using visualization tools. \bigskip
 \end{enumerate}
 
 An analysis might look like the following. Here we assume there are two 
-data tables with missing rows, \Rcode{table1} and \Rcode{table2}, and the
+data tables with missing rows, \Rcode{table1} and \Rcode{table2}, and the 
 stratum for each individual is stored in a data frame \Rcode{df}. \medskip
 
 <<quickStart, eval=FALSE>>=
@@ -239,13 +239,13 @@ plotVar(midt)
 
 \subsection{Installation}
 %============================================================================
-We assume that the user has the \R{} program (see the \R{} project at
+We assume that the user has the \R{} program (see the \R{} project at 
 \url{http://www.r-project.org}) already installed.
 
-The \Rpackage{missRows} package is available from the \Bioconductor{}
-repository at \url{http://www.bioconductor.org}. To be able to install the
-package one needs first to install the core \Bioconductor{} packages. If you
-have already installed \Bioconductor{} packages on your system then you can
+The \Rpackage{missRows} package is available from the \Bioconductor{} 
+repository at \url{http://www.bioconductor.org}. To be able to install the 
+package one needs first to install the core \Bioconductor{} packages. If you 
+have already installed \Bioconductor{} packages on your system then you can 
 skip the two lines below. \medskip
 
 <<eval=FALSE>>=
@@ -255,7 +255,7 @@ biocLite()
 \vspace*{-0.2cm}
 \warning{try http:// if https:// URLs are not supported}
 
-Once the core \Bioconductor{} packages are installed, you can install the
+Once the core \Bioconductor{} packages are installed, you can install the 
 \Rpackage{missRows} package by \medskip
 
 <<install, eval=FALSE>>=
@@ -281,7 +281,7 @@ help.search("missRows")
 
 \subsection{Data overview}
 %============================================================================
-To help demonstrate the functionality of \Rpackage{missRows}, the package
+To help demonstrate the functionality of \Rpackage{missRows}, the package 
 includes example datasets of the NCI-60 cancer cell line panel. This panel 
 was developed as part of the Developmental Therapeutics Program 
 (\url{http://dtp.nci.nih.gov/}) of the National Cancer Institute (NCI).
@@ -301,22 +301,22 @@ names(NCI60)
 
 \Rcode{completeData} contains both transcriptomic and proteomic expression from 
 NCI-60 without missing data. The transcriptome data was directly retrieved 
-from the \Robject{NCI60\_4arrays} data in the \Biocpkg{omicade4} package
-\cite{NCI60_4arrays}. This data table contains gene expression profiles
-generated by the Agilent platform with only few hundreds of genes randomly
-selected to keep the size of the Bioconductor package small. The proteomic
+from the \Robject{NCI60\_4arrays} data in the \Biocpkg{omicade4} package 
+\cite{NCI60_4arrays}. This data table contains gene expression profiles 
+generated by the Agilent platform with only few hundreds of genes randomly 
+selected to keep the size of the Bioconductor package small. The proteomic 
 data table was retrieved from the \Biocpkg{rcellminerData} package 
 \cite{rcellminer}. Protein abundance levels are available for 162 proteins.
 Both full datasets are accessible at 
 \url{https://discover.nci.nih.gov/cellminer/} \cite{CellMiner}.
 
-Subsequently, a specific pattern of missingness has been created in these data
+Subsequently, a specific pattern of missingness has been created in these data 
 tables for illustration purpose, resulting in what we called the 
 \Rcode{incompleteData}.
 
-The component \Rcode{cell.line} contains the character vector of cancer type
-for each cell line: colon (CO), renal (RE), ovarian (OV), breast (BR),
-prostate (PR), lung (LC), central nervous system (CNS), leukemia (LE) and
+The component \Rcode{cell.line} contains the character vector of cancer type 
+for each cell line: colon (CO), renal (RE), ovarian (OV), breast (BR), 
+prostate (PR), lung (LC), central nervous system (CNS), leukemia (LE) and 
 melanoma (ME). \medskip
 
 <<>>=
@@ -326,8 +326,8 @@ table(NCI60$cell.line)
 
 \subsection{Data preparation: the \Rclass{MIDTList} object}
 %============================================================================
-The first step in using the \Rpackage{missRows} package is to create a
-\Rclass{MIDTList} object. This object stores the data tables, the
+The first step in using the \Rpackage{missRows} package is to create a 
+\Rclass{MIDTList} object. This object stores the data tables, the 
 intermediate estimated quantities during the multiple imputation procedure 
 and is the input of the visualization functions. The object 
 \Rclass{MIDTList} will usually be represented in the code here as 
@@ -337,19 +337,19 @@ To build such an object the user needs the following:
 
 \begin{description}
 \item[the incomplete data:] data tables with missing rows. Two or more 
-objects which can be interpreted as matrices (or data frames). Data tables
-passed as arguments must be arranged in samples $\times$ variables, with
+objects which can be interpreted as matrices (or data frames). Data tables 
+passed as arguments must be arranged in samples $\times$ variables, with 
 sample order and row names matching in all data tables. \medskip
 
-\item[strata:] named vector or data frame giving the stratum for each
+\item[strata:] named vector or data frame giving the stratum for each 
 individual. Names (in vector) or row names (in data frame) must be equal 
 to the row names among data tables. \medskip
 
-\item[table names:] optionally a character vector giving the name for each
+\item[table names:] optionally a character vector giving the name for each 
 table. \medskip
 \end{description}
 
-Here, we demonstrate how to construct a \Rclass{MIDTList} object from
+Here, we demonstrate how to construct a \Rclass{MIDTList} object from 
 \Rcode{NCI60} data. We first load the data \medskip
 
 <<>>=
@@ -357,7 +357,7 @@ data(NCI60)
 @
 
 If the data tables are already available as a list, \Rcode{tableList} say, 
-and \Rcode{cell.line} contains the character vector of cancer type for each
+and \Rcode{cell.line} contains the character vector of cancer type for each 
 cell line, then a \Rclass{MIDTList} object can be created by \medskip
 
 <<dirMIDTList>>=
@@ -368,7 +368,7 @@ midt <- newMIDTList(tableList, strata=cell.line,
                     tableNames=c("trans", "prote"))
 @
 
-The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from
+The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from 
 separated data tables directly by \medskip
 
 <<sepMIDTList>>=
@@ -396,12 +396,12 @@ midt
 
 \subsection{Performing MI-MFA}
 %============================================================================
-The main function for performing MI-MFA is \Rcode{MIMFA}, and it has four main
+The main function for performing MI-MFA is \Rcode{MIMFA}, and it has four main 
 arguments. The first argument is an instance of class \Rclass{MIDTList}. 
 The second and third arguments are of type integer; they specify the number 
 of components to include in MFA and the number of imputations in MI, 
-respectively. The fourth argument is a boolean, if \Rcode{TRUE} then the
-number of components is estimated for data imputation, in this case the
+respectively. The fourth argument is a boolean, if \Rcode{TRUE} then the 
+number of components is estimated for data imputation, in this case the 
 maximum number of components is determined by the second argument 
 \Rcode{ncomp}.
 
@@ -423,12 +423,12 @@ midt
 
 \subsection{Working with the \Rclass{MIDTList} object}
 %============================================================================
-Once the \Rclass{MIDTList} object is created the user can use the methods
-defined for this class to access the information encapsulated in the object.
-The information in each slot can be accessed using the method with the same
+Once the \Rclass{MIDTList} object is created the user can use the methods 
+defined for this class to access the information encapsulated in the object. 
+The information in each slot can be accessed using the method with the same 
 slot name.
 
-By example, the \Rcode{tableNames} slot contains the table names, this
+By example, the \Rcode{tableNames} slot contains the table names, this 
 information is accessed by \medskip
 
 <<>>=
@@ -442,8 +442,8 @@ cell.line <- strata(midt)
 table(cell.line)
 @
 
-Multiple imputation calculates \Rcode{M} configurations associated to each
-imputed datasets. In order to get the \Rcode{M}th configuration, use the
+Multiple imputation calculates \Rcode{M} configurations associated to each 
+imputed datasets. In order to get the \Rcode{M}th configuration, use the 
 \Rcode{configurations} function. For \Rcode{M=5}, \medskip
 
 <<MthConf>>=
@@ -462,19 +462,19 @@ completeData <- imputedData(midt)
 \subsection{Data exploration and visualization}
 %============================================================================
 This section presents the available tools for data exploration and 
-visualization of the results in \Rpackage{missRows}. Both \Rcode{newMIDTList}
-and \Rcode{MIMFA} functions return an object of type \Rclass{MIDTList}, and
+visualization of the results in \Rpackage{missRows}. Both \Rcode{newMIDTList} 
+and \Rcode{MIMFA} functions return an object of type \Rclass{MIDTList}, and 
 all of the following functions work with this object.
 
 
 \subsubsection{Inspect the missing rows pattern}
 %----------------------------------------------------------------------------
-Before imputation, the structure of missing values can be explored using
+Before imputation, the structure of missing values can be explored using 
 visualization tools and summaries outputs. Looking at the missing data 
 pattern is always useful. It can give you an indication of how much 
 information is missing and how the missingness is distributed.
 
-Inspect the missingness pattern for the \Rcode{NCI60} incomplete data by
+Inspect the missingness pattern for the \Rcode{NCI60} incomplete data by 
 \medskip
 
 <<missingPattern, fig.width=6, fig.height=5, out.width="0.6\\textwidth">>=
@@ -482,13 +482,13 @@ patt <- missPattern(midt, colMissing="grey70")
 @
 
 \Rcode{missPattern} calculates the amount of missing/available rows 
-in each stratum per data table and plots a missingness map showing where
+in each stratum per data table and plots a missingness map showing where 
 missingness occurs. Data tables are plotted separately 
-on a same device showing the pattern of missingness. The individuals are
-colored with rapport to their stratum whereas missing rows are colored
+on a same device showing the pattern of missingness. The individuals are 
+colored with rapport to their stratum whereas missing rows are colored 
 according to the \Rcode{colMissing} argument.
 
-The object \Rcode{patt} encapsulates information from  the structure of
+The object \Rcode{patt} encapsulates information from  the structure of 
 missingness, such as the amount of missing/available rows in each 
 stratum per data table and the indicator matrix for the missing rows. 
 \medskip
@@ -499,8 +499,8 @@ patt
 
 The missingness pattern shows that there are 20 missing rows in total: 12 
 for the \Rcode{trans} table and 8 for the \Rcode{prote} table. Moreover, 
-there are two strata (\Rcode{LC} and \Rcode{ME}) with 4 missing rows, four
-strata with 2 missing rows, one stratum with 3 missing rows and another one
+there are two strata (\Rcode{LC} and \Rcode{ME}) with 4 missing rows, four 
+strata with 2 missing rows, one stratum with 3 missing rows and another one 
 with 1 missing row.
 
 
@@ -510,7 +510,7 @@ An insightful way of looking at the results of \Rcode{MIMFA} is to
 investigate how the observed and imputed individuals are distributed on 
 the two-dimensional configuration defined by the MFA components.
 
-\Rcode{plotInd} function makes scatter plot for individuals representation
+\Rcode{plotInd} function makes scatter plot for individuals representation 
 from \Rcode{MIMFA} results. Each point corresponds to an individual. The 
 color of each individual reflects their corresponding stratum, whereas 
 imputed individuals are colored according to the \Rcode{colMissing} 
@@ -523,70 +523,70 @@ plotInd(midt, colMissing="white")
 
 \subsubsection{Visualizing the uncertainty induced by the missing individuals}
 %----------------------------------------------------------------------------
-Multiple imputation generates \Rcode{M} imputed datasets and the variance
-between-imputations reflects the uncertainty associated to the estimation of
-the missing row values. The \Rpackage{missRows} package proposes two
-approaches to visualize and assess the uncertainty due to missing data:
+Multiple imputation generates \Rcode{M} imputed datasets and the variance 
+between-imputations reflects the uncertainty associated to the estimation of 
+the missing row values. The \Rpackage{missRows} package proposes two 
+approaches to visualize and assess the uncertainty due to missing data: 
 confidence ellipses and convex hulls.
 
-The rough idea is to project all the multiple imputed datasets onto the
+The rough idea is to project all the multiple imputed datasets onto the 
 compromise configuration. Each individual is represented by \Rcode{M} 
 points, each corresponding to one of the \Rcode{M} configurations. 
 Confidence ellipses and convex hulls can be then constructed for the 
 \Rcode{M} configurations for each individual. The computed convex hull 
 results in a polygon containing all \Rcode{M} solutions.
 
-Confidence ellipses can be created using the function \Rcode{plotInd} by
+Confidence ellipses can be created using the function \Rcode{plotInd} by 
 setting the \Rcode{confAreas} argument to \Rcode{"ellipse"} \medskip
 
 <<plotInd-ellipses, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotInd(midt, confAreas="ellipse", confLevel=0.95)
 @
 
-The 95\% confidence ellipses show the uncertainty for each individual. For
-ease of understanding, not all individuals for the \Rcode{M} configurations
+The 95\% confidence ellipses show the uncertainty for each individual. For 
+ease of understanding, not all individuals for the \Rcode{M} configurations 
 obtained are plotted.
 
-Convex hulls are plotted by setting the \Rcode{confAreas} argument to
+Convex hulls are plotted by setting the \Rcode{confAreas} argument to 
 \Rcode{"convex.hull"} \medskip
 
 <<plotInd-convexhull, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotInd(midt, confAreas="convex.hull")
 @
 
-These graphical representations provide scientists with considerable guidance
-when interpreting the significance of \Rcode{MIMFA} results. The larger the
+These graphical representations provide scientists with considerable guidance 
+when interpreting the significance of \Rcode{MIMFA} results. The larger the 
 area of an ellipse (convex hull), the more uncertain the exact location of 
-the individual. Thus, when ellipse and convex hull areas are large, the
+the individual. Thus, when ellipse and convex hull areas are large, the 
 scientist should remain really careful regarding its interpretation.
 
 
 \subsubsection{Variables plot: correlation circle}
 %----------------------------------------------------------------------------
-\Rcode{plotVar} produces a "correlation circle", \textit{i.e.} the correlations
-between each variable and the selected components are plotted as scatter plot,
-with concentric circles of radius one and radius given by \Rcode{radIn}.
-Variables are represented by points (symbols) and colored according to the
+\Rcode{plotVar} produces a "correlation circle", \textit{i.e.} the correlations 
+between each variable and the selected components are plotted as scatter plot, 
+with concentric circles of radius one and radius given by \Rcode{radIn}. 
+Variables are represented by points (symbols) and colored according to the 
 data table to which they belong. \medskip
 
 <<plotVar, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
 plotVar(midt, radIn=0.5)
 @
 
-This plot is an enlightening tool for data interpretation, as it enables a
+This plot is an enlightening tool for data interpretation, as it enables a 
 graphical examination of the relationships between variables. The variables 
 or groups of variables strongly positively correlated are projected closely 
-to each other on the correlation circle. When the correlation is strongly
-negative, the groups of variables are projected at diametrically opposite
-places on the correlation circle. The variables or groups of variables that
-are not correlated are situated 90$^\circ$ one from the other in the circle.
-For variables closely located to the origin, it means that some information
-can be carried on other axes and, it might be necessary to visualize the
+to each other on the correlation circle. When the correlation is strongly 
+negative, the groups of variables are projected at diametrically opposite 
+places on the correlation circle. The variables or groups of variables that 
+are not correlated are situated 90$^\circ$ one from the other in the circle. 
+For variables closely located to the origin, it means that some information 
+can be carried on other axes and, it might be necessary to visualize the 
 correlation circle plot in the subsequent dimensions. More details about 
 the correlation circle interpretation can be found in \cite{Gonzalez_2012}.
 
-In the high dimensional case, the interpretation of the correlation structure
-between variables from two or more data tables can be difficult, and a
+In the high dimensional case, the interpretation of the correlation structure 
+between variables from two or more data tables can be difficult, and a 
 \Rcode{cutoff} can be chosen to remove some weaker associations. \medskip
 
 <<plotVar-cutoff, fig.width=6, fig.height=5, out.width="0.55\\textwidth">>=
@@ -596,23 +596,23 @@ plotVar(midt, radIn=0.55, varNames=TRUE, cutoff=0.55)
 
 \subsection{How many imputations\,?}
 %============================================================================
-When using MI, one of the uncertainties concerns the number \Rcode{M} of
-imputed datasets needed to obtain satisfactory results. The number of imputed
-datasets in MI depends to a large extent on the proportion of missing data.
-The greater the missingness, the larger the number of  imputations needed to
+When using MI, one of the uncertainties concerns the number \Rcode{M} of 
+imputed datasets needed to obtain satisfactory results. The number of imputed 
+datasets in MI depends to a large extent on the proportion of missing data. 
+The greater the missingness, the larger the number of  imputations needed to 
 obtain stable results. However, in multiple hot-deck imputation, the number 
 of imputed datasets is limited by the size of the donor pools.
 
-The appropriate number of imputations can be informally determined by carrying
-out MI-MFA on $N$ replicate sets of $M_l$ imputations for $l=0,1,2,\ldots ,$
-with $M_0 < M_1< M_2 < \cdots < M_{max}$, until the estimate compromise
+The appropriate number of imputations can be informally determined by carrying 
+out MI-MFA on $N$ replicate sets of $M_l$ imputations for $l=0,1,2,\ldots ,$ 
+with $M_0 < M_1< M_2 < \cdots < M_{max}$, until the estimate compromise 
 configurations are stabilized.
 
-\Rcode{tuneM} function implements such a procedure. Collections of size
-\Rcode{N} are generated for each number of imputations \Rcode{M}, with
-\Rcode{M = seq(inc, Mmax, by=inc)}. The stability of the estimated MI-MFA
-configurations is then determined by calculating the RV coefficient between
-the configurations obtained using \Rcode{M}$_{\,l}$ and \Rcode{M}$_{\,l+1}$
+\Rcode{tuneM} function implements such a procedure. Collections of size 
+\Rcode{N} are generated for each number of imputations \Rcode{M}, with 
+\Rcode{M = seq(inc, Mmax, by=inc)}. The stability of the estimated MI-MFA 
+configurations is then determined by calculating the RV coefficient between 
+the configurations obtained using \Rcode{M}$_{\,l}$ and \Rcode{M}$_{\,l+1}$ 
 imputations. \medskip
 
 <<tuneM, echo=FALSE>>=
@@ -644,12 +644,12 @@ Error bars represent the standard deviation of the RV coefficients.
 
 \subsection{The MI-MFA approach}
 %============================================================================
-To deal with multiple tables with missing rows, \Rpackage{missRows} implements
-the MI-MFA method in \cite{Voillet_2016}, a multiple imputation approach in a
-multiple factor analysis framework. According to MI methodology, the MI-MFA
-proceeds as follows. Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},\ldots ,
+To deal with multiple tables with missing rows, \Rpackage{missRows} implements 
+the MI-MFA method in \cite{Voillet_2016}, a multiple imputation approach in a 
+multiple factor analysis framework. According to MI methodology, the MI-MFA 
+proceeds as follows. Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},\ldots , 
 \boldsymbol{K}_{\!J}\}$ a set of $J$ data tables, where each 
-$\boldsymbol{K}_{\!j}$ corresponds to a table of quantitative variables
+$\boldsymbol{K}_{\!j}$ corresponds to a table of quantitative variables 
 measured on the same individuals, then carry out the following three 
 steps: \smallskip
 
@@ -675,31 +675,31 @@ steps: \smallskip
 \end{minipage}
 \end{center}
 
-These steps are outlined in Figure~\ref{overview_method} and described in
+These steps are outlined in Figure~\ref{overview_method} and described in 
 detail in our publication (Voillet \textit{et al.} 2016, \cite{Voillet_2016}).
 
 
 \subsection{Imputation of missing rows and estimation of MFA axes}
 %============================================================================
-Even if the objective of MI-MFA is to estimate the MFA components in spite of
-missing values, an estimation of MFA axes and imputation of missing data
-values can be achieved. Consequently, the MI-MFA approach can also be viewed
-as a single imputation method. Moreover, since the imputation is based on a
-MFA model (on the components and axes), it takes into account similarities
-between individuals and relationships between variables.
+Even if the objective of MI-MFA is to estimate the MFA components in spite of 
+missing values, an estimation of MFA axes and imputation of missing data 
+values can be achieved. Consequently, the MI-MFA approach can also be viewed 
+as a single imputation method. Moreover, since the imputation is based on a 
+MFA model (on the components and axes), it takes into account similarities 
+between individuals and relationships between variables. 
 
 Since the core of MFA is a PCA of the weighted data table $\boldsymbol{K}$, 
-the algorithm suggested to estimate MFA axes and impute missing values is
-inspired from the alternating least squares algorithm used in PCA. This
-consists in finding matrices $\boldsymbol{F}$ and $\boldsymbol{U}$ which
-minimize the following criterion:
+the algorithm suggested to estimate MFA axes and impute missing values is 
+inspired from the alternating least squares algorithm used in PCA. This 
+consists in finding matrices $\boldsymbol{F}$ and $\boldsymbol{U}$ which 
+minimize the following criterion: 
 $$||\boldsymbol{K}-\boldsymbol{M}-\boldsymbol{F}\boldsymbol{U}||^2 = 
 \sum_{i}\sum_{k}\left( \boldsymbol{K}_{ik} - \boldsymbol{M}_{ik} - 
 \sum_{d=1}^D \boldsymbol{F}_{id} \boldsymbol{U}_{kd} \right)^2,$$
 
 \noindent where $\boldsymbol{M}$ is a matrix with each row equal to a vector 
 of the mean of each variable and $D$ is the kept dimensions in PCA. 
-The solution is obtained by alternating two multiple regressions until
+The solution is obtained by alternating two multiple regressions until 
 convergence, one for estimating axes (loadings $\hat{\boldsymbol{U}}$) and 
 one for components (scores $\hat{\boldsymbol{F}}$):
 $$
@@ -713,8 +713,8 @@ $$
 \end{array}
 $$
 
-The algorithm to estimate MFA axes and impute missing values works as follows.
-Let $\boldsymbol{K} = [\boldsymbol{K}_1,\ldots, \boldsymbol{K}_J]$ the merged
+The algorithm to estimate MFA axes and impute missing values works as follows. 
+Let $\boldsymbol{K} = [\boldsymbol{K}_1,\ldots, \boldsymbol{K}_J]$ the merged 
 matrix containing missing values and $\boldsymbol{F}$ the matrix containing 
 the compromise components of the MI-MFA, then carry out the following 
 steps: \smallskip
@@ -723,9 +723,9 @@ steps: \smallskip
 \begin{minipage}{15.5cm}
 
 \begin{description}
-    \item[] Step 0. Initialization $l = 0$: $\boldsymbol{K}^0$ is obtained by
-    substituting missing values with initial values (for example with column
-    means on the non-missing entries or zeros); $\hat{\boldsymbol{M}}^0$ is
+    \item[] Step 0. Initialization $l = 0$: $\boldsymbol{K}^0$ is obtained by 
+    substituting missing values with initial values (for example with column 
+    means on the non-missing entries or zeros); $\hat{\boldsymbol{M}}^0$ is 
     computed.\medskip
 
     \item[] Step 1. Calculate $(\hat{\boldsymbol{U}}^l)' = 
@@ -737,14 +737,14 @@ steps: \smallskip
     \boldsymbol{F}(\hat{\boldsymbol{U}}^l)'$.\medskip
 
     \item[] Step 3. The new imputed data set $\boldsymbol{K}^l$ is obtained 
-    by replacing the missing values of the original $K$ matrix with the
-    corresponding elements of $\hat{\boldsymbol{K}}^l$, whilst keeping the
+    by replacing the missing values of the original $K$ matrix with the 
+    corresponding elements of $\hat{\boldsymbol{K}}^l$, whilst keeping the 
     observed values unaltered.\medskip
 
     \item[] Step 4. $\hat{\boldsymbol{M}}^l$ is computed on 
     $\boldsymbol{K}^l$.\medskip
 
-    \item[] Step 5. Steps 1 to 4 are repeated until convergence.
+    \item[] Step 5. Steps 1 to 4 are repeated until convergence. 
 \end{description}
 
 \end{minipage}
