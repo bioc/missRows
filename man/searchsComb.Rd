@@ -20,7 +20,7 @@ searchsComb(args, idx)
 }
 
 \arguments{
-    \item{args}{a list containing the vectors sources for combinations.}
+    \item{args}{a list containing the vector sources for combinations.}
 
     \item{idx}{the index of the searched combination.}
 }

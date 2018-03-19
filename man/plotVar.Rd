@@ -69,7 +69,7 @@ plotVar(object, comp =1:2, col=NULL, varNames=FALSE, cex=3,
 }
 
 \details{
-\code{plotVar} produce a "correlation circle", \emph{i.e.} the 
+\code{plotVar} produces a "correlation circle", \emph{i.e.} the 
 correlations between each variable and the selected components 
 are plotted as scatter plot, with concentric circles of radius 
 one and radius given by \code{radIn}. Each point corresponds 
@@ -84,10 +84,10 @@ names in the \code{"table1"} are drawn.
 The arguments \code{cex} and \code{pch} can be either vectors 
 of length one or of length the total number of data tables. In the 
 first case, the single value determine the graphics attributes for 
-all data tables variables. Otherwise, multiple argument values can 
+all data table variables. Otherwise, multiple argument values can 
 be specified so that each data table variable can be given its own 
 graphic attributes. In this case, each component of the vector 
-correspond to the attributes of the each data table variables.
+corresponds to the attributes of the each data table variable.
 }
 
 \value{

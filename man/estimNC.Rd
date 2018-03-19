@@ -3,7 +3,7 @@
 \alias{estimNC}
 
 \title{
-Estimates the Number of Components for Data Imputation
+Estimate the Number of Components for Data Imputation
 }
 
 \description{

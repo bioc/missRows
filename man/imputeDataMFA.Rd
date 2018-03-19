@@ -4,7 +4,7 @@
 \alias{imputeDataMFA}
 
 \title{
-Imputes Missing Rows and Estimates MFA Axes
+Impute Missing Rows and Estimates MFA Axes
 }
 
 \description{
@@ -64,7 +64,7 @@ and one for components (scores \eqn{\hat{F}}):
         \hat{F} = (K - \hat{M})\hat{U}(\hat{U}'\hat{U})^{-1}.
     }
 
-The \code{imputeDataMFA} algorithm first consists imputing missing 
+The \code{imputeDataMFA} algorithm first consists in imputing missing 
 values in \eqn{K} with initial values (the column means on the 
 non-missing entries), then \eqn{\hat{M}} is computed. The second step 
 of the iterative algorithm is to calculate 

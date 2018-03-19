@@ -24,7 +24,7 @@ plotInd(object, comp=1:2, colStrata=NULL, colMissing="white",
         \code{\link{MIMFA}} function.}
 
     \item{comp}{an integer vector of length two. The components
-        that will be used on the horizontal and the vertical axis
+        that will be used on the horizontal and the vertical axes
         respectively to project the individuals.}
 
     \item{colStrata}{a character vector of the same length than the
@@ -68,7 +68,7 @@ according to the \code{colMissing} argument.
 Multiple imputation generates \code{M} imputed datasets and 
 the variance between-imputations reflects the uncertainty associated 
 to the estimation of the missing row values. The \code{plotInd} 
-function propose two approaches to visualize the uncertainty 
+function proposes two approaches to visualize the uncertainty 
 due to missing data: confidence ellipses and convex hulls. The idea 
 is to project all the multiple imputed datasets onto the compromise 
 configuration. Each individual is represented by \code{M} points, each

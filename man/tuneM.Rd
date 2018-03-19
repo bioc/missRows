@@ -11,7 +11,7 @@ Tune the Number of Imputations in MI-MFA
 \description{
 \code{tuneM} can be used to determine the appropriate number 
 of imputed datasets needed to obtain satisfactory results 
-in MI-MFA.
+with MI-MFA.
 }
 
 \usage{
@@ -72,7 +72,7 @@ standard deviation of the RV coefficients.
 \value{
 A list with the following components:
 
-    \item{stats}{\code{data.frame} containing the information
+    \item{stats}{a \code{data.frame} containing the information
         used to generate the plot.}
 
     \item{ggp}{an object of class \code{ggplot}.}
