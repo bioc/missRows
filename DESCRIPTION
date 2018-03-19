@@ -2,7 +2,7 @@ Package: missRows
 Type: Package
 Title: Handling Missing Rows in Multi-Omics Data Integration
 Version: 0.99.0
-Date: 2018-02-16
+Date: 2018-03-19
 Author: Ignacio Gonzalez and Valentin Voillet
 Maintainer: Gonzalez Ignacio <ignacio.gonzalez@some.domain.net>
 Description: The missRows package implements the MI-MFA method to deal with 
