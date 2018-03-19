@@ -4,7 +4,7 @@ Title: Handling Missing Rows in Multi-Omics Data Integration
 Version: 0.99.0
 Date: 2018-03-19
 Author: Ignacio Gonzalez and Valentin Voillet
-Maintainer: Gonzalez Ignacio <ignacio.gonzalez@some.domain.net>
+Maintainer: Gonzalez Ignacio <ignacio.gonzalez@bbox.fr>
 Description: The missRows package implements the MI-MFA method to deal with 
     missing rows in multi-omics data integration. The MI-MFA method generates 
     multiple imputed datasets from a Multiple Factor Analysis model, then the 
