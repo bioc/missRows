@@ -52,8 +52,9 @@ plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
     
     ##- internal function for character color checking -----------#
     ##------------------------------------------------------------#
-    isColor <- function(x) { sapply(x, function(x) {
-        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) })
+    isColor <- function(x) { vapply(x, function(x) {
+        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) },
+        TRUE)
     }
     ##------------------------------------------------------------#
     
@@ -240,7 +241,7 @@ plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
     }
     
     ##- data frame for ggplot
-    nbVar <- sapply(coord, nrow)
+    nbVar <- vapply(coord, nrow, 1L)
     df <- do.call(rbind, coord)
     if (cutoff == 0) { namevar <- rownames(df) }
     rownames(df) <- NULL

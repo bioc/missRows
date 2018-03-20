@@ -19,7 +19,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
                         names(strt))
     names(datasets) <- paste0("data", seq(length(datasets)))
     
-    nbCols <- sapply(datasets, ncol)
+    nbCols <- vapply(datasets, ncol, 1L)
     nbTables <- length(datasets)
     nbRows <- length(strt)
     

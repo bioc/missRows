@@ -51,8 +51,9 @@ plotInd <- function(object,
     
     ##- internal function for character color checking -----------#
     ##------------------------------------------------------------#
-    isColor <- function(x) { sapply(x, function(x) {
-        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) })
+    isColor <- function(x) { vapply(x, function(x) {
+        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) },
+        TRUE)
     }
     ##------------------------------------------------------------#
     

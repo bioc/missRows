@@ -78,8 +78,8 @@ setMethod("show",
             cat("An object of class ", class(object), ".",
                 "\n\nTables:\n", sep = "")
             info <- data.frame(names(object@incompleteData),
-                            sapply(object@incompleteData, nrow),
-                            sapply(object@incompleteData, ncol),
+                            vapply(object@incompleteData, nrow, 1L),
+                            vapply(object@incompleteData, ncol, 1L),
                             nbMiss,
                             row.names = paste0("Table ", 1:nt, " "))
             colnames(info) <- c("name", "rows", "columns", "missing")

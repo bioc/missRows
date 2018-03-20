@@ -14,8 +14,9 @@ missPattern <- function(object, colStrata=NULL, colMissing="grey70",
     
     ##- internal function for character color checking -----------#
     ##------------------------------------------------------------#
-    isColor <- function(x) { sapply(x, function(x) {
-        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) })
+    isColor <- function(x) { vapply(x, function(x) {
+        tryCatch(is.matrix(col2rgb(x)), error=function(e) FALSE) },
+        TRUE)
     }
     ##------------------------------------------------------------#
     
@@ -75,7 +76,7 @@ missPattern <- function(object, colStrata=NULL, colMissing="grey70",
     for (i in 1:length(missData)) {
         id.miss <- apply(is.na(missData[[i]]), 1, all)
         tmp <- split(id.miss, strt)
-        nbmr[, i] <- sapply(tmp, sum)
+        nbmr[, i] <- vapply(tmp, sum, 1L)
         tmp <- unlist(split(id.miss, strt))
         mrp[, i] <- tmp
     }

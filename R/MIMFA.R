@@ -18,10 +18,10 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     }
     
     if (ncomp > min(length(strata(object)) - 1,
-                    sum(sapply(incompleteData(object), ncol)))) {
+                    sum(vapply(incompleteData(object), ncol, 1L)))) {
         stop("'ncomp' must be a numeric value lower or equal to ",
             min(length(strata(object)) - 1, 
-                sum(sapply(incompleteData(object), ncol))), call.=FALSE)
+                sum(vapply(incompleteData(object), ncol, 1L))), call.=FALSE)
     }
     
     ncomp <- round(ncomp)
@@ -71,7 +71,7 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     strt <- strata(object)
     missRows <- missingRows(object)
     
-    nbCols <- sapply(incompData, ncol)
+    nbCols <- vapply(incompData, ncol, 1L)
     nbTables <- length(incompData)
     nbRows <- length(strt)
     strLevels <- levels(strt)

@@ -61,7 +61,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
     }
     
     ##- equal row numbers among tables
-    nr <- c(sapply(K, nrow), length(strata))
+    nr <- c(vapply(K, nrow, 1L), length(strata))
     if (length(unique(nr)) != 1)
         stop("non equal row numbers among tables and/or strata", 
             call.=FALSE)
@@ -98,7 +98,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
         stop("no missing rows in the data tables, MI is not useful.", 
             " Perform MFA.", call.=FALSE)
     
-    miss <- miss[sapply(miss, length) > 0]
+    miss <- miss[vapply(miss, length, 1L) > 0]
     
     ##- end checking ---------------------------------------------------------#
     
