@@ -1,5 +1,5 @@
 plotInd <- function(object,
-                    comp=1:2,
+                    comp=c(1, 2),
                     colStrata=NULL,
                     colMissing="white",
                     confAreas=c('none', 'ellipse', 'convex.hull'),

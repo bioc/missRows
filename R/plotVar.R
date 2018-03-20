@@ -1,5 +1,5 @@
 plotVar <- function(object, 
-                    comp=1:2, 
+                    comp=c(1, 2), 
                     col=NULL, 
                     varNames=FALSE,
                     cex=3, 

@@ -97,7 +97,7 @@ missPattern <- function(object, colStrata=NULL, colMissing="grey70",
     df <- data.frame(ymin = NA, ymax = NA, strata = NA, Table = NA)
     df.m <- data.frame(ymin = 0, ymax = 0, strata = "", Table = nmTables[1])
     
-    for (i in 1:length(missData)) {
+    for (i in seq_along(missData)) {
         tmp <- data.frame(ymin = ymin, ymax = ymax, strata = levels(strt),
                             Table = rep(nmTables[i], length(levels(strt))))
         df <- rbind(df, tmp)
