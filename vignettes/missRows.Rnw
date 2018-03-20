@@ -39,16 +39,16 @@ In omics data integration studies, it is common, for a variety of reasons,
 for some individuals to not be present in all data tables. Missing row values 
 are challenging to deal with because most statistical methods cannot be 
 directly applied to incomplete datasets. To overcome this issue, we propose 
-\Rpackage{missRows}, an \R{} package that implements the MI-MFA method published 
-in Voillet \textit{et al.} (2016) \cite{Voillet_2016}, a multiple imputation (MI) 
-approach in a multiple factor analysis (MFA) framework. The MI-MFA method 
-generates multiple imputed datasets from a MFA model, then the results yield 
-are combined in a single consensus solution. The package provides functions for 
-estimating coordinates of individuals and variables in presence of missing 
-individuals (rows), graphical outputs to display the results and improve 
-interpretation, and various diagnostic plots to inspect the pattern of 
-missingness and visualize the uncertainty due to missing row values. 
-This vignette explains the use of the package and demonstrates 
+\Rpackage{missRows}, an \R{} package that implements the MI-MFA method
+published in Voillet \textit{et al.} (2016) \cite{Voillet_2016}, a multiple
+imputation (MI) approach in a multiple factor analysis (MFA) framework. 
+The MI-MFA method generates multiple imputed datasets from a MFA model, then
+the results yield are combined in a single consensus solution. The package
+provides functions for estimating coordinates of individuals and variables 
+in presence of missing individuals (rows), graphical outputs to display the
+results and improve interpretation, and various diagnostic plots to inspect 
+the pattern of missingness and visualize the uncertainty due to missing row
+values. This vignette explains the use of the package and demonstrates 
 typical workflows.
 \end{abstract}
 
@@ -68,11 +68,11 @@ reasons. In omics data integration studies, it is common for some individuals
 to not be present in all data tables, resulting in a specific missing data 
 pattern for multiple tables. Missing row values for a table of variables are 
 challenging to handle because most statistical methods cannot be directly 
-applied to incomplete datasets. To overcome one of the major 
-issues associated with multiple omics data tables, we propose 
-\Rpackage{missRows}, an \R{} package that implements the MI-MFA method published 
-in \cite{Voillet_2016}, a multiple imputation (MI) approach in a multiple factor 
-analysis (MFA, \cite{Escofier_1994}) framework. 
+applied to incomplete datasets. To overcome one of the major issues associated
+with multiple omics data tables, we propose \Rpackage{missRows}, an \R{}
+package that implements the MI-MFA method published in \cite{Voillet_2016}, 
+a multiple imputation (MI) approach in a multiple factor analysis (MFA,
+\cite{Escofier_1994}) framework. 
 Proposed by Rubin (1987) \cite{Rubin_2004}, MI estimates both the parameters 
 of interest and their variability in a data missingness framework, and it 
 relies on the principle that a single value cannot reflect the uncertainty 
