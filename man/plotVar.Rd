@@ -13,7 +13,7 @@ representation from \code{\link{MIMFA}} results.
 }
 
 \usage{
-plotVar(object, comp =1:2, col=NULL, varNames=FALSE, cex=3,
+plotVar(object, comp=c(1, 2), col=NULL, varNames=FALSE, cex=3,
         pch=19, alpha=0.7, spty=TRUE, cutoff=0, radIn=0.5,
         overlap=TRUE, ncols=2, legTitle="Tables")
 }

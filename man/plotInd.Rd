@@ -13,7 +13,7 @@ representation from \code{\link{MIMFA}} results.
 }
 
 \usage{
-plotInd(object, comp=1:2, colStrata=NULL, colMissing="white",
+plotInd(object, comp=c(1, 2), colStrata=NULL, colMissing="white",
         confAreas=c("none", "ellipse", "convex.hull"), confLevel=0.95,
         ellipseType=c("norm", "t"), alpha=0.1, lwd=0.3, cex=3,
         legTitle="Strata")
