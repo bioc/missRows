@@ -4,7 +4,7 @@ MFA <- function(dataTables, ncomp, nbRows, nbTables, ncTables) {
     Kmat <- matrix(0, nbRows, 0)
     center <- sigma <- NULL
     
-    for (k in 1:nbTables) {
+    for (k in seq_len(nbTables)) {
         scaledTable <- scale(dataTables[[k]]) * sqrt(nbRows/(nbRows - 1))
         ## calculer sd, if(sd < 1e-08) sd <- 1 puis reduir
         center <- c(center, attr(scaledTable, "scaled:center"))
@@ -18,7 +18,7 @@ MFA <- function(dataTables, ncomp, nbRows, nbTables, ncTables) {
     ##- global PCA
     tmp <- wrapperSVD(Kmat, cWeights=rep(weights, ncTables), ncp=ncomp)
     
-    eig <- tmp$vs[1:ncomp]
+    eig <- tmp$vs[seq_len(ncomp)]
     U <- sweep(tmp$U, 2, eig, "*")
     
     res <- list(U = U)

@@ -200,7 +200,7 @@ plotInd <- function(object,
         
         m <- length(configurations(object))
         
-        for (j in 1:m) {
+        for (j in seq_len(m)) {
             X <- as.matrix(configurations(object)[[j]][, comp])
             P <- X %*% solve(t(X) %*% X) %*% t(X)
             traj <- P %*% as.matrix(comprConf[, comp])
@@ -267,7 +267,7 @@ plotInd <- function(object,
         
         m <- length(configurations(object))
         
-        for (j in 1:m) {
+        for (j in seq_len(m)) {
             X <- as.matrix(configurations(object)[[j]][, comp])
             P <- X %*% solve(t(X) %*% X) %*% t(X)
             traj <- P %*% as.matrix(comprConf[, comp])

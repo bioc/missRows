@@ -37,10 +37,10 @@ STATIS <- function (Ktab, nf=3, tol=1e-07) {
     
     if (nf > rank) { nf <- rank }
     
-    wref <- eig1$vectors[, 1:nf]
+    wref <- eig1$vectors[, seq_len(nf)]
     rm(eig1)
-    w <- data.frame(t(t(wref) * sqrt(eig[1:nf])))
-    names(w) <- paste("C", 1:nf, sep = "")
+    w <- data.frame(t(t(wref) * sqrt(eig[seq_len(nf)])))
+    names(w) <- paste("C", seq_len(nf), sep="")
     result$Cli <- w
     
     return(result)

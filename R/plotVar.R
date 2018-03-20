@@ -1,6 +1,15 @@
-plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
-                    cex=3, pch=19, alpha=0.7, spty=TRUE, cutoff=0,
-                    radIn=0.5, overlap=TRUE, ncols=2,
+plotVar <- function(object, 
+                    comp=1:2, 
+                    col=NULL, 
+                    varNames=FALSE,
+                    cex=3, 
+                    pch=19, 
+                    alpha=0.7, 
+                    spty=TRUE, 
+                    cutoff=0,
+                    radIn=0.5, 
+                    overlap=TRUE, 
+                    ncols=2,
                     legTitle = "Tables") {
     
     ##- checking general input arguments & initialization of variables -------#
@@ -18,7 +27,7 @@ plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
     
     completeData <- imputedData(object)
     comprConf <- compromise(object)
-    dtab <- 1:length(completeData)
+    dtab <- seq_along(completeData)
     nmTables <- tableNames(object)
     nbTables <- length(completeData)
     
@@ -215,7 +224,7 @@ plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
     idx <- vector("list", nbTables)
     
     if (cutoff > 0) {
-        for (i in 1:(nbTables - 1)) {
+        for (i in seq_len(nbTables - 1)) {
             for (j in 2:nbTables) {
                 mat <- coord[[i]] %*% t(coord[[j]])
                 tmp <- (abs(mat) >= cutoff)
@@ -234,7 +243,7 @@ plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
         idx <- lapply(idx, function(x) unique(x))
         namevar <- NULL
         
-        for (i in 1:nbTables) {
+        for (i in seq_len(nbTables)) {
             coord[[i]] <- matrix(coord[[i]][idx[[i]], ], ncol=length(comp))
             namevar <- c(namevar, colnames(completeData[[i]])[idx[[i]]])
         }
@@ -268,7 +277,7 @@ plotVar <- function(object, comp=1:2, col=NULL, varNames=FALSE,
     
     if (spty) { g <- g + coord_equal(ratio=1) }
     
-    for (i in 1:nbTables) {
+    for (i in seq_len(nbTables)) {
         id <- (df$Tables == nmTables[i])
         
         if (flagVarNames[i]) {

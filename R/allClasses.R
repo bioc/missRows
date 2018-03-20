@@ -81,7 +81,7 @@ setMethod("show",
                             vapply(object@incompleteData, nrow, 1L),
                             vapply(object@incompleteData, ncol, 1L),
                             nbMiss,
-                            row.names = paste0("Table ", 1:nt, " "))
+                            row.names = paste0("Table ", seq_len(nt), " "))
             colnames(info) <- c("name", "rows", "columns", "missing")
             print(info)
 

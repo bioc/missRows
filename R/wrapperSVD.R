@@ -33,9 +33,9 @@ wrapperSVD <- function (X, rWeights=NULL, cWeights=NULL, ncp=Inf) {
                 usuelleSVD <- vector(mode="list", length=3)
                 usuelleSVD$d[usuelleSVD$d < 0] = 0
                 usuelleSVD$d <- sqrt(usuelleSVD$d)
-                usuelleSVD$v <- bb$vec[, 1:ncp]
+                usuelleSVD$v <- bb$vec[, seq_len(ncp)]
                 usuelleSVD$u <- t(t(crossprod(t(X), usuelleSVD$v))/
-                                    usuelleSVD$d[1:ncp])
+                                    usuelleSVD$d[seq_len(ncp)])
             }
         }
         U <- usuelleSVD$u
@@ -63,9 +63,9 @@ wrapperSVD <- function (X, rWeights=NULL, cWeights=NULL, ncp=Inf) {
                 usuelleSVD <- vector(mode="list", length=3)
                 usuelleSVD$d[usuelleSVD$d < 0] <- 0
                 usuelleSVD$d <- sqrt(usuelleSVD$d)
-                usuelleSVD$v <- bb$vec[, 1:ncp]
+                usuelleSVD$v <- bb$vec[, seq_len(ncp)]
                 usuelleSVD$u <- t(t(crossprod(X, usuelleSVD$v)) / 
-                                    usuelleSVD$d[1:ncp])
+                                    usuelleSVD$d[seq_len(ncp)])
             }
         }
         U <- usuelleSVD$v
@@ -75,8 +75,8 @@ wrapperSVD <- function (X, rWeights=NULL, cWeights=NULL, ncp=Inf) {
         V <- t(t(V) * mult)/sqrt(cWeights)
         U <- t(t(U) * mult)/sqrt(rWeights)
     }
-    vs <- usuelleSVD$d[1:min(ncol(X), nrow(X) - 1)]
-    num <- which(vs[1:ncp] < 1e-15)
+    vs <- usuelleSVD$d[seq_len(min(ncol(X), nrow(X) - 1))]
+    num <- which(vs[seq_len(ncp)] < 1e-15)
     if (length(num) == 1) {
         U[, num] <- U[, num, drop = FALSE] * vs[num]
         V[, num] <- V[, num, drop = FALSE] * vs[num]

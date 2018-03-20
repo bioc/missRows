@@ -73,7 +73,7 @@ missPattern <- function(object, colStrata=NULL, colMissing="grey70",
     
     ##- finds the missing data pattern ---------------------------------------#
     ##------------------------------------------------------------------------#
-    for (i in 1:length(missData)) {
+    for (i in seq_along(missData)) {
         id.miss <- apply(is.na(missData[[i]]), 1, all)
         tmp <- split(id.miss, strt)
         nbmr[, i] <- vapply(tmp, sum, 1L)
@@ -91,8 +91,8 @@ missPattern <- function(object, colStrata=NULL, colMissing="grey70",
     ymax <- cumsum(table(mrp$strata))
     ymin <- c(0, ymax[-length(ymax)])
     
-    ymin.m <- 0:(length(strt) - 1)
-    ymax.m <- 1:length(strt)
+    ymin.m <- seq(0, length(strt) - 1)
+    ymax.m <- seq_along(strt)
     
     df <- data.frame(ymin = NA, ymax = NA, strata = NA, Table = NA)
     df.m <- data.frame(ymin = 0, ymax = 0, strata = "", Table = nmTables[1])
@@ -118,7 +118,7 @@ missPattern <- function(object, colStrata=NULL, colMissing="grey70",
     df.m$Table <- factor(df.m$Table, levels=nmTables)
     
     ind.cols <- c(colStrata, "transparent", colMissing)
-    names(ind.cols)[length(colStrata) + 1:2] <- c("", missLab)
+    names(ind.cols)[length(colStrata) + seq_len(2)] <- c("", missLab)
     
     g <- ggplot() + theme_bw() + facet_wrap(~ Table) +
         scale_y_reverse(expand=c(0, 1.5)) +

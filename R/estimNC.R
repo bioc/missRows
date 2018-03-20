@@ -15,8 +15,9 @@ estimNC <- function (X, minNC=0, maxNC) {
     for (q in max(minNC, 1):maxNC) {
 
         if (q > 1) {
-            rec <- tcrossprod(sweep(rr$u[, 1:q, drop=FALSE], 2, rr$d[1:q], 
-                            FUN = "*"), rr$v[, 1:q, drop=FALSE])
+            rec <- tcrossprod(sweep(rr$u[, seq_len(q), drop=FALSE], 2, 
+                                    rr$d[seq_len(q)], FUN="*"), 
+                                    rr$v[, seq_len(q), drop=FALSE])
         }
 
         if (q == 1) {

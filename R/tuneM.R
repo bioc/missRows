@@ -92,7 +92,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     from <- 1
     
     for (i in seq_along(nbMissStr)) {
-        to <- sum(nbMissStr[1:i])
+        to <- sum(nbMissStr[seq_len(i)])
         idDataMiss[[i]] <- seq(from, to)
         from <- to + 1
     }
@@ -125,7 +125,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     ##- initial configuration M_0
     conf0 <- list()
     m <- 1
-    In <- split(1:(m * inc * N), rep(1:N, length = m * inc * N))
+    In <- split(seq_len(m * inc * N), rep(seq_len(N), length = m * inc * N))
     
     ##- realisation of the MFA on the imputated data
     for (i in unlist(In)) {
@@ -148,7 +148,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
         variatesMFA[[i]] <- data.frame(result$U)
     }
     
-    for (n in 1:N) {
+    for (n in seq_len(N)) {
         ##- calculation of the compromise space (STATIS method)
         conf0[[n]] <- STATIS(variatesMFA[In[[n]]], nf=ncomp)$Cli
     }
@@ -158,9 +158,9 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     m <- 2
     
     repeat {
-        In <- split(1:(m * inc * N), rep(1:N, length=m * inc * N))
+        In <- split(seq_len(m * inc * N), rep(seq_len(N), length=m * inc * N))
         subIn <- split((((m - 1) * inc * N) + 1):(m * inc * N),
-                        rep(1:N, length=inc * N))
+                        rep(seq_len(N), length=inc * N))
         RV <- NULL
         
         ##- realisation of the MFA on the imputated data
@@ -184,7 +184,7 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
             variatesMFA[[i]] <- data.frame(result$U)
         }
         
-        for (n in 1:N) {
+        for (n in seq_len(N)) {
             ##- calculation of the compromise space (STATIS method)
             conf <- STATIS(variatesMFA[In[[n]]], nf=ncomp)$Cli
             RV <- c(RV, RVcoeff(conf0[[n]], conf))
@@ -202,9 +202,9 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     
     ##- graphic representation -----------------------------------------------#
     ##------------------------------------------------------------------------#
-    df <- data.frame(x = 1:length(aveRVcoef), avg = aveRVcoef, 
+    df <- data.frame(x = seq_along(aveRVcoef), avg = aveRVcoef, 
                     sd = sdRVcoef)
-    lab <- paste0("(", Ml[1:(nbMl - 1)], ",", Ml[2:nbMl], ")")
+    lab <- paste0("(", Ml[seq_len(nbMl - 1)], ",", Ml[2:nbMl], ")")
     res <- list(stats = df[, -1])
     res$stats <- data.frame(imputations = lab, res$stats)
     

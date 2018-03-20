@@ -26,7 +26,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
     ##- table names
     if (is.null(tableNames)) { tableNames <- names(K) }
     
-    if (is.null(tableNames)) { tableNames <- paste0("Table ", 1:length(K)) }
+    if (is.null(tableNames)) { tableNames <- paste0("Table ", seq_along(K)) }
     
     if (length(tableNames) != length(K)) {
         stop("the length of 'tableNames' must be equal to ", length(K),
@@ -40,7 +40,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
     names(K) <- tableNames
     
     ##- the individual tables
-    for (i in 1:length(K)) {
+    for (i in seq_along(K)) {
         if (length(dim(K[[i]])) != 2) {
             stop("the '", names(K)[i], "' data table must be a matrix or",
                 " data frame.", call.=FALSE)
@@ -53,7 +53,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
     }
     
     ### Inf values in tables
-    for (i in 1:length(K)) {
+    for (i in seq_along(K)) {
         if (any(apply(K[[i]], 1, is.infinite))) {
             stop("infinite values in '", names(K)[i], "' data table.", 
                 call.=FALSE)
@@ -67,7 +67,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
             call.=FALSE)
     
     ##- the tables are rows named
-    for (i in 1:length(K)) {
+    for (i in seq_along(K)) {
         if (is.null(rownames(K[[i]]))) {
             stop("the '", names(K)[i], "' data table must be rows named.", 
                 call.=FALSE)
@@ -81,7 +81,7 @@ newMIDTList <- function(..., strata=NULL, tableNames=NULL) {
     
     ##- samples are ordered correctly
     rnames <- names(strata)
-    for (i in 1:length(K)) {
+    for (i in seq_along(K)) {
         if (!identical(rnames, rownames(K[[i]]))) {
             stop("non equal row names among tables and/or strata", 
                 call.=FALSE)

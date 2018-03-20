@@ -108,7 +108,7 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     from <- 1
     
     for (i in seq_along(nbStrMiss)) {
-        to <- sum(nbStrMiss[1:i])
+        to <- sum(nbStrMiss[seq_len(i)])
         strMiss[[i]] <- seq(from, to)
         from <- to + 1
     }
@@ -134,7 +134,7 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     U <- list()
     center <- sigma <- matrix(0, nrow=M, ncol=sum(nbCols))
     
-    for (m in 1:M) { ## nb. of imputations M
+    for (m in seq_len(M)) { ## nb. of imputations M
         completeData <- incompData
         
         for (nm in nmMissRows) {
@@ -160,7 +160,7 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     ##- calculation of the compromise space (STATIS method) ------------------#
     ##------------------------------------------------------------------------#
     tmp <- STATIS(U, nf=ncomp)
-    colnames(tmp$Cli) <- paste0("comp ", 1:ncomp)
+    colnames(tmp$Cli) <- paste0("comp ", seq_len(ncomp))
     
     ##- estimation of the number of components for data imputation -----------#
     ##------------------------------------------------------------------------#
@@ -174,14 +174,14 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     
     ##- data imputation ------------------------------------------------------#
     ##------------------------------------------------------------------------#
-    impD <- imputeDataMFA(incompData, tmp$Cli, missRows, comp=1:ncp,
+    impD <- imputeDataMFA(incompData, tmp$Cli, missRows, comp=seq_len(ncp),
                             maxIter=maxIter, tol=tol)
     
     ##- results: MIDTList S4 class -------------------------------------------#
     ##------------------------------------------------------------------------#
     object <- new("MIDTList",
                     object,
-                    compromise=tmp$Cli[, 1:ncp],
+                    compromise=tmp$Cli[, seq_len(ncp)],
                     configurations=U,
                     imputedRows=impD,
                     MIparam=list(method="MFA",
