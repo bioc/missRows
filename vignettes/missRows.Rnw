@@ -222,7 +222,7 @@ stratum for each individual is stored in a data frame \Rcode{df}. \medskip
 
 <<quickStart, eval=FALSE>>=
 ## Data preparation
-midt <- newMIDTList(table1, table2, strata=df)
+midt <- newMIDTList(table1, table2, colData=df)
 
 ## Performing MI
 midt <- MIMFA(midt, ncomp=2, M=30)
@@ -292,14 +292,14 @@ Once the package is loaded, these datasets can be used by typing \medskip
 data(NCI60)
 @
 
-\Rcode{NCI60} is a list composed of three components: \Rcode{completeData}, 
-\Rcode{incompleteData} and \Rcode{cell.line}. \medskip
+\Rcode{NCI60} is a list composed of two components: \Rcode{dataTables}, 
+and \Rcode{mae}. \medskip
 
 <<>>=
 names(NCI60)
 @
 
-\Rcode{completeData} contains both transcriptomic and proteomic expression from 
+\Rcode{dataTables} contains both transcriptomic and proteomic expression from
 NCI-60 without missing data. The transcriptome data was directly retrieved 
 from the \Robject{NCI60\_4arrays} data in the \Biocpkg{omicade4} package 
 \cite{NCI60_4arrays}. This data table contains gene expression profiles 
@@ -311,18 +311,24 @@ Both full datasets are accessible at
 \url{https://discover.nci.nih.gov/cellminer/} \cite{CellMiner}.
 
 Subsequently, a specific pattern of missingness has been created in these data 
-tables for illustration purpose, resulting in what we called the 
-\Rcode{incompleteData}.
+tables for illustration purpose.
 
-The component \Rcode{cell.line} contains the character vector of cancer type 
-for each cell line: colon (CO), renal (RE), ovarian (OV), breast (BR), 
-prostate (PR), lung (LC), central nervous system (CNS), leukemia (LE) and 
-melanoma (ME). \medskip
+The component \Rcode{dataTables\$cell.line} contains the character vector of
+cancer type for each cell line: colon (CO), renal (RE), ovarian (OV), breast
+(BR), prostate (PR), lung (LC), central nervous system (CNS), leukemia (LE) 
+and melanoma (ME). \medskip
 
 <<>>=
-table(NCI60$cell.line)
+table(NCI60$dataTables$cell.line)
 @
 
+\Rcode{NCI60\$mae} contain a 'MultiAssayExperiment' instance from NCI60 data
+with transcriptome and proteomic experiments as described in 
+\Rcode{dataTables}.
+
+<<>>=
+NCI60$mae
+@
 
 \subsection{Data preparation: the \Rclass{MIDTList} object}
 %============================================================================
@@ -361,29 +367,37 @@ and \Rcode{cell.line} contains the character vector of cancer type for each
 cell line, then a \Rclass{MIDTList} object can be created by \medskip
 
 <<dirMIDTList>>=
-tableList <- NCI60$incompleteData
-cell.line <- NCI60$cell.line
+tableList <- NCI60$dataTables[1:2]
+cell.line <- NCI60$dataTables$cell.line
 
-midt <- newMIDTList(tableList, strata=cell.line, 
-                    tableNames=c("trans", "prote"))
+midt <- newMIDTList(tableList, colData=cell.line, 
+                    assayNames=c("trans", "prote"))
 @
 
 The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from 
 separated data tables directly by \medskip
 
 <<sepMIDTList>>=
-table1 <- NCI60$incompleteData$trans
-table2 <- NCI60$incompleteData$prote
+table1 <- NCI60$dataTables$trans
+table2 <- NCI60$dataTables$prote
+cell.line <- NCI60$dataTables$cell.line
 
-midt <- newMIDTList(table1, table2, strata=NCI60$cell.line,
-                    tableNames=c("trans", "prote"))
+midt <- newMIDTList(table1, table2, colData=cell.line,
+                    assayNames=c("trans", "prote"))
 @
 
 or by \medskip
 
 <<sepMIDTList2>>=
 midt <- newMIDTList("trans" = table1, "prote" = table2,
-                    strata=NCI60$cell.line)
+                    colData=cell.line)
+@
+
+The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from 
+'MultiAssayExperiment' by \medskip
+
+<<maeMIDTList>>=
+midt <- newMIDTList(NCI60$mae)
 @
 
 A summary of the \Rcode{midt} object can be seen by typing the object name 
@@ -425,21 +439,17 @@ midt
 %============================================================================
 Once the \Rclass{MIDTList} object is created the user can use the methods 
 defined for this class to access the information encapsulated in the object. 
-The information in each slot can be accessed using the method with the same 
-slot name.
 
-By example, the \Rcode{tableNames} slot contains the table names, this 
-information is accessed by \medskip
+By example, the table names information is accessed by \medskip
 
 <<>>=
-tableNames(midt)
+names(midt)
 @
 
-For accessing the \Rcode{strata} slot \medskip
+For accessing the \Rcode{colData} slot \medskip
 
 <<>>=
-cell.line <- strata(midt)
-table(cell.line)
+cell.line <- colData(midt)
 @
 
 Multiple imputation calculates \Rcode{M} configurations associated to each 
@@ -451,12 +461,8 @@ conf <- configurations(midt, M=5)
 dim(conf)
 @
 
-The list of the imputed data tables can be exported by the function 
-\Rcode{imputedData} \medskip
-
-<<imputData>>=
-completeData <- imputedData(midt)
-@
+The list of ... can be exported by the function 
+\Rcode{function} \medskip
 
 
 \subsection{Data exploration and visualization}
@@ -563,7 +569,7 @@ scientist should remain really careful regarding its interpretation.
 
 \subsubsection{Variables plot: correlation circle}
 %----------------------------------------------------------------------------
-\Rcode{plotVar} produces a "correlation circle", \textit{i.e.} the correlations 
+\Rcode{plotVar} produces a "correlation circle", \textit{i.e.} the correlations
 between each variable and the selected components are plotted as scatter plot, 
 with concentric circles of radius one and radius given by \Rcode{radIn}. 
 Variables are represented by points (symbols) and colored according to the 
@@ -644,11 +650,11 @@ Error bars represent the standard deviation of the RV coefficients.
 
 \subsection{The MI-MFA approach}
 %============================================================================
-To deal with multiple tables with missing rows, \Rpackage{missRows} implements 
-the MI-MFA method in \cite{Voillet_2016}, a multiple imputation approach in a 
-multiple factor analysis framework. According to MI methodology, the MI-MFA 
-proceeds as follows. Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},\ldots , 
-\boldsymbol{K}_{\!J}\}$ a set of $J$ data tables, where each 
+To deal with multiple tables with missing individuals, \Rpackage{missRows}
+implements the MI-MFA method in \cite{Voillet_2016}, a multiple imputation
+approach in a multiple factor analysis framework. According to MI methodology,
+the MI-MFA proceeds as follows. Let $\boldsymbol{K} = \{\boldsymbol{K}_{\!1},
+\ldots ,\boldsymbol{K}_{\!J}\}$ a set of $J$ data tables, where each 
 $\boldsymbol{K}_{\!j}$ corresponds to a table of quantitative variables 
 measured on the same individuals, then carry out the following three 
 steps: \smallskip
