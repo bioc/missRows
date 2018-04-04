@@ -5,37 +5,26 @@
 ##- setClass -----------------------------------------------------------------#
 ##----------------------------------------------------------------------------#
 MIDTList <- setClass("MIDTList",
-                    slots=c(incompleteData="ANY",
+                    contains="MultiAssayExperiment",
+                    slots=c(
                     strata="ANY",
-                    tableNames="ANY",
-                    missingRows="ANY",
+                    missingIndv="ANY",
                     compromise="ANY",
                     configurations="ANY",
-                    imputedRows="ANY",
+                    imputedIndv="ANY",
                     MIparam="ANY"))
 
 
 ##- setGeneric ---------------------------------------------------------------#
 ##----------------------------------------------------------------------------#
 
-##- incompleteData
-setGeneric(name="incompleteData",
-            def=function(object) standardGeneric("incompleteData"))
-
 ##- strata
 setGeneric(name="strata",
             def=function(object) standardGeneric("strata"))
 
-##- tableNames
-setGeneric(name="tableNames",
-            def=function(object, ...) standardGeneric("tableNames"))
-
-setGeneric("tableNames<-",
-            def =function(object, value) standardGeneric("tableNames<-"))
-
-##- missingRows
-setGeneric(name="missingRows",
-            def=function(object) standardGeneric("missingRows"))
+##- missingIndv
+setGeneric(name="missingIndv",
+            def=function(object) standardGeneric("missingIndv"))
 
 ##- compromise
 setGeneric(name="compromise",
@@ -45,14 +34,13 @@ setGeneric(name="compromise",
 setGeneric(name="configurations",
             def=function(object, ...) standardGeneric("configurations"))
 
-##- imputedRows
-setGeneric(name="imputedRows",
-            def=function(object) standardGeneric("imputedRows"))
+##- imputedIndv
+setGeneric(name="imputedIndv",
+            def=function(object) standardGeneric("imputedIndv"))
 
 ##- MIparam
 setGeneric(name="MIparam",
             def=function(object) standardGeneric("MIparam"))
-
 
 
 ##- setMethod ----------------------------------------------------------------#
@@ -62,31 +50,22 @@ setMethod("show",
         signature="MIDTList",
         definition=function(object) {
 
-            nbMiss <- NULL
-
-            for (j in seq_along(object@incompleteData)) {
-                idMiss <- apply(is.na(object@incompleteData[[j]]), 1, all)
-                if (any(idMiss)) {
-                    nbMiss <- c(nbMiss, sum(idMiss))
-                } else {
-                    nbMiss <- c(nbMiss, 0)
-                }
-            }
-
-            nt <- length(object@incompleteData)
+            nbMiss <- unlist(lapply(object@missingIndv, length))
+            nt <- length(assays(object))
 
             cat("An object of class ", class(object), ".",
                 "\n\nTables:\n", sep = "")
-            info <- data.frame(names(object@incompleteData),
-                            vapply(object@incompleteData, nrow, 1L),
-                            vapply(object@incompleteData, ncol, 1L),
+            info <- data.frame(
+                            vapply(assays(object), nrow, 1L),
+                            vapply(assays(object), ncol, 1L),
                             nbMiss,
-                            row.names = paste0("Table ", seq_len(nt), " "))
-            colnames(info) <- c("name", "rows", "columns", "missing")
+                            row.names = names(assays(object))
+                                )
+            colnames(info) <- c("features", "individuals", "miss.indv")
             print(info)
 
             cat("\nStrata:")
-            print(table(object@strata))
+            print(table(colData(object)[, object@strata]))
 
             if (!is.null(object@MIparam)) {
                 cat("\nMultiple imputation in", object@MIparam$method)
@@ -105,43 +84,9 @@ setMethod("show",
             }
         })
 
-##- incompleteData
-setMethod(f="incompleteData", signature="MIDTList",
-        definition=function(object) object@incompleteData)
-
-##- strata
-setMethod(f="strata", signature="MIDTList",
-        definition=function(object) object@strata)
-
-##- tableNames
-setMethod(f="tableNames", signature="MIDTList",
-        definition=function(object, ...) object@tableNames)
-
-setReplaceMethod(f="tableNames", signature="MIDTList",
-                definition=function(object, value) {
-                nt <- length(object@incompleteData)
-
-                if (length(value) != nt | is.matrix(value) | 
-                    is.list(value)) {
-                    stop("'tableNames<-' accessor is only valid for vectors",
-                        " of length ", nt, call.=FALSE)
-                }
-
-                value <- as.character(value)
-
-                if (any(duplicated(value))) {
-                    stop("'tableNames<-' accessor is only valid for vectors",
-                        " with unique values", call.=FALSE)
-                }
-
-                object@tableNames  <- value
-                names(object@incompleteData) <- value
-                return(object)
-            })
-
-##- missingRows
-setMethod(f="missingRows", signature="MIDTList",
-        definition=function(object) object@missingRows)
+##- missingIndv
+setMethod(f="missingIndv", signature="MIDTList",
+        definition=function(object) object@missingIndv)
 
 ##- compromise
 setMethod(f="compromise", signature="MIDTList",
@@ -169,14 +114,14 @@ setMethod(f="configurations", signature="MIDTList",
             }
         })
 
-##- imputedRows
-setMethod(f="imputedRows", signature="MIDTList",
+##- imputedIndv
+setMethod(f="imputedIndv", signature="MIDTList",
         definition=function(object) {
-            if (is.null(object@imputedRows)) {
-                cat("No 'imputedRows' slot found in the MIDTList object.",
+            if (is.null(object@imputedIndv)) {
+                cat("No 'imputedIndv' slot found in the MIDTList object.",
                     "Run MI first.")
             } else {
-                object@imputedRows
+                object@imputedIndv
             }
         })
 
@@ -190,4 +135,3 @@ setMethod(f="MIparam", signature="MIDTList",
                 object@MIparam
             }
         })
-
