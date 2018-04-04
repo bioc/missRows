@@ -10,14 +10,43 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     }
     
     ##- strata
-    strt <- strata(object)
+    strt <- factor(colData(object)[, object@strata])
+    names(strt) <- rownames(colData(object))
     strtLevels <- levels(strt)
     
-    ##- datasets
-    datasets <- incompleteData(object)
-    datasets <- lapply(datasets, function(x, ind) {rownames(x) <- ind; x},
-                        names(strt))
+    ##- internal function for inserting NA in missing columns ----#
+    ##------------------------------------------------------------#
+    insertCols <- function(mat, id) {
+        
+        mat <- as.data.frame(mat)
+        
+        for(i in seq_along(id)) {
+            colSeq <- seq(from=id[i], to=ncol(mat))
+            mat[, colSeq + 1] <- mat[, colSeq]
+            mat[, id[i]] <- NA
+        }
+        
+        return(as.matrix(mat))
+    }
+    ##------------------------------------------------------------#
+    
+    datasets <- assays(object)
+    dfmap <- sampleMap(object)
+    dfmap <- mapToList(dfmap, "assay")
+    cnames <- rownames(colData(object))
+    
+    ##- inserting NA in missing columns
+    for (i in names(datasets)) {
+        colnames(datasets[[i]]) <- dfmap[[i]]$primary
+        idx <- (cnames %in% colnames(datasets[[i]]))
+        datasets[[i]] <- datasets[[i]][, cnames[idx]]
+        missColId <- which(!idx)
+        datasets[[i]] <- insertCols(datasets[[i]], missColId)
+        colnames(datasets[[i]]) <- cnames
+    }
+    
     names(datasets) <- paste0("data", seq(length(datasets)))
+    datasets <- lapply(datasets, t)
     
     nbCols <- vapply(datasets, ncol, 1L)
     nbTables <- length(datasets)
@@ -227,6 +256,5 @@ tuneM <- function(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06,
     ##- results --------------------------------------------------------------#
     ##------------------------------------------------------------------------#
     res <- c(res, list(ggp = g))
-    class(res) <- "tuneM"
     return(invisible(res))
 }
