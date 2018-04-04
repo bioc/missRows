@@ -1,7 +1,7 @@
 Package: missRows
 Type: Package
 Title: Handling Missing Individuals in Multi-Omics Data Integration
-Version: 0.99.4
+Version: 0.99.5
 Date: 2018-03-19
 Author: Ignacio Gonzalez and Valentin Voillet
 Maintainer: Gonzalez Ignacio <ignacio.gonzalez@bbox.fr>
@@ -13,7 +13,7 @@ Description: The missRows package implements the MI-MFA method to deal with miss
     individuals, and various diagnostic plots to inspect the pattern of missingness and 
     visualize the uncertainty due to missing values.
 License: Artistic-2.0
-Depends: R (>= 3.4), methods, ggplot2, grDevices, MultiAssayExperiment
+Depends: R (>= 3.5), methods, ggplot2, grDevices, MultiAssayExperiment
 Imports: plyr, stats, gtools, S4Vectors
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, testthat
