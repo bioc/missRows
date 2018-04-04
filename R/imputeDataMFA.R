@@ -45,7 +45,7 @@ imputeDataMFA <- function(datasets, U, missRows, comp,
         id <- which(names(nl[-1]) == nm)
         from <- sum(nl[seq_len(id)]) + 1
         to <- sum(nl[seq_len(id + 1)])
-        imputData[[nm]] <- Xnew[missRows[[nm]], from:to]
+        imputData[[nm]] <- t(Xnew[missRows[[nm]], from:to])
     }
     
     return(imputData)
