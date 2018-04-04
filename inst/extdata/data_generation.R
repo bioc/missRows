@@ -1,66 +1,83 @@
-#-- transcriptomic data --------------------------------------------------------#
-#-------------------------------------------------------------------------------#
-
-#-- load data
+##- required libraries -------------------------------------------------------#
+##----------------------------------------------------------------------------#
+library(S4Vectors)
+library(MultiAssayExperiment)
 library(omicade4)
-data(NCI60_4arrays)
-
-#-- a subset of microarray gene expression of the NCI 60 cell lines
-trans <- t(NCI60_4arrays$agilent)
-
-
-#-- proteomic data -------------------------------------------------------------#
-#-------------------------------------------------------------------------------#
-
-#-- load data
 library(rcellminer)
 library(rcellminerData)
+
+
+##- transcriptomic data ------------------------------------------------------#
+##----------------------------------------------------------------------------#
+##- load data
+data(NCI60_4arrays)
+
+##- a subset of microarray gene expression from the NCI-60 cell lines
+trans <- NCI60_4arrays$agilent
+
+##- incomplete trascriptomic data
+trans <- trans[, -c(1, 6, 12, 13, 19, 25, 26, 35, 36, 44, 53, 55)]
+
+##-- map
+colname <- colnames(trans)
+primary <- apply(as.matrix(colname), 1, 
+                 function(x) { strsplit(x, "[.]")[[1]][2] })
+transmap <- DataFrame(primary = primary, colname = colname)
+
+
+##- proteomic data -----------------------------------------------------------#
+##----------------------------------------------------------------------------#
+##- load data
 data(molData)
 
-#-- proteomic data of the NCI 60 cell lines
-prote <- t(exprs(molData@eSetList$pro))
+##-- proteomic data from the NCI 60 cell lines
+prote <- getESetList(molData)$pro
+colData <- getSampleData(molData)
+
+##-- incomplete proteomic data
+prote <- prote[, -c(8, 20, 27, 28, 39, 40, 45, 54)]
+
+##-- map
+colname <- sampleNames(prote)
+primary <- apply(as.matrix(colname), 1, 
+                 function(x) { strsplit(x, "[:]")[[1]][2] })
+protemap <- DataFrame(primary = primary, colname = colname)
 
 
-#-- cell line information ------------------------------------------------------#
-#-------------------------------------------------------------------------------#
-samples <- getSampleData(molData)$Name
-strata <- data.frame(samples = samples, stringsAsFactors = FALSE)
-rownames(strata) <- samples
-
-for (i in 1:length(samples)) {
-  strata[i, ] <- strsplit(samples[i], "[:]")[[1]][1]
-  rownames(trans)[i] <- paste(strsplit(rownames(trans)[i], "[.]")[[1]],
-                              collapse = ":")
-}
+##- cell line information ----------------------------------------------------#
+##----------------------------------------------------------------------------#
+tmp <- getSampleData(molData)$Name
+tmp <- data.frame(tmp, stringsAsFactors = FALSE)
+cell.type <- apply(tmp, 1, function(x) { strsplit(x, "[:]")[[1]][1] })
+samples <- apply(tmp, 1, function(x) { strsplit(x, "[:]")[[1]][2] })
+cell.line <- data.frame(type = cell.type, row.names = samples,
+                        stringsAsFactors = FALSE)
 
 
-#-- complete data --------------------------------------------------------------#
-#-------------------------------------------------------------------------------#
+##- MultiAssayExperiment for the incomplete data -----------------------------#
+##----------------------------------------------------------------------------#
+listmap <- list("trans" = transmap, "prote" = protemap)
+dfmap <- listToMap(listmap)
 
-#-- liste containing the data tables
-completeData <- list(trans = trans, prote = prote)
+explist <- list("trans" = trans, "prote" = prote)
 
-#-- check whether samples are ordered correctly
-all(apply(x <- sapply(completeData, rownames), 2,
-          function(y) identical(y, x[, 1])))
-
-
-#-- incomplete data ------------------------------------------------------------#
-#-------------------------------------------------------------------------------#
-
-#-- incomplete trascriptomic data
-trans.incompl <- trans
-trans.incompl[c(1, 6, 12, 13, 19, 25, 26, 35, 36, 44, 53, 55), ] <- NA
-
-#-- incomplete proteomic data
-prote.incompl <- prote
-prote.incompl[c(8, 20, 27, 28, 39, 40, 45, 54), ] <- NA
-
-#-- liste containing the data tables
-incompleteData <- list(trans = trans.incompl, prote = prote.incompl)
+mae <- MultiAssayExperiment(experiments=explist,
+                            colData=cell.line,
+                            sampleMap=dfmap)
 
 
-#-- liste containing both data sets and cell line info -------------------------#
-#-------------------------------------------------------------------------------#
-NCI60 <- list(completeData = completeData, incompleteData = incompleteData,
-              cell.line = strata)
+##- liste containing both data tables and cell line info ---------------------#
+##----------------------------------------------------------------------------#
+transTable <- assays(mae)$trans
+colnames(transTable) <- transmap$primary
+
+proteTable <- assays(mae)$prote
+colnames(proteTable) <- protemap$primary
+
+dataTables <- list(trans = transTable, prote = proteTable, 
+                    cell.line = cell.line)
+
+
+##- the NCI60 data for missRows ----------------------------------------------#
+##----------------------------------------------------------------------------#
+NCI60 <- list("dataTables" = dataTables, "mae" = mae)
