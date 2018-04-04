@@ -18,13 +18,13 @@ plotInd <- function(object,
         stop("'object' must be an object of class 'MIDTList'", call.=FALSE)
     }
     
-    if (is.null(object@compromise)) {
+    if (is.null(compromise(object))) {
         stop("No 'compromise' slot found in the MIDTList object.",
             " Run MIMFA first", call.=FALSE)
     }
     
     ##- comp
-    if (is.null(object@MIparam)) {
+    if (is.null(MIparam(object))) {
         stop("No 'MIparam' slot found in the MIDTList object.",
             " Run MIMFA first", call.=FALSE)
     }
@@ -57,14 +57,17 @@ plotInd <- function(object,
     }
     ##------------------------------------------------------------#
     
+    strata <- factor(colData(object)[, object@strata])
+    names(strata) <- rownames(colData(object))
+    
     ##- colStrata
     if (is.null(colStrata)) {
-        colStrata <- rainbow(length(levels(strata(object))))
-        names(colStrata) <- levels(strata(object))
+        colStrata <- rainbow(length(levels(strata)))
+        names(colStrata) <- levels(strata)
     } else {
-        if (length(colStrata) != length(levels(strata(object)))) {
+        if (length(colStrata) != length(levels(strata))) {
             stop("'colStrata' must be a color names vector of length ",
-                length(levels(strata(object))), ".", call.=FALSE)
+                length(levels(strata)), ".", call.=FALSE)
         } else {
             if (any(!isColor(colStrata))) {
                 stop("'colStrata' must be a character vector of recognized",
@@ -74,11 +77,11 @@ plotInd <- function(object,
     }
     
     if (is.null(names(colStrata))) {
-        names(colStrata) <- levels(strata(object))
+        names(colStrata) <- levels(strata)
     } else {
-        if (any(!(names(colStrata) %in% levels(strata(object)))))
+        if (any(!(names(colStrata) %in% levels(strata))))
             stop("names of 'colStrata' must be a character from: ",
-                toString(levels(strata(object))), call.=FALSE)
+                toString(levels(strata)), call.=FALSE)
     }
     
     ##- colMissing
@@ -103,7 +106,9 @@ plotInd <- function(object,
     }
     
     ##- confLevel
-    
+    if ((confLevel > 1) | (confLevel < 0))
+        stop("the value taken by 'confLevel' must be between 0 and 1",
+            call.=FALSE)
     
     ##- ellipse type
     choices <- c("norm", "t")
@@ -157,14 +162,14 @@ plotInd <- function(object,
     comprConf <- compromise(object)
     n <- nrow(comprConf)
     miss <- rep("not", n)
-    miss[names(strata(object)) %in% unlist(missingRows(object))] <- "yes"
+    miss[names(strata) %in% unlist(missingIndv(object))] <- "yes"
     pch <- 21
     
     ##- none confidence areas ------------------------------------------------#
     ##------------------------------------------------------------------------#
     if (confAreas == 'none') {
         df <- data.frame(x = comprConf[, comp[1]], y = comprConf[, comp[2]],
-                        ind = names(strata(object)), stratum = strata(object),
+                        ind = names(strata), stratum = strata,
                         missing = miss)
         
         df$ind.miss <- paste(df$ind, df$missing, sep = ".")
@@ -195,7 +200,7 @@ plotInd <- function(object,
     ##------------------------------------------------------------------------#
     if (confAreas == 'ellipse') {
         df <- data.frame(x = comprConf[, comp[1]], y = comprConf[, comp[2]],
-                        ind = names(strata(object)), stratum = strata(object),
+                        ind = names(strata), stratum = strata,
                         missing = miss, conf = rep("compromise", n))
         
         m <- length(configurations(object))
@@ -206,8 +211,8 @@ plotInd <- function(object,
             traj <- P %*% as.matrix(comprConf[, comp])
             
             temp <- data.frame(x = traj[, comp[1]], y = traj[, comp[2]],
-                                ind = names(strata(object)), 
-                                stratum = strata(object),
+                                ind = names(strata), 
+                                stratum = strata,
                                 missing = miss, conf = rep("imputed", n))
             df <- rbind(df, temp)
         }
@@ -262,7 +267,7 @@ plotInd <- function(object,
     ##------------------------------------------------------------------------#
     if (confAreas == 'convex.hull') {
         df <- data.frame(x = comprConf[, comp[1]], y = comprConf[, comp[2]],
-                        ind = names(strata(object)), stratum = strata(object),
+                        ind = names(strata), stratum = strata,
                         missing = miss, conf = rep("compromise", n))
         
         m <- length(configurations(object))
@@ -273,8 +278,8 @@ plotInd <- function(object,
             traj <- P %*% as.matrix(comprConf[, comp])
             
             temp <- data.frame(x = traj[, comp[1]], y = traj[, comp[2]],
-                                ind = names(strata(object)), 
-                                stratum = strata(object),
+                                ind = names(strata), 
+                                stratum = strata,
                                 missing = miss, conf = rep("imputed", n))
             df <- rbind(df, temp)
         }
