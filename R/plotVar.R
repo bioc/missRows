@@ -10,7 +10,7 @@ plotVar <- function(object,
                     radIn=0.5, 
                     overlap=TRUE, 
                     ncols=2,
-                    legTitle = "Tables") {
+                    legTitle="Tables") {
     
     ##- checking general input arguments & initialization of variables -------#
     ##------------------------------------------------------------------------#
@@ -20,19 +20,19 @@ plotVar <- function(object,
         stop("'object' must be an object of class 'MIDTList'.", call.=FALSE)
     }
     
-    if (is.null(object@compromise)) {
+    if (is.null(compromise(object))) {
         stop("No 'compromise' slot found in the MIDTList object.",
             " Run MIMFA first", call.=FALSE)
     }
     
-    completeData <- imputedData(object)
+    completeData <- lapply(imputedData(object), t)
     comprConf <- compromise(object)
     dtab <- seq_along(completeData)
-    nmTables <- tableNames(object)
+    nmTables <- names(object)
     nbTables <- length(completeData)
     
     ##- comp
-    if (is.null(object@MIparam)) {
+    if (is.null(MIparam(object))) {
         stop("No 'MIparam' slot found in the MIDTList object. Run MIMFA first",
             call.=FALSE)
     }
