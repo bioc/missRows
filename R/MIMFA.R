@@ -5,6 +5,12 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     ##- checking general input arguments -------------------------------------#
     ##------------------------------------------------------------------------#
     
+    ##- there are no missing individuals
+    if (length(unlist(missingIndv(object))) == 0) {
+        stop("no missing individuals in the data tables, MI is not useful.", 
+            call.=FALSE)
+    }
+    
     ##- object
     if (class(object) != "MIDTList") {
         stop("'object' must be an object of class 'MIDTList'.", call.=FALSE)
@@ -17,17 +23,20 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
             " integer", call.=FALSE)
     }
     
-    if (ncomp > min(length(strata(object)) - 1,
-                    sum(vapply(incompleteData(object), ncol, 1L)))) {
+    cond <- min(nrow(colData(object)) - 1,
+                sum(vapply(assays(object), nrow, 1L)))
+    
+    if (ncomp > cond) {
         stop("'ncomp' must be a numeric value lower or equal to ",
-            min(length(strata(object)) - 1, 
-                sum(vapply(incompleteData(object), ncol, 1L))), call.=FALSE)
+            cond, call.=FALSE)
     }
     
     ncomp <- round(ncomp)
     
     ##- M (number of imputations)
-    if (is.null(M) || !is.numeric(M) || M <= 1 || !is.finite(M)) {
+    if (is.null(M)) { M <- 30 }
+    
+    if (!is.numeric(M) || M <= 1 || !is.finite(M)) {
         stop("invalid number of imputations, 'M'. It must be a positive",
             " integer", call.=FALSE)
     }
@@ -67,10 +76,42 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     
     ##- initialization of variables ------------------------------------------#
     ##------------------------------------------------------------------------#
-    incompData <- incompleteData(object)
-    strt <- strata(object)
-    missRows <- missingRows(object)
     
+    ##- internal function for inserting NA in missing columns ----#
+    ##------------------------------------------------------------#
+    insertCols <- function(mat, id) {
+        
+        mat <- as.data.frame(mat)
+        
+        for(i in seq_along(id)) {
+            colSeq <- seq(from=id[i], to=ncol(mat))
+            mat[, colSeq + 1] <- mat[, colSeq]
+            mat[, id[i]] <- NA
+        }
+        
+        return(as.matrix(mat))
+    }
+    ##------------------------------------------------------------#
+    
+    incompData <- assays(object)
+    dfmap <- sampleMap(object)
+    dfmap <- mapToList(dfmap, "assay")
+    cnames <- rownames(colData(object))
+    
+    ##- inserting NA in missing columns
+    for (i in names(incompData)) {
+        colnames(incompData[[i]]) <- dfmap[[i]]$primary
+        idx <- (cnames %in% colnames(incompData[[i]]))
+        incompData[[i]] <- incompData[[i]][, cnames[idx]]
+        missColId <- which(!idx)
+        incompData[[i]] <- insertCols(incompData[[i]], missColId)
+        colnames(incompData[[i]]) <- cnames
+    }
+    
+    strt <- factor(colData(object)[, object@strata])
+    missRows <- missingIndv(object)
+    
+    incompData <- lapply(incompData, t)
     nbCols <- vapply(incompData, ncol, 1L)
     nbTables <- length(incompData)
     nbRows <- length(strt)
@@ -116,8 +157,6 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     Mtotal <- prod(unlist(tmp))
     seqPermData <- alply(matrix(unlist(tmp)), 1, seq)
     
-    if (is.null(M)) { M <- 30 }
-    
     M <- min(M, Mtotal)
     
     ##- selection of the donor indexes ---------------------------------------#
@@ -153,6 +192,7 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
         ##- realisation of the MFA
         result <- MFA(completeData, ncomp, nbRows, nbTables, nbCols)
         U[[m]] <- data.frame(result$U)
+        colnames(U[[m]]) <- paste0("comp ", seq_len(ncomp))
     }
     
     rm(perm)
@@ -177,13 +217,14 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
     impD <- imputeDataMFA(incompData, tmp$Cli, missRows, comp=seq_len(ncp),
                             maxIter=maxIter, tol=tol)
     
+    
     ##- results: MIDTList S4 class -------------------------------------------#
     ##------------------------------------------------------------------------#
     object <- new("MIDTList",
                     object,
                     compromise=tmp$Cli[, seq_len(ncp)],
                     configurations=U,
-                    imputedRows=impD,
+                    imputedIndv=impD,
                     MIparam=list(method="MFA",
                                     ncomp=ncp,
                                     M=M,
