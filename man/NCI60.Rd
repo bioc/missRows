@@ -4,42 +4,39 @@
 
 \docType{data}
 
-\title{Data of the NCI-60 Cell Lines with Missing Rows}
+\title{Data of the NCI-60 Cell Lines with Missing Individuals}
 
 \description{
 The \code{NCI60} data contain both transcriptomic and proteomic
 expression for a collection of 60 cell lines from the National
-Cancer Institute (NCI-60). Data tables with missing rows have been
-generated for illustration purposes.
+Cancer Institute (NCI-60). Data tables with missing individuals 
+have been generated for illustration purposes.
 }
 
 \usage{data(NCI60)}
 
 \format{
-A list with three components, \code{cell.line}, \code{completeData} and
-\code{incompleteData}:
+A list with two components, \code{dataTables} and \code{mae}:
+
+\code{dataTables} contain a list with the following components:
 
 \describe{
+    \item{\code{trans}}{a matrix containing 300 rows and 48 columns.
+        The mRNA transcription levels of the NCI60 cell lines. There
+        are 12 missing individuals.}
+
+    \item{\code{prote}}{a matrix containing 162 rows and 52 columns.
+        The protein abundance levels of the NCI60 cell lines. There
+        are 8 missing individuals.}
+        
     \item{\code{cell.line}}{a character vector of cancer types:
         colon (CO), renal (RE), ovarian (OV), breast (BR),
         prostate (PR), lung (LC), central nervous system (CNS),
         leukemia (LE) and melanoma (ME).}
 }
 
-\code{completeData} and \code{incompleteData}, each one containing a
-list with the following components:
-
-\describe{
-    \item{\code{trans}}{a matrix containing 60 rows and 300 columns.
-        The mRNA transcription levels of the NCI60 cell lines. The
-        \code{trans} \code{incompleteData} table containing 12 missing
-        rows.}
-
-    \item{\code{prote}}{a matrix containing 60 rows and 162 columns.
-        The protein abundance levels of the NCI60 cell lines. The
-        \code{prote} \code{incompleteData} table containing 8 missing
-        rows.}
-}
+\code{mae} contain a 'MultiAssayExperiment' instance from NCI60 data with
+transcriptome and proteomic experiments as described in \code{dataTables}.
 }
 
 \details{

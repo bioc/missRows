@@ -7,17 +7,18 @@
 \docType{package}
 
 \title{
-Handling Missing Rows in Multi-Omics Data Integration
+Handling Missing Individuals in Multi-Omics Data Integration
 }
 
 \description{
-The missRows package implements the MI-MFA method to deal with missing rows in
-multi-omics data integration. The MI-MFA method generates multiple imputed
-datasets from a Multiple Factor Analysis model, then the yield results are
-combined in a single consensus solution. The package provides functions for
-estimating coordinates of individuals and variables, imputing missing row
-values, and various diagnostic plots to inspect the pattern of missingness and
-visualize the uncertainty due to missing row values.
+The missRows package implements the MI-MFA method to deal with missing 
+individuals ('biological units') in multi-omics data integration. The MI-MFA
+method generates multiple imputed datasets from a Multiple Factor Analysis
+model, then the yield results are combined in a single consensus solution. 
+The package provides functions for estimating coordinates of individuals and
+variables, imputing missing individuals, and various diagnostic plots to
+inspect the pattern of missingness and visualize the uncertainty due to 
+missing values.
 }
 
 \details{
@@ -25,9 +26,11 @@ visualize the uncertainty due to missing row values.
         Package: \tab missRows\cr
         Type: \tab Package\cr
         Version: \tab 1.0\cr
-        Date: \tab 2017-04-22\cr
-        License: \tab What license is it under?\cr
-        Depends: \tab methods\cr
+        Date: \tab 2018-03-19\cr
+        License: \tab Artistic-2.0\cr
+        Depends: \tab R (>= 3.4)\cr
+        Imports: \tab methods, gtools, plyr, ggplot2, stats, grDevices,\cr
+                \tab S4Vectors, MultiAssayExperiment
     }
 }
 
@@ -55,7 +58,7 @@ Multiple Imputation in Multiple Factor Analysis framework.
 \dontrun{
 
 #-- Data preparation
-midt <- newMIDTList(table1, table2, strata=df)
+midt <- newMIDTList(table1, table2, colData=df)
 
 #-- Performing MI
 midt <- MIMFA(midt, ncomp=2, M=30)

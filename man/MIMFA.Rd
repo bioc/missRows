@@ -11,8 +11,7 @@ Handling Missing Individuals in MFA
 The \code{MIMFA} function estimates coordinates of
 individuals and variables on the MFA components by implementing 
 a multiple imputation (MI) approach in order to deal
-with multiple tables in presence of missing individuals
-(rows).
+with multiple tables in presence of missing individuals.
 }
 
 \usage{
@@ -44,7 +43,7 @@ MIMFA(object, ncomp=2, M=NULL, estimeNC=FALSE, maxIter=500, tol=1e-10)
 }
 
 \details{
-According to the MI methodology, missing rows are filled
+According to the MI methodology, missing individuals are filled
 in by several sets of plausible values, resulting in \code{M}
 completed data. MFA is then applied to each completed data
 leading to \code{M} different configurations.
@@ -63,7 +62,7 @@ A \code{\link{MIDTList}} object containing additional slots for:
 \describe{
     \item{\code{compromise}}{}
     \item{\code{configurations}}{}
-    \item{\code{imputedRows}}{}
+    \item{\code{imputedIndv}}{}
     \item{\code{MIparam}}{}
 }
 
@@ -98,7 +97,7 @@ Ignacio González and Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
+midt <- newMIDTList(NCI60$mae)
 midt
 
 #-- performs MIMFA

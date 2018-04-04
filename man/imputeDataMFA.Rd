@@ -89,17 +89,4 @@ each data table.
 Ignacio González
 }
 
-\examples{
-#-- load data and create MIDTList object
-data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
-
-#-- performs MIMFA
-midt <- MIMFA(midt, ncomp=3, M=10)
-
-#-- imputes missing rows and estimates MFA axes
-completeRows <- imputeDataMFA(incompleteData(midt), compromise(midt), 
-                                missRows=missingRows(midt), comp=3)
-}
-
 \keyword{multivariate}

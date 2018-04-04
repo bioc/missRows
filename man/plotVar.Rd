@@ -109,8 +109,7 @@ Ignacio González
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line,
-                    tableNames=c("trans", "prote"))
+midt <- newMIDTList(NCI60$mae)
 
 #-- performs MIMFA
 midt <- MIMFA(midt, ncomp=2, M=5)

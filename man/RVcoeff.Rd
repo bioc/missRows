@@ -17,8 +17,7 @@ RVcoeff(X, Y)
 }
 
 \arguments{
-    \item{X, Y}{a matrix with \eqn{n} rows (individuals) and 
-        \eqn{p} columns (variables).}
+    \item{X, Y}{a matrix with \eqn{n}{n} rows and \eqn{p}{p} columns.}
 }
 
 \value{
@@ -31,18 +30,6 @@ A unifying tool for linear multivariate statistical methods:
 The RV coefficient. 
 \emph{Journal of the Royal Statistical Society}.
 25(3), 257--265.
-}
-
-\examples{
-#-- load data and create MIDTList object
-data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata = NCI60$cell.line)
-
-#-- performs MIMFA
-midt <- MIMFA(midt, ncomp=3, M=10)
-
-#-- RV coefficient between two configurations
-RVcoeff(configurations(midt, 1), configurations(midt, 2))
 }
 
 \keyword{multivariate}

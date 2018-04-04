@@ -3,11 +3,11 @@
 \encoding{latin1}
 \docType{methods}
 \alias{newMIDTList}
-\alias{tableNames<-}
-\alias{tableNames<-,MIDTList-method}
+\alias{newMIDTList.default}
+\alias{newMIDTList.MultiAssayExperiment}
 
 \title{
-Creates a MIDTList Object
+Creates an MIDTList Object
 }
 
 \description{
@@ -16,34 +16,36 @@ for each individual and table names (optional).
 }
 
 \usage{
-newMIDTList(..., strata=NULL, tableNames=NULL)
+\method{newMIDTList}{default}(..., colData=NULL, strata=NULL, assayNames=NULL)
 
-\S4method{tableNames}{MIDTList}(object) <- value
+\method{newMIDTList}{MultiAssayExperiment}(object, strata=NULL, ...)
 }
 
 \arguments{
-    \item{\dots}{data tables with missing rows. Two or more objects
-        which can be interpreted as matrices (or data frames).
-        Data tables passed as arguments in \code{\dots} must be
-        arranged in samples \eqn{\times} variables, with samples
-        order and row names matching in all data tables.}
+    \item{\dots}{data tables with missing individuals. Two or more objects
+        which can be interpreted as matrices (or data frames) or a list
+        containing these. Data tables passed as arguments in \code{\dots} 
+        (or \code{list(\dots)}) must be arranged in variables (rows) 
+        \eqn{\times}{x} individuals (columns), with individual names matching 
+        row names of \code{colData}. 
+        
+        For \code{'MultiAssayExperiment'}, \code{\dots} is not currently used.}
+        
+    \item{object}{an object of class 
+        \code{\link[MultiAssayExperiment]{MultiAssayExperiment}}.}
 
-    \item{strata}{a named vector or data frame giving the stratum for
-        each individual. Names (in vector) or row names (in data frame)
-        must be equal to the row names among data tables.}
+    \item{colData}{a data frame giving the stratum for each individual. 
+        The row names of \code{colData} must contain individual identifiers.}
 
-    \item{tableNames}{optional. A character vector giving the name for
+    \item{assayNames}{optional. A character vector giving the name for
         each table.}
 
-    \item{object}{an object of class \code{MIDTList}.}
-
-    \item{value}{a character vector of length the total number of
-        data tables.}
+    \item{strata}{a character ...}
 }
 
 \details{
 To facilitate programming pipelines, \code{NULL} values are input for
-\code{compromise}, \code{configurations}, \code{imputedRows} and
+\code{compromise}, \code{configurations}, \code{imputedIndv} and
 \code{MIparam} slots, in which case the default value is used as if the
 argument had been missing. These slots will be updated after multiple
 imputation (\code{\link{MIMFA}}) approach.
@@ -65,16 +67,17 @@ Ignacio González
 #-- load data
 data(NCI60)
 
-#-- MIDTList object directly from a list of data tables
-midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
+#-- MIDTList object directly from a 'MultiAssayExperiment' object
+midt <- newMIDTList(NCI60$mae)
 midt
 
 #-- MIDTList object from separate data tables
-table1 <- NCI60$incompleteData$trans
-table2 <- NCI60$incompleteData$prote
+table1 <- NCI60$dataTables$trans
+table2 <- NCI60$dataTables$prote
+colData <- NCI60$dataTables$cell.line
 
-midt <- newMIDTList(table1, table2, strata=NCI60$cell.line,
-                    tableNames=c("transcrip", "proteome"))
+midt <- newMIDTList(table1, table2, colData=colData,
+                    assayNames=c("transcrip", "proteome"))
 midt
 }
 

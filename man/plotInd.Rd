@@ -67,7 +67,7 @@ according to the \code{colMissing} argument.
 
 Multiple imputation generates \code{M} imputed datasets and 
 the variance between-imputations reflects the uncertainty associated 
-to the estimation of the missing row values. The \code{plotInd} 
+to the estimation of the missing values. The \code{plotInd} 
 function proposes two approaches to visualize the uncertainty 
 due to missing data: confidence ellipses and convex hulls. The idea 
 is to project all the multiple imputed datasets onto the compromise 
@@ -99,10 +99,10 @@ Ignacio González and Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
+midt <- newMIDTList(NCI60$mae)
 
 #-- performs MIMFA
-midt <- MIMFA(midt, ncomp=2, M=5)
+midt <- MIMFA(midt, ncomp=2, M=10)
 
 #-- default plot
 plotInd(midt)

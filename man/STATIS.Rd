@@ -45,12 +45,4 @@ The ACT (STATIS method).
 \code{\link[ade4]{statis}}
 }
 
-\examples{
-#-- load data 
-data(NCI60)
-
-#-- STATIS analysis of two data tables
-result <- STATIS(NCI60$completeData, nf=3)
-}
-
 \keyword{multivariate}

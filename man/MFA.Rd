@@ -55,14 +55,4 @@ Ignacio González, Valentin Voillet
 \code{\link[FactoMineR]{MFA}} in \code{FactoMineR}
 }
 
-\examples{
-#-- load complete data
-data(NCI60)
-dataTables <- NCI60$completeData
-nc <- sapply(dataTables, ncol)
-
-mfa <- MFA(dataTables, ncomp=3, nbRows=nrow(dataTables[[1]]), 
-            nbTables=length(dataTables), ncTable=nc)
-}
-
 \keyword{multivariate}

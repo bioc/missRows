@@ -18,7 +18,7 @@ wrapperSVD(X, rWeights=NULL, cWeights=NULL, ncp=Inf)
 }
 
 \arguments{
-    \item{X}{a data matrix.}
+    \item{X}{a numeric matrix.}
 
     \item{rWeights}{vector with the weights of each row 
         (\code{NULL} by default and the weights are uniform).}
@@ -43,13 +43,6 @@ A list that contains the following components:
 
 \seealso{
 \code{\link{svd}}, \code{\link[FactoMineR]{svd.triplet}}
-}
-
-\examples{
-hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
-X <- hilbert(9)[, 1:6]
-
-wrapperSVD(X)
 }
 
 \keyword{algebra}

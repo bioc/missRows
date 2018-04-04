@@ -96,7 +96,7 @@ Ignacio González, Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$incompleteData, strata=NCI60$cell.line)
+midt <- newMIDTList(NCI60$mae)
 
 #-- tune the number of imputations
 \dontrun{
