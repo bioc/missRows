@@ -222,7 +222,7 @@ stratum for each individual is stored in a data frame \Rcode{df}. \medskip
 
 <<quickStart, eval=FALSE>>=
 ## Data preparation
-midt <- newMIDTList(table1, table2, colData=df)
+midt <- MIDTList(table1, table2, colData=df)
 
 ## Performing MI
 midt <- MIMFA(midt, ncomp=2, M=30)
@@ -319,7 +319,7 @@ cancer type for each cell line: colon (CO), renal (RE), ovarian (OV), breast
 and melanoma (ME). \medskip
 
 <<>>=
-table(NCI60$dataTables$cell.line)
+table(NCI60$dataTables$cell.line$type)
 @
 
 \Rcode{NCI60\$mae} contain a 'MultiAssayExperiment' instance from NCI60 data
@@ -370,11 +370,11 @@ cell line, then a \Rclass{MIDTList} object can be created by \medskip
 tableList <- NCI60$dataTables[1:2]
 cell.line <- NCI60$dataTables$cell.line
 
-midt <- newMIDTList(tableList, colData=cell.line, 
+midt <- MIDTList(tableList, colData=cell.line, 
                     assayNames=c("trans", "prote"))
 @
 
-The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from 
+The function \Rcode{MIDTList} makes a \Rclass{MIDTList} object from 
 separated data tables directly by \medskip
 
 <<sepMIDTList>>=
@@ -382,22 +382,22 @@ table1 <- NCI60$dataTables$trans
 table2 <- NCI60$dataTables$prote
 cell.line <- NCI60$dataTables$cell.line
 
-midt <- newMIDTList(table1, table2, colData=cell.line,
+midt <- MIDTList(table1, table2, colData=cell.line,
                     assayNames=c("trans", "prote"))
 @
 
 or by \medskip
 
 <<sepMIDTList2>>=
-midt <- newMIDTList("trans" = table1, "prote" = table2,
-                    colData=cell.line)
+midt <- MIDTList("trans" = table1, "prote" = table2,
+                colData=cell.line)
 @
 
-The function \Rcode{newMIDTList} makes a \Rclass{MIDTList} object from 
+The function \Rcode{MIDTList} makes a \Rclass{MIDTList} object from 
 'MultiAssayExperiment' by \medskip
 
 <<maeMIDTList>>=
-midt <- newMIDTList(NCI60$mae)
+midt <- MIDTList(NCI60$mae)
 @
 
 A summary of the \Rcode{midt} object can be seen by typing the object name 
@@ -468,7 +468,7 @@ The list of ... can be exported by the function
 \subsection{Data exploration and visualization}
 %============================================================================
 This section presents the available tools for data exploration and 
-visualization of the results in \Rpackage{missRows}. Both \Rcode{newMIDTList} 
+visualization of the results in \Rpackage{missRows}. Both \Rcode{MIDTList} 
 and \Rcode{MIMFA} functions return an object of type \Rclass{MIDTList}, and 
 all of the following functions work with this object.
 
@@ -631,8 +631,8 @@ tune <- tuneM(midt, ncomp=2, Mmax=100, inc=10, N=20)
 tune
 @
 
-<<echo=FALSE>>=
-tune
+<<>>=
+tune$stats
 @
 
 <<echo=FALSE, fig.width=6.5, fig.height=5, out.width="0.5\\textwidth">>=
