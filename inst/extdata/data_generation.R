@@ -50,8 +50,7 @@ tmp <- getSampleData(molData)$Name
 tmp <- data.frame(tmp, stringsAsFactors = FALSE)
 cell.type <- apply(tmp, 1, function(x) { strsplit(x, "[:]")[[1]][1] })
 samples <- apply(tmp, 1, function(x) { strsplit(x, "[:]")[[1]][2] })
-cell.line <- data.frame(type = cell.type, row.names = samples,
-                        stringsAsFactors = FALSE)
+cell.line <- DataFrame(type = cell.type, row.names = samples)
 
 
 ##- MultiAssayExperiment for the incomplete data -----------------------------#
