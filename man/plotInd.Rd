@@ -99,7 +99,7 @@ Ignacio González and Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$mae)
+midt <- MIDTList(NCI60$mae)
 
 #-- performs MIMFA
 midt <- MIMFA(midt, ncomp=2, M=10)

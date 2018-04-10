@@ -4,6 +4,7 @@
 \docType{class}
 \alias{MIDTList}
 \alias{MIDTList-class}
+\alias{initialize,MIDTList-method}
 \alias{strata}
 \alias{strata,MIDTList-method}
 \alias{missingIndv}
@@ -22,19 +23,61 @@
 \description{
 \code{MIDTList} is an S4 class that extends the class 
 \code{\link{MultiAssayExperiment}} by providing the infrastructure (slots) 
-to store the data, intermediate calculations and results of 
+to store the input data, intermediate calculations and results of 
 a multiple imputation approach.
 }
 
 \section{Objects from the Class}{
-Objects of this class are typically created by \code{\link{newMIDTList}}
-constructor and returned by \code{\link{MIMFA}} function. Usually there
-should be no need to create them directly.
+Objects can be created by calls of the form:
+
+\code{MIDTList(..., colData=NULL, strata=NULL, assayNames=NULL)}
+
+\code{new("MIDTList", ..., colData=NULL, strata=NULL, assayNames=NULL)}
+}
+
+\section{Arguments}{
+\describe{
+    \item{\code{\dots}}{arguments passed to '\code{\dots}' can be:
+    
+        1) data tables with missing individuals. Two or more objects
+        which can be interpreted as matrices (or data frames). Data tables
+        passed as arguments in \code{\dots} must be arranged in variables 
+        (rows) \eqn{\times}{x} individuals (columns), with individual names
+        matching row names of \code{colData}.
+        
+        2) a \code{list} containing two or more data tables with
+        missing individuals. Data tables (matrices or data frames) within 
+        list must be arranged in variables (rows) \eqn{\times}{x} individuals
+        (columns), with individual names matching row names of \code{colData}.
+        
+        3) an object of class 
+        \code{\link[MultiAssayExperiment]{MultiAssayExperiment}}. In this case
+        \code{colData} and \code{assayNames} arguments are ignored.
+        }
+
+    \item{\code{colData}}{a \code{DataFrame} giving the characteristics for 
+        all individuals (biological units). The row names of \code{colData}
+        must contain individual identifiers.}
+
+    \item{\code{assayNames}}{optional. A character vector giving the name for
+        each table.}
+
+    \item{\code{strata}}{a character indicating the column of \code{colData} 
+        to be used as \code{strata} in the construction of \code{MIDTList}.}
+    }
+}
+
+\section{Details}{
+To facilitate programming pipelines, \code{NULL} values are input for
+\code{compromise}, \code{configurations}, \code{imputedIndv} and
+\code{MIparam} slots, in which case the default value is used as if the
+argument had been missing. These slots will be updated after multiple
+imputation (\code{\link{MIMFA}}) approach.
 }
 
 \section{Slots}{
 
-    \describe{
+\describe{
     
     \item{\code{ExperimentList}}{an \code{\link{ExperimentList}} class 
         object for each assay dataset.}
@@ -78,6 +121,12 @@ Class \code{\linkS4class{MultiAssayExperiment}}, directly.
 }
 
 \section{Methods}{
+
+\describe{
+    \item{initialize}{\code{signature(.Object = "MIDTList")}: See 'Objects 
+        from the Class' section for description.}
+}
+
 Class-specific methods return the corresponding objects:
 
 \describe{
@@ -123,7 +172,7 @@ Ignacio González
 }
 
 \seealso{
-\code{\link{newMIDTList}}, \link{MultiAssayExperiment-class},
+\link{MultiAssayExperiment-class},
 \link{MultiAssayExperiment-methods}
 }
 
@@ -131,10 +180,24 @@ Ignacio González
 #-- load data
 data(NCI60)
 
-#-- MIDTList object from a list of data tables
-midt <- newMIDTList("trans" = NCI60$dataTables$trans, 
-                    "prote" = NCI60$dataTables$prote,
-                    colData = NCI60$dataTables$cell.line)
+#-- MIDTList object from separate data tables
+table1 <- NCI60$dataTables$trans
+table2 <- NCI60$dataTables$prote
+colData <- NCI60$dataTables$cell.line
+
+midt <- MIDTList(table1, table2, colData=colData,
+                assayNames=c("transcrip", "proteome"))
+midt
+
+#-- MIDTList object from a list
+tablesList <- NCI60$dataTables[1:2]
+colData <- NCI60$dataTables$cell.line
+
+midt <- MIDTList(tablesList, colData=colData)
+midt
+
+#-- MIDTList object directly from a 'MultiAssayExperiment'
+midt <- MIDTList(NCI60$mae)
 midt
 }
 

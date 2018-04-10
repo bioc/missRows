@@ -21,8 +21,7 @@ tuneM(object, ncomp=2, Mmax=30, inc=5, N=10, tol=1e-06, showPlot=TRUE)
 }
 
 \arguments{
-    \item{object}{an object of class \code{MIDTList} as returned by
-        \code{\link{newMIDTList}}.}
+    \item{object}{an object of class \code{MIDTList}.}
 
     \item{x}{an object of class inheriting from \code{tuneM}.}
 
@@ -96,7 +95,7 @@ Ignacio González, Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$mae)
+midt <- MIDTList(NCI60$mae)
 
 #-- tune the number of imputations
 \dontrun{

@@ -19,8 +19,7 @@ MIMFA(object, ncomp=2, M=NULL, estimeNC=FALSE, maxIter=500, tol=1e-10)
 }
 
 \arguments{
-    \item{object}{an object of class \code{MIDTList} as returned by
-        \code{\link{newMIDTList}}.}
+    \item{object}{an object of class \code{MIDTList}.}
 
     \item{ncomp}{a number of components to include in MFA when 
         \code{estimeNC=FALSE} (default to 2). If 
@@ -97,7 +96,7 @@ Ignacio González and Valentin Voillet
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$mae)
+midt <- MIDTList(NCI60$mae)
 midt
 
 #-- performs MIMFA

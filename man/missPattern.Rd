@@ -21,8 +21,7 @@ missPattern(object, colStrata=NULL, colMissing="grey70", cexTitles=12,
 }
 
 \arguments{
-    \item{object}{an object of class \code{MIDTList} as returned by
-        \code{\link{newMIDTList}}.}
+    \item{object}{an object of class \code{MIDTList}.}
 
     \item{x}{an object of class inheriting from \code{missPattern}}
 
@@ -74,7 +73,7 @@ Ignacio González
 \examples{
 #-- load data and create MIDTList object
 data(NCI60)
-midt <- newMIDTList(NCI60$mae)
+midt <- MIDTList(NCI60$mae)
 
 #-- inspects pattern of missingness
 patt <- missPattern(midt)

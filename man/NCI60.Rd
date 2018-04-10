@@ -29,7 +29,7 @@ A list with two components, \code{dataTables} and \code{mae}:
         The protein abundance levels of the NCI60 cell lines. There
         are 8 missing individuals.}
         
-    \item{\code{cell.line}}{a character vector of cancer types:
+    \item{\code{cell.line}}{a \code{DataFrame} of cancer types:
         colon (CO), renal (RE), ovarian (OV), breast (BR),
         prostate (PR), lung (LC), central nervous system (CNS),
         leukemia (LE) and melanoma (ME).}
