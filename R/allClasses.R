@@ -45,9 +45,74 @@ setGeneric(name="MIparam",
 
 ##- setMethod ----------------------------------------------------------------#
 ##----------------------------------------------------------------------------#
+
+##- initialize
+setMethod(f="initialize", signature="MIDTList",
+        definition=function(.Object,
+                            ...,
+                            colData=NULL, 
+                            strata=NULL, 
+                            assayNames=NULL,
+                            compromise=NULL,
+                            configurations=NULL,
+                            imputedIndv=NULL,
+                            MIparam=NULL) {
+
+            obj <- list(...)
+
+            if (class(obj[[1]]) == "MIDTList") {
+                midt <- obj[[1]]
+                .Object@ExperimentList <- experiments(midt)
+                .Object@colData <- colData(midt)
+                .Object@sampleMap <- sampleMap(midt)
+                .Object@strata <- midt@strata
+                .Object@missingIndv <- missingIndv(midt)
+                .Object@compromise <- compromise
+                .Object@configurations <- configurations
+                .Object@imputedIndv <- imputedIndv
+                .Object@MIparam <- MIparam
+
+                .Object
+            } else {
+                ##- initialize MIDTList from a MultiAssayExperiment
+                if (class(obj[[1]]) == "MultiAssayExperiment") {
+                    res <- MIDTListFromMultiAssayExperiment(obj[[1]], strata)
+                } else {
+                    ##- initialize MIDTList from a tables list
+                    if (class(obj[[1]]) == "list") {
+
+                        if (length(obj[[1]]) <= 1) {
+                            stop("the list passed as argument in '...' must",
+                                " contain at least two data tables", 
+                                call.=FALSE)
+                        }
+
+                        res <- MIDTListFromTablesList(obj[[1]], colData, 
+                                                        strata, assayNames)
+                    } else {
+                        ##- initialize MIDTList from separated data tables
+                        if (length(obj) <= 1) {
+                            stop("at least two data tables must be passed",
+                                " as arguments in '...'", call.=FALSE)
+                        }
+
+                        res <- MIDTListFromTablesList(obj, colData, strata, 
+                                                    assayNames)
+                    }
+                }
+
+                .Object@ExperimentList <- experiments(res$mae)
+                .Object@colData <- colData(res$mae)
+                .Object@sampleMap <- sampleMap(res$mae)
+                .Object@strata <- res$strata
+                .Object@missingIndv <- res$missingIndv
+
+                .Object
+            }
+        })
+
 ##- show
-setMethod("show",
-        signature="MIDTList",
+setMethod(f="show", signature="MIDTList",
         definition=function(object) {
 
             nbMiss <- unlist(lapply(object@missingIndv, length))
