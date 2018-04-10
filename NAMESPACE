@@ -11,7 +11,6 @@ importFrom(S4Vectors, DataFrame)
 exportClasses(MIDTList)
 
 export(MIDTList)
-export(newMIDTList)
 export(imputedData)
 export(MIMFA)
 export(missPattern)
@@ -26,5 +25,3 @@ export(MIparam)
 
 S3method(print, missPattern)
 S3method(print, tuneM)
-S3method(newMIDTList, default)
-S3method(newMIDTList, MultiAssayExperiment)
