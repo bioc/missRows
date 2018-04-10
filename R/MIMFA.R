@@ -229,6 +229,6 @@ MIMFA <- function(object, ncomp=2, M=NULL, estimeNC=FALSE,
                                     ncomp=ncp,
                                     M=M,
                                     Mtotal=Mtotal))
-    
+
     return(object)
 }
