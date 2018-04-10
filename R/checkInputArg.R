@@ -60,6 +60,21 @@ checkInputArg <- function(dTables, cData, strata, assayNames) {
     }
 
     names(dTables) <- assayNames
+    
+    ##- the individual tables
+    for (i in seq_along(dTables)) {
+        if (length(dim(dTables[[i]])) != 2) {
+            stop("the '", names(dTables)[i], "' data table must be a matrix",
+                " or data frame.", call.=FALSE)
+        }
+        
+        dTables[[i]] <- as.matrix(dTables[[i]])
+        
+        if (!is.numeric(dTables[[i]])) {
+            stop("the '", names(dTables)[i], "' data table must be a matrix",
+                " or data frame.", call.=FALSE)
+        }
+    }
 
     ##- the tables are columns named
     for (i in seq_along(dTables)) {
@@ -78,22 +93,7 @@ checkInputArg <- function(dTables, cData, strata, assayNames) {
                 "' data table do not match row names in colData.", call.=FALSE)
         }
     }
-    
-    ##- the individual tables
-    for (i in seq_along(dTables)) {
-        if (length(dim(dTables[[i]])) != 2) {
-            stop("the '", names(dTables)[i], "' data table must be a matrix",
-                " or data frame.", call.=FALSE)
-        }
-        
-        dTables[[i]] <- as.matrix(dTables[[i]])
-        
-        if (!is.numeric(dTables[[i]])) {
-            stop("the '", names(dTables)[i], "' data table must be a matrix",
-                " or data frame.", call.=FALSE)
-        }
-    }
-    
+
     ### Inf values in tables
     for (i in seq_along(dTables)) {
         if (any(apply(dTables[[i]], 1, is.infinite))) {
