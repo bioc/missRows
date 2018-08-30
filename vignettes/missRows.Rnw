@@ -249,8 +249,9 @@ have already installed \Bioconductor{} packages on your system then you can
 skip the two lines below. \medskip
 
 <<eval=FALSE>>=
-source("https://bioconductor.org/biocLite.R")
-biocLite()
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
 @
 \vspace*{-0.2cm}
 \warning{try http:// if https:// URLs are not supported}
@@ -259,8 +260,9 @@ Once the core \Bioconductor{} packages are installed, you can install the
 \Rpackage{missRows} package by \medskip
 
 <<install, eval=FALSE>>=
-source("https://bioconductor.org/biocLite.R")
-biocLite("missRows")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("missRows")
 @
 \vspace*{-0.2cm}
 \warning{try http:// if https:// URLs are not supported} \bigskip
