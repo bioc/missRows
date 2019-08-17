@@ -7,7 +7,7 @@ checkInputArg <- function(dTables, cData, strata, assayNames) {
         stop("'colData' must be a DataFrame", call.=FALSE)
     }
 
-    if (class(cData) != "DataFrame") {
+    if (!is(cData, "DataFrame")) {
         stop("'colData' must be a DataFrame", call.=FALSE)
     } else {
         tmp <- rownames(cData)
